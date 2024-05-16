@@ -1,0 +1,42 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_USER=ultimate-ltt
+      - POSTGRES_PASSWORD=ultimate-ltt
+      - POSTGRES_DB=ultimate-ltt
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    ports:
+      - "5433:5432"
+
+  web:
+    build:
+      context: .
+    image: release
+    environment:
+      - DATABASE_URL=postgresql://ultimate-ltt:ultimate-ltt@db/ultimate-ltt?schema=public
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    command: "/bin/sh -c 'bunx prisma migrate dev --name init && bun --watch run index.ts'"
+
+  studio:
+    build:
+      context: .
+    image: prisma
+    environment:
+      - DATABASE_URL=postgresql://ultimate-ltt:ultimate-ltt@db/ultimate-ltt?schema=public
+    volumes:
+      - ./prisma/schema.prisma:/prisma/schema.prisma
+    ports:
+      - "5555:5555"
+    depends_on:
+      - db
+    command: "/bin/sh -c 'bunx prisma studio --schema /prisma/schema.prisma'"
+
+volumes:
+  postgres_data:
