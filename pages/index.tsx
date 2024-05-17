@@ -1,5 +1,5 @@
 import { renderPage } from "@/main";
-import { setSession, type SessionRequest } from "@session";
+import { type SessionRequest } from "@session";
 
 function home(req: SessionRequest) {
   return (

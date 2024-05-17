@@ -16,13 +16,12 @@ function login(success: boolean = true) {
   );
 }
 
-export function get(req: SessionRequest) {
+export function get() {
   return renderPage(login());
 }
 
-export async function post(req: SessionRequest, data: any): Promise<Response> {
-  const formdata = data;
-  console.log(formdata);
+export async function post(req: SessionRequest): Promise<Response> {
+  const formdata = req.data;
 
   const username = formdata.get("username") as string;
   const password = formdata.get("password") as string;

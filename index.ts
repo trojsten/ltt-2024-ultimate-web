@@ -1,4 +1,3 @@
-import { PrismaClient } from "@prisma/client";
 import { SessionRequest } from "./session";
 
 Bun.serve({
@@ -23,7 +22,9 @@ Bun.serve({
       return new Response("Not Found", { status: 404 });
     }
 
-    let sessReq = new SessionRequest(Request);
+
+    const data = await Request.formData();
+    const sessReq = new SessionRequest(Request, data);
 
     const page = await import(route.filePath);
 
@@ -37,10 +38,10 @@ Bun.serve({
     }
 
     if (Request.method == "POST") {
-      let data = await Request.formData();
       res = page.post?.(sessReq, data);
     } else if (Request.method == "GET") {
       res = page.get?.(sessReq);
+      
     }
 
     return res ?? new Response("Method Not Allowed", { status: 405 });
