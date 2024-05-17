@@ -18,12 +18,5 @@ function home(req: SessionRequest) {
 }
 
 export function get(req: SessionRequest) {
-  return renderPage(home(req));
+  return renderPage(home(req), req);
 }
-
-// export async function post(request: SessionRequest): Promise<Response> {
-//   const formData = await request.data;
-//   const test = formData.get("test") as string;
-//   const res = await renderPage(home(request));
-//   return setSession(res, { name: test });
-// }

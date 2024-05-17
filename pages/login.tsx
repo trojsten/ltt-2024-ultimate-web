@@ -6,7 +6,7 @@ function login(success: boolean = true) {
   return (
     <div>
       <h1>Prihlásiť sa</h1>
-      {success ? null : <p>Zle meno alebo heslo</p>}
+      {success ? null : <p className="text-red-500">Zlé meno alebo heslo</p>}
       <form action="/login" method="post" encType="multipart/form-data">
         <input type="text" name="username" />
         <input type="password" name="password" />
@@ -16,12 +16,12 @@ function login(success: boolean = true) {
   );
 }
 
-export function get() {
-  return renderPage(login());
+export function get(req: SessionRequest) {
+  return renderPage(login(), req);
 }
 
 export async function post(req: SessionRequest): Promise<Response> {
-  const formdata = req.data;
+  const formdata = req.data!;
 
   const username = formdata.get("username") as string;
   const password = formdata.get("password") as string;
@@ -32,11 +32,17 @@ export async function post(req: SessionRequest): Promise<Response> {
     },
   });
   if (user) {
-    const res = Response.redirect(
-      req.parsedUrl.searchParams.get("redirect") ?? "/",
-    );
+    const redirectUrl = req.parsedUrl.searchParams.get("redirect");
+    let res: Response
+    if(redirectUrl == null) {
+      res = Response.redirect('/');
+    } else {
+      res = Response.redirect(
+        decodeURIComponent(redirectUrl) ?? "/",
+      );
+    }
     return setSession(res, { user: user });
   } else {
-    return renderPage(login(false));
+    return renderPage(login(false), req);
   }
 }

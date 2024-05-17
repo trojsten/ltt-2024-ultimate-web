@@ -22,9 +22,11 @@ Bun.serve({
       return new Response("Not Found", { status: 404 });
     }
 
-
-    const data = await Request.formData();
-    const sessReq = new SessionRequest(Request, data);
+    let data: FormData | undefined;
+    if (Request.method == "POST") {
+      data = await Request.formData();
+    }
+    const sessReq = new SessionRequest(Request, data, route.params);
 
     const page = await import(route.filePath);
 
@@ -40,8 +42,7 @@ Bun.serve({
     if (Request.method == "POST") {
       res = page.post?.(sessReq, data);
     } else if (Request.method == "GET") {
-      res = page.get?.(sessReq);
-      
+      res = page.get?.(sessReq);      
     }
 
     return res ?? new Response("Method Not Allowed", { status: 405 });

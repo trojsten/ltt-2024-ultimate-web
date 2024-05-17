@@ -1,11 +1,13 @@
-export function navbar() {
+import type { SessionRequest } from "@session";
+
+export function navbar(req: SessionRequest) {
+    const user = req.session?.user;
     return (
         <div>
             <nav>
                 <ul>
-                    <li>Home</li>
-                    <li>About</li>
-                    <li>Contact</li>
+                    <li><a href={'/user/' + user?.id}>Profil</a></li>
+                    <li><a href="/shop">Obchod</a></li>
                 </ul>
             </nav>
         </div>

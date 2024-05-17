@@ -11,7 +11,7 @@ export class SessionRequest extends Request {
   session?: Session;
   sessionValid = true;
   parsedUrl: URL;
-  constructor(request: Request, public data: FormData) {
+  constructor(request: Request, public data: FormData | undefined, public params: Record<string, string>) {
     super(request);
 
     const s = this.headers.get("Cookie")?.split("session=");

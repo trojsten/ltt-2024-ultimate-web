@@ -25,19 +25,19 @@ services:
       - db
     command: "/bin/sh -c 'bunx prisma migrate dev --name init && bun --watch --inspect run index.ts'"
 
-  studio:
-    build:
-      context: .
-    image: prisma
-    environment:
-      - DATABASE_URL=postgresql://ultimate-ltt:ultimate-ltt@db/ultimate-ltt?schema=public
-    volumes:
-      - ./prisma/schema.prisma:/prisma/schema.prisma
-    ports:
-      - "5555:5555"
-    depends_on:
-      - db
-    command: "/bin/sh -c 'bunx prisma studio --schema /prisma/schema.prisma'"
+  # studio:
+  #   build:
+  #     context: .
+  #   image: prisma
+  #   environment:
+  #     - DATABASE_URL=postgresql://ultimate-ltt:ultimate-ltt@db/ultimate-ltt?schema=public
+  #   volumes:
+  #     - ./prisma/schema.prisma:/prisma/schema.prisma
+  #   ports:
+  #     - "5555:5555"
+  #   depends_on:
+  #     - db
+  #   command: "/bin/sh -c 'bunx prisma studio --schema /prisma/schema.prisma'"
 
   tailwind:
     build:

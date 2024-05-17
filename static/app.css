@@ -409,14 +409,49 @@
   .static {
     position: static;
   }
+  .static\/ {
+    position: static;
+  }
   .static\/app {
     position: static;
+  }
+  .grid {
+    display: grid;
   }
   .table {
     display: table;
   }
+  .h-32 {
+    height: var(--spacing-32, 8rem);
+  }
+  .w-32 {
+    width: var(--spacing-32, 8rem);
+  }
+  .grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .gap-4 {
+    gap: var(--spacing-4, 1rem);
+  }
+  .rounded-md {
+    border-radius: var(--radius-md, 0.375rem);
+  }
+  .bg-gray-200 {
+    background-color: var(--color-gray-200, #edf2f7);
+  }
   .bg-red-500 {
     background-color: var(--color-red-500, #f56565);
+  }
+  .text-2xl {
+    font-size: var(--font-size-2xl, 1.5rem);
+    line-height: var(--font-size-2xl--line-height, 2rem);
+  }
+  .text-lg {
+    font-size: var(--font-size-lg, 1.125rem);
+    line-height: var(--font-size-lg--line-height, 1.75rem);
+  }
+  .text-red-500 {
+    color: var(--color-red-500, #f56565);
   }
   .filter {
     filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);

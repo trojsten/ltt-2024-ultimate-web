@@ -22,6 +22,8 @@ model User {
   teamId Int
   tags  Tag[]
   beds  Bed[]
+  transactions Transaction[]
+  admin Boolean @default(false)
 }
 
 model Team {
@@ -30,7 +32,6 @@ model Team {
   users User[]
   money Int
   transactions Transaction[]
-  items Item[]
 }
 
 model Transaction {
@@ -38,6 +39,10 @@ model Transaction {
   amount    Int
   team      Team    @relation(fields: [teamId], references: [id])
   teamId    Int
+  user      User    @relation(fields: [userId], references: [id])
+  userId    Int
+  item      Item    @relation(fields: [itemId], references: [id])
+  itemId    Int
   createdAt DateTime @default(now())
 }
 
@@ -46,12 +51,13 @@ model Item {
   name      String
   cost      Int
   description String
-  team     Team?    @relation(fields: [teamId], references: [id])
-  teamId    Int?
+  image     String
+  transactions Transaction[]
   createdAt DateTime @default(now())
   tags      Tag[]
   beds      Bed[]
   bedId     Int?
+  amount    Int @default(1)
 }
 
 model Tag {
