@@ -20,22 +20,24 @@ export function get(req: SessionRequest) {
   return renderPage(login());
 }
 
-export async function post(req: SessionRequest): Promise<Response> {
-    const formdata = await req.data;
-    console.log(formdata);
-    
-    const username = formdata.get("username") as string;
-    const password = formdata.get("password") as string;
-    const user = await db.user.findFirst({
-        where: {
-            name: username,
-            password: password
-        }
-    })
-    if(user){
-        const res = Response.redirect(req.parsedUrl.searchParams.get("redirect") ?? "/");
-        return setSession(res, { user: user });
-    } else {
-        return renderPage(login(false));
-    }
+export async function post(req: SessionRequest, data: any): Promise<Response> {
+  const formdata = data;
+  console.log(formdata);
+
+  const username = formdata.get("username") as string;
+  const password = formdata.get("password") as string;
+  const user = await db.user.findFirst({
+    where: {
+      name: username,
+      password: password,
+    },
+  });
+  if (user) {
+    const res = Response.redirect(
+      req.parsedUrl.searchParams.get("redirect") ?? "/",
+    );
+    return setSession(res, { user: user });
+  } else {
+    return renderPage(login(false));
+  }
 }

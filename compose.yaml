@@ -20,6 +20,7 @@ services:
       - .:/usr/src/app
     ports:
       - "3000:3000"
+      - "6499:6499"
     depends_on:
       - db
     command: "/bin/sh -c 'bunx prisma migrate dev --name init && bun --watch --inspect run index.ts'"
@@ -46,6 +47,6 @@ services:
       - .:/usr/src/app
     command: "bun x @tailwindcss/cli@next -i css/app.css -o static/app.css --watch"
     tty: true
-    
+
 volumes:
   postgres_data:
