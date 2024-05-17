@@ -18,6 +18,7 @@ Bun.serve({
     });
 
     const route = router.match(Request);
+    
     if (!route) {
       return new Response("Not Found", { status: 404 });
     }
@@ -32,9 +33,10 @@ Bun.serve({
 
     let res: Response | undefined;
     if (sessReq.sessionValid == false) {
-      if (new URL(Request.url).pathname != "/login") {
+      
+      if (sessReq.parsedUrl.pathname != "/login") {
         return Response.redirect(
-          "/login?redirect=" + encodeURIComponent(Request.url),
+          "/login?redirect=" + btoa(Request.url),
         );
       }
     }

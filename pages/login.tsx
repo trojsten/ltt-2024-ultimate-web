@@ -2,12 +2,12 @@ import { renderPage } from "@/main";
 import db from "@db";
 import { setSession, type SessionRequest } from "@session";
 
-function login(success: boolean = true) {
+function login(success: boolean = true, redirect: string = "/") {
   return (
     <div>
       <h1>Prihlásiť sa</h1>
       {success ? null : <p className="text-red-500">Zlé meno alebo heslo</p>}
-      <form action="/login" method="post" encType="multipart/form-data">
+      <form action={'/login?redirect=' + redirect} method="post" encType="multipart/form-data">
         <input type="text" name="username" />
         <input type="password" name="password" />
         <button type="submit">Submit</button>
@@ -17,7 +17,7 @@ function login(success: boolean = true) {
 }
 
 export function get(req: SessionRequest) {
-  return renderPage(login(), req);
+  return renderPage(login(true, req.parsedUrl.searchParams.get("redirect") ?? '/'), req);
 }
 
 export async function post(req: SessionRequest): Promise<Response> {
@@ -32,17 +32,19 @@ export async function post(req: SessionRequest): Promise<Response> {
     },
   });
   if (user) {
+
     const redirectUrl = req.parsedUrl.searchParams.get("redirect");
     let res: Response
-    if(redirectUrl == null) {
+    if (redirectUrl == null) {
       res = Response.redirect('/');
     } else {
+
       res = Response.redirect(
-        decodeURIComponent(redirectUrl) ?? "/",
+        atob(redirectUrl) ?? "/",
       );
     }
     return setSession(res, { user: user });
   } else {
-    return renderPage(login(false), req);
+    return renderPage(login(false, req.parsedUrl.searchParams.get("redirect") ?? '/'), req);
   }
 }

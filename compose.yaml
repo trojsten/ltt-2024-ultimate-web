@@ -23,7 +23,7 @@ services:
       - "6499:6499"
     depends_on:
       - db
-    command: "/bin/sh -c 'bunx prisma migrate dev --name init && bun --watch --inspect run index.ts'"
+    command: "/bin/sh -c 'bunx prisma migrate dev --name init && bun --watch run index.ts'"
 
   # studio:
   #   build:
