@@ -1,6 +1,6 @@
 services:
   db:
-    image: postgres:16-alpine
+    image: postgres:16.3-alpine3.19
     environment:
       - POSTGRES_USER=ultimate-ltt
       - POSTGRES_PASSWORD=ultimate-ltt
@@ -9,44 +9,82 @@ services:
       - postgres_data:/var/lib/postgresql/data/
     ports:
       - "5432:5432"
+    stop_grace_period: 2s
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ultimate-ltt"]
+      interval: 10s
+      timeout: 1s
+      retries: 5
 
   web:
-    build:
-      context: .
-    image: release
+    image: oven/bun:1.1.8-slim
     environment:
       - DATABASE_URL=postgresql://ultimate-ltt:ultimate-ltt@db/ultimate-ltt?schema=public
     volumes:
-      - .:/usr/src/app
+      - .:/home/bun/app
     ports:
       - "3000:3000"
       - "6499:6499"
     depends_on:
-      - db
-    command: "/bin/sh -c 'bunx prisma migrate dev --name init && bun --watch run index.ts'"
+      db:
+        condition: service_healthy
+        restart: true
+      migrate:
+        condition: service_completed_successfully
+      bun:
+        condition: service_completed_successfully
+    command: "bun --watch --inspect=localhost:6499/debug run index.ts"
+    stop_grace_period: 0s
+    stop_signal: SIGKILL
 
-  # studio:
-  #   build:
-  #     context: .
-  #   image: prisma
-  #   environment:
-  #     - DATABASE_URL=postgresql://ultimate-ltt:ultimate-ltt@db/ultimate-ltt?schema=public
-  #   volumes:
-  #     - ./prisma/schema.prisma:/prisma/schema.prisma
-  #   ports:
-  #     - "5555:5555"
-  #   depends_on:
-  #     - db
-  #   command: "/bin/sh -c 'bunx prisma studio --schema /prisma/schema.prisma'"
+  studio:
+    image: node:22.2.0-alpine3.19
+    environment:
+      - DATABASE_URL=postgresql://ultimate-ltt:ultimate-ltt@db/ultimate-ltt?schema=public
+    working_dir: /home/node
+    volumes:
+      - ./node_modules:/home/node/node_modules
+      - ./prisma/schema.prisma:/home/node/prisma/schema.prisma
+    ports:
+      - "5555:5555"
+    depends_on:
+      db:
+        condition: service_healthy
+        restart: true
+    command: "npx prisma studio"
+    stop_grace_period: 0s
+    stop_signal: SIGKILL
+
+  migrate:
+    image: node:22.2.0-alpine3.19
+    environment:
+      - DATABASE_URL=postgresql://ultimate-ltt:ultimate-ltt@db/ultimate-ltt?schema=public
+    working_dir: /home/node
+    volumes:
+      - .:/home/node
+    depends_on:
+      db:
+        condition: service_healthy
+        restart: true
+    command: "npx prisma migrate dev --name init"
+
+  bun:
+    image: oven/bun:1.1.8-slim
+    volumes:
+      - .:/home/bun/app
+    command: "bun install"
 
   tailwind:
-    build:
-      context: .
-    image: base
+    image: oven/bun:1.1.8-slim
     volumes:
-      - .:/usr/src/app
-    command: "bun x @tailwindcss/cli@next -i css/app.css -o static/app.css --watch"
+      - .:/home/bun/app
+    depends_on:
+      bun:
+        condition: service_completed_successfully
+    command: "bunx @tailwindcss/cli@next -i css/app.css -o static/app.css --watch"
     tty: true
+    stop_grace_period: 0s
+    stop_signal: SIGKILL
 
 volumes:
   postgres_data:
