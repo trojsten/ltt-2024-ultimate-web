@@ -8,7 +8,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     ports:
-      - "5433:5432"
+      - "5432:5432"
 
   web:
     build:
@@ -22,7 +22,7 @@ services:
       - "3000:3000"
     depends_on:
       - db
-    command: "/bin/sh -c 'bunx prisma migrate dev --name init && bun --watch run index.ts'"
+    command: "/bin/sh -c 'bunx prisma migrate dev --name init && bun --watch --inspect run index.ts'"
 
   studio:
     build:
@@ -38,5 +38,14 @@ services:
       - db
     command: "/bin/sh -c 'bunx prisma studio --schema /prisma/schema.prisma'"
 
+  tailwind:
+    build:
+      context: .
+    image: base
+    volumes:
+      - .:/usr/src/app
+    command: "bun x @tailwindcss/cli@next -i css/app.css -o static/app.css --watch"
+    tty: true
+    
 volumes:
   postgres_data:
