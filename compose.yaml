@@ -8,10 +8,10 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     ports:
-      - "5432:5432"
+      - '5432:5432'
     stop_grace_period: 2s
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ultimate-ltt"]
+      test: ['CMD-SHELL', 'pg_isready -U ultimate-ltt']
       interval: 10s
       timeout: 1s
       retries: 5
@@ -23,8 +23,8 @@ services:
     volumes:
       - .:/home/bun/app
     ports:
-      - "3000:3000"
-      - "6499:6499"
+      - '3000:3000'
+      - '6499:6499'
     depends_on:
       db:
         condition: service_healthy
@@ -33,7 +33,7 @@ services:
         condition: service_completed_successfully
       bun:
         condition: service_completed_successfully
-    command: "bun --watch --inspect=localhost:6499/debug run index.ts"
+    command: 'bun --watch --inspect=localhost:6499/debug run index.ts'
     stop_grace_period: 0s
     stop_signal: SIGKILL
 
@@ -46,12 +46,12 @@ services:
       - ./node_modules:/home/node/node_modules
       - ./prisma/schema.prisma:/home/node/prisma/schema.prisma
     ports:
-      - "5555:5555"
+      - '5555:5555'
     depends_on:
       db:
         condition: service_healthy
         restart: true
-    command: "npx prisma studio"
+    command: 'npx prisma studio'
     stop_grace_period: 0s
     stop_signal: SIGKILL
 
@@ -66,13 +66,13 @@ services:
       db:
         condition: service_healthy
         restart: true
-    command: "npx prisma migrate dev --name init"
+    command: 'npx prisma migrate dev --name init'
 
   bun:
     image: oven/bun:1.1.8-slim
     volumes:
       - .:/home/bun/app
-    command: "bun install"
+    command: 'bun install'
 
   tailwind:
     image: oven/bun:1.1.8-slim
@@ -81,7 +81,7 @@ services:
     depends_on:
       bun:
         condition: service_completed_successfully
-    command: "bunx @tailwindcss/cli@next -i css/app.css -o static/app.css --watch"
+    command: 'bunx @tailwindcss/cli@next -i css/app.css -o static/app.css --watch'
     tty: true
     stop_grace_period: 0s
     stop_signal: SIGKILL

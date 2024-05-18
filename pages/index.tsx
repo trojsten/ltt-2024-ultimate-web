@@ -1,5 +1,5 @@
-import { renderPage } from "@/main";
-import { type SessionRequest } from "@session";
+import { renderPage } from '@/main'
+import { type SessionRequest } from '@session'
 
 function home(req: SessionRequest) {
   return (
@@ -14,9 +14,9 @@ function home(req: SessionRequest) {
         </form>
       </div>
     </div>
-  );
+  )
 }
 
 export function get(req: SessionRequest) {
-  return renderPage(home(req), req);
+  return renderPage(home(req), req)
 }

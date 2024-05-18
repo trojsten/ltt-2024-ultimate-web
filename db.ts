@@ -1,18 +1,17 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from '@prisma/client'
 
-const db = new PrismaClient();
+const db = new PrismaClient()
 
 export default db
 
-
 export async function getTeamForUser(userId: number) {
-    return db.team.findFirst({
-        where: {
-            users: {
-                some: {
-                    id: userId
-                }
-            }
+  return db.team.findFirst({
+    where: {
+      users: {
+        some: {
+          id: userId
         }
-    })
+      }
+    }
+  })
 }

@@ -1,50 +1,56 @@
-import { renderPage } from "@/main";
-import db from "@db";
-import { setSession, type SessionRequest } from "@session";
+import { renderPage } from '@/main'
+import db from '@db'
+import { setSession, type SessionRequest } from '@session'
 
-function login(success: boolean = true, redirect: string = "/") {
+function login(success: boolean = true, redirect: string = '/') {
   return (
     <div>
       <h1>Prihlásiť sa</h1>
       {success ? null : <p className="text-red-500">Zlé meno alebo heslo</p>}
-      <form action={'/login?redirect=' + redirect} method="post" encType="multipart/form-data">
+      <form
+        action={'/login?redirect=' + redirect}
+        method="post"
+        encType="multipart/form-data"
+      >
         <input type="text" name="username" />
         <input type="password" name="password" />
         <button type="submit">Submit</button>
       </form>
     </div>
-  );
+  )
 }
 
 export function get(req: SessionRequest) {
-  return renderPage(login(true, req.parsedUrl.searchParams.get("redirect") ?? '/'), req);
+  return renderPage(
+    login(true, req.parsedUrl.searchParams.get('redirect') ?? '/'),
+    req
+  )
 }
 
 export async function post(req: SessionRequest): Promise<Response> {
-  const formdata = req.data!;
+  const formdata = req.data!
 
-  const username = formdata.get("username") as string;
-  const password = formdata.get("password") as string;
+  const username = formdata.get('username') as string
+  const password = formdata.get('password') as string
   const user = await db.user.findFirst({
     where: {
       name: username,
-      password: password,
-    },
-  });
+      password: password
+    }
+  })
   if (user) {
-
-    const redirectUrl = req.parsedUrl.searchParams.get("redirect");
+    const redirectUrl = req.parsedUrl.searchParams.get('redirect')
     let res: Response
     if (redirectUrl == null) {
-      res = Response.redirect('/');
+      res = Response.redirect('/')
     } else {
-
-      res = Response.redirect(
-        atob(redirectUrl) ?? "/",
-      );
+      res = Response.redirect(atob(redirectUrl) ?? '/')
     }
-    return setSession(res, { user: user });
+    return setSession(res, { user: user })
   } else {
-    return renderPage(login(false, req.parsedUrl.searchParams.get("redirect") ?? '/'), req);
+    return renderPage(
+      login(false, req.parsedUrl.searchParams.get('redirect') ?? '/'),
+      req
+    )
   }
 }
