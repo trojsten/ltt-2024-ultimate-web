@@ -3,7 +3,7 @@ import { SessionRequest } from "./session";
 Bun.serve({
   fetch: async (Request) => {
     const path = new URL(Request.url).pathname;
-    if (Request.method == "GET" && path.startsWith("/static")) {
+    if (Request.method == "GET" && (path.startsWith("/static") || path.startsWith("/uploads"))) {
       const file = Bun.file("." + path);
       if (!(await file.exists())) {
         return new Response("Not Found", { status: 404 });
