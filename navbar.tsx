@@ -10,18 +10,32 @@ export async function navbar(req: SessionRequest) {
   }
 
   return (
-    <nav>
-      <ul className="flex justify-center">
+    <nav className="bg-gray-500 w-full p-2">
+      <ul className="flex items-center justify-around flex-col-reverse md:flex-row">
         <li>
-          <a href={'/user/' + user?.id}>Profil</a>
+          <a
+            className="hover:bg-gray-600 transition-all"
+            href={'/user/' + user?.id}
+          >
+            Profil
+          </a>
+        </li>
+        {/* TODO: add button to collapse navbar on mobile. */}
+        <li>
+          <a className="hover:bg-gray-600 transition-all" href="/shop">
+            Obchod
+          </a>
         </li>
         <li>
-          <a href="/shop">Obchod</a>
+          <a className="hover:bg-gray-600 transition-all" href="/transactions">
+            Vykonané transakcie
+          </a>
         </li>
-        <li>
-          <a href="/transactions">Vykonané transakcie</a>
+        <li className="flex items-center">
+          <span className="material-symbols-outlined">person</span>
+          {user?.name} | {team?.money}
+          <span className="material-symbols-outlined">monetization_on</span>
         </li>
-        <li>{team?.money}</li>
       </ul>
     </nav>
   )

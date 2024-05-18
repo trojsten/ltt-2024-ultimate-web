@@ -6,25 +6,21 @@ import type { SessionRequest } from '@session'
 function Transactions(transactions: any[], showAll: boolean, isAdmin: boolean) {
   return (
     <div>
-      <h1>Vykonané transakcie</h1>
-      {isAdmin ? (
-        <a href={showAll ? '/transactions' : '/transactions?all'}>
-          Zobraziť všetkých
-        </a>
-      ) : null}
-      <table>
-        <thead>
+      <h1 className="text-xl font-bold text-center">Vykonané transakcie</h1>
+
+      <table className="table w-full">
+        <thead className="table-header-group bg-gray-400 border-b-2">
           <tr>
             <th>Hodnota</th>
             <th>Meno</th>
             <th>Produkt</th>
-            {showAll ? <th>Tím</th> : null}
+            {showAll ? <th>Družinka</th> : null}
             <th>Čas</th>
           </tr>
         </thead>
         <tbody>
           {transactions.map((e) => (
-            <tr>
+            <tr className="text-center">
               <td>{e.amount}</td>
               <td>{e.user.name}</td>
               <td>{e.item.name}</td>
@@ -34,6 +30,14 @@ function Transactions(transactions: any[], showAll: boolean, isAdmin: boolean) {
           ))}
         </tbody>
       </table>
+      {isAdmin ? (
+        <a
+          href={showAll ? '/transactions' : '/transactions?all'}
+          className="btn"
+        >
+          {showAll ? 'Zobraziť len moje' : 'Zobraziť všetky'}
+        </a>
+      ) : null}
     </div>
   )
 }

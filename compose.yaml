@@ -81,7 +81,7 @@ services:
     depends_on:
       bun:
         condition: service_completed_successfully
-    command: 'bunx @tailwindcss/cli@next -i css/app.css -o static/app.css --watch'
+    command: 'bunx @tailwindcss/cli@next -i css/tailwind.css -o static/app.css --watch'
     tty: true
     stop_grace_period: 0s
     stop_signal: SIGKILL
