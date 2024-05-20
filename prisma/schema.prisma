@@ -13,13 +13,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Sex {
+  Male
+  Female
+}
+
 model User {
   id    Int     @id @default(autoincrement())
   email String  @unique
-  name  String?
+  name  String  @unique
   password String
   team  Team   @relation(fields: [teamId], references: [id])
   teamId Int
+  // TODO: migrate
+  // sex Sex
   tags  Tag[]
   beds  Bed[]
   transactions Transaction[]
@@ -87,8 +94,14 @@ model Room {
   bed_count Int
 }
 
+enum AdType {
+  IMAGE
+  VIDEO
+}
+
 model Ad {
   id        Int     @id @default(autoincrement())
+  // TODO: migrate to enum
   type     String
   content  String
   tags     Tag[]
