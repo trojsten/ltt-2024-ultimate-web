@@ -23,6 +23,7 @@ model User {
   tags  Tag[]
   beds  Bed[]
   transactions Transaction[]
+  ads  Ad[]
   admin Boolean @default(false)
 }
 
@@ -92,5 +93,9 @@ model Ad {
   content  String
   tags     Tag[]
   length   Int
+  viewRemaining Int
+  views    Int
+  createdBy User    @relation(fields: [createdById], references: [id])
+  createdById Int
 }
 

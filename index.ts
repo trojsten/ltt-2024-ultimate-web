@@ -1,3 +1,4 @@
+import { startAdWatch } from '@pages/ad'
 import { SessionRequest } from './session'
 
 Bun.serve({
@@ -31,6 +32,14 @@ Bun.serve({
       data = await Request.formData()
     }
     const sessReq = new SessionRequest(Request, data, route.params)
+    if (
+      sessReq.session !== undefined &&
+      sessReq.session.ad === undefined &&
+      Math.random() > 0.5 &&
+      sessReq.method == 'GET'
+    ) {
+      return startAdWatch(sessReq)
+    }
 
     const page = await import(route.filePath)
 

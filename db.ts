@@ -15,3 +15,19 @@ export async function getTeamForUser(userId: number) {
     }
   })
 }
+
+export async function getAdsForUser(userId: number) {
+  const tags = await db.tag.findMany({
+    where: {
+      users: {
+        some: {
+          id: userId
+        }
+      }
+    },
+    include: {
+      ads: true
+    }
+  })
+  return tags.map((tag) => tag.ads).flat()
+}
