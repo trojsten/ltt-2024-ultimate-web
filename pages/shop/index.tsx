@@ -46,6 +46,7 @@ export function itemHTML(
   buyButton: boolean = true,
   canbuy: boolean = false
 ): JSX.Element {
+  if (item == null) return <div></div>
   return (
     <div className="bg-gray-200 rounded-lg overflow-hidden p-2">
       <h2 className="text-lg text-center mb-3 mt-1">{item.name}</h2>

@@ -5,8 +5,8 @@ import { setSession, type SessionRequest } from '@session'
 
 function renderAd(ad: Ad) {
   return (
-    <div className="w-screen h-screen fixed top-0 left-0 z-10">
-      {ad.type == 'image' ? (
+    <div className="w-screen h-screen fixed top-0 left-0 z-10 bg-black">
+      {ad.type == 'IMAGE' ? (
         <img src={ad.content} className="w-full h-full" />
       ) : (
         <video src={ad.content} autoPlay className="w-full h-full" />
@@ -52,7 +52,7 @@ export async function startAdWatch(req: SessionRequest) {
 
   const ad = await pickAd(req.session.user)
   if (!ad) {
-    return new Response('No ads available', { status: 400 })
+    throw 'no ad available'
   }
 
   req.session.ad = {

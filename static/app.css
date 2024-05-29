@@ -430,9 +430,6 @@
   .static\/drift-boss {
     position: static;
   }
-  .static\/galaxie {
-    position: static;
-  }
   .static\/galaxies {
     position: static;
   }
@@ -573,6 +570,9 @@
   .border-b-2 {
     border-bottom-style: var(--tw-border-style);
     border-bottom-width: 2px;
+  }
+  .bg-black {
+    background-color: var(--color-black, #000);
   }
   .bg-gray-200 {
     background-color: var(--color-gray-200, #edf2f7);

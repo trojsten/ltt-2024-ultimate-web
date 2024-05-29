@@ -20,7 +20,8 @@ async function getPage(req: SessionRequest): Promise<JSX.Element> {
     where: {
       user: {
         id: user.id
-      }
+      },
+      description: null
     },
     include: {
       item: true
@@ -36,7 +37,11 @@ async function getPage(req: SessionRequest): Promise<JSX.Element> {
       {user.name == req.session?.user.name ? <p>{team?.money}</p> : null}
       <h2 className="text-lg">Moje kúpené veci</h2>
       <div className="grid grid-cols-3 gap-4">
-        {myItems.map((e) => itemHTML(e.item, false, false))}
+        {myItems.length > 0 ? (
+          myItems.map((e) => itemHTML(e.item!, false, false))
+        ) : (
+          <p>Žiadne kúpené veci</p>
+        )}
       </div>
     </div>
   )
