@@ -91,5 +91,13 @@ export const games: Record<string, Game> = {
     thumbnail:
       'https://www.onlinegames.io/media/posts/554/Capybara-Clicker-Pro.jpg',
     cost: 200
+  },
+  galaxie: {
+    name: 'Galaxie',
+    sourceUrl: 'https://medmunds.github.io/puzzles/',
+    iframeUrl: './static/galaxies.html',
+    thumbnail:
+      'https://www.onlinegames.io/media/posts/554/Capybara-Clicker-Pro.jpg',
+    cost: 100
   }
 }
