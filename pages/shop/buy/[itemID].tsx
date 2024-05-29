@@ -1,4 +1,4 @@
-import db from '@db'
+import db, { buy } from '@db'
 import type { SessionRequest } from '@session'
 
 export async function post(req: SessionRequest): Promise<Response> {
@@ -37,37 +37,7 @@ export async function post(req: SessionRequest): Promise<Response> {
     }
   })
 
-  await db.transaction.create({
-    data: {
-      amount: item!.cost,
-      team: {
-        connect: {
-          id: team!.id
-        }
-      },
-      user: {
-        connect: {
-          id: user.id
-        }
-      },
-      item: {
-        connect: {
-          id: item!.id
-        }
-      }
-    }
-  })
-
-  await db.team.update({
-    where: {
-      id: team!.id
-    },
-    data: {
-      money: {
-        decrement: item!.cost
-      }
-    }
-  })
+  await buy(user.id, item!.cost, item)
 
   return Response.redirect('/shop')
 }

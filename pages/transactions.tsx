@@ -1,6 +1,8 @@
-import db, { getTeamForUser } from '@db'
+import db, { buyAddTag, getTeamForUser, userHasTag } from '@db'
 import { renderPage } from '@main'
 import type { SessionRequest } from '@session'
+
+const TRANSACTION_COST = 100
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function Transactions(transactions: any[], showAll: boolean, isAdmin: boolean) {
@@ -23,7 +25,7 @@ function Transactions(transactions: any[], showAll: boolean, isAdmin: boolean) {
             <tr className="text-center">
               <td>{e.amount}</td>
               <td>{e.user.name}</td>
-              <td>{e.item.name}</td>
+              <td>{e.item?.name ?? e.description}</td>
               {showAll ? <td>{e.team.name}</td> : null}
               <td>{e.createdAt.toLocaleTimeString()}</td>
             </tr>
@@ -42,7 +44,43 @@ function Transactions(transactions: any[], showAll: boolean, isAdmin: boolean) {
   )
 }
 
+function BuyTransactions() {
+  return (
+    <div>
+      <h1>Vykonané Transakcie</h1>
+      <p>Kúp si možnosť vidieť všetky tvoje minulé transakcie</p>
+      <form method="post" action="/transactions">
+        <button type="submit" className="btn">
+          Kúpiť
+        </button>
+      </form>
+    </div>
+  )
+}
+
+export async function post(req: SessionRequest): Promise<Response> {
+  if (await userHasTag(req.session!.user.id, 'transactions')) {
+    return get(req)
+  }
+  try {
+    await buyAddTag(
+      req.session!.user.id,
+      TRANSACTION_COST,
+      'Umožnenie prístupu ku vykonaným transakciám',
+      'transactions'
+    )
+  } catch (err) {
+    return new Response(err as string)
+  }
+
+  return get(req)
+}
+
 export async function get(req: SessionRequest): Promise<Response> {
+  if (!(await userHasTag(req.session!.user.id, 'transactions'))) {
+    return renderPage(BuyTransactions(), req)
+  }
+
   req.parsedUrl.searchParams.get('all')
   let showAll = false
   if (

@@ -31,6 +31,11 @@ export async function navbar(req: SessionRequest) {
             Vykonané transakcie
           </a>
         </li>
+        <li>
+          <a className="hover:bg-gray-600 transition-all" href="/games">
+            Hry
+          </a>
+        </li>
         <li className="flex items-center">
           <span className="material-symbols-outlined">person</span>
           {user?.name} | {team?.money}

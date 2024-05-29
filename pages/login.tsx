@@ -54,7 +54,7 @@ export async function post(req: SessionRequest): Promise<Response> {
     } else {
       res = Response.redirect(atob(redirectUrl) ?? '/')
     }
-    return setSession(res, { user: user })
+    return setSession(res, { user: user, ad: undefined })
   } else {
     return renderPage(
       login(false, req.parsedUrl.searchParams.get('redirect') ?? '/'),

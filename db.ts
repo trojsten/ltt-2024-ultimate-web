@@ -1,4 +1,4 @@
-import { PrismaClient, type Team, type User } from '@prisma/client'
+import { PrismaClient, type Item, type Team, type User } from '@prisma/client'
 
 const db = new PrismaClient()
 
@@ -32,11 +32,7 @@ export async function getAdsForUser(userId: number) {
   return tags.map((tag) => tag.ads).flat()
 }
 
-export async function buy(
-  userId: number,
-  cost: number,
-  description: string | undefined
-) {
+export async function buy(userId: number, cost: number, item: Item | String) {
   const team = await getTeamForUser(userId)
   if (!team) {
     throw new Error('No team')
@@ -50,16 +46,75 @@ export async function buy(
       id: team.id
     },
     data: {
-      money: team.money - cost
+      money: {
+        decrement: cost
+      }
     }
   })
 
+  const data = {
+    amount: cost,
+    userId: userId,
+    teamId: team.id
+  }
+
+  if (item instanceof String) {
+    //@ts-ignore
+    data.description = item.toString()
+  } else {
+    //@ts-ignore
+    data.itemId = item
+  }
+
+  console.log(data)
+
   return db.transaction.create({
+    data
+  })
+}
+
+export async function userHasTag(userId: number, tagName: string) {
+  const tag = await db.tag.findFirst({
+    where: {
+      name: tagName,
+      users: {
+        some: {
+          id: userId
+        }
+      }
+    }
+  })
+
+  return tag != null
+}
+
+export async function buyAddTag(
+  userId: number,
+  cost: number,
+  description: string,
+  tag: string
+) {
+  await buy(userId, cost, new String(description))
+  const id = await db.tag.findFirst({
+    where: {
+      name: tag
+    }
+  })
+
+  if (!id) {
+    throw new Error('invalid tag')
+  }
+
+  await db.user.update({
+    where: {
+      id: userId
+    },
     data: {
-      amount: cost,
-      userId: userId,
-      teamId: team.id,
-      description
+      tags: {
+        connect: {
+          id: id!.id
+        }
+      }
     }
   })
 }

@@ -3,8 +3,7 @@ import type { Ad, User } from '@prisma/client'
 interface Session {
   id?: string
   user: User
-  ad: AdState | undefined
-  gameId: string | undefined
+  ad?: AdState
 }
 
 interface AdState {
