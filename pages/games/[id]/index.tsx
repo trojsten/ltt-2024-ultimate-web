@@ -1,3 +1,4 @@
+import { userHasTag } from '@db'
 import { renderPage } from '@main'
 import type { SessionRequest } from '@session'
 
@@ -16,6 +17,14 @@ function getPage(id: string) {
   )
 }
 
+function Unauthorized() {
+  return <div>K tejto hre nemáš prístup</div>
+}
+
 export async function get(req: SessionRequest): Promise<Response> {
-  return renderPage(getPage(req.params.id), req)
+  if (await userHasTag(req.session!.user.id, req.params.id)) {
+    return renderPage(getPage(req.params.id), req)
+  }
+
+  return renderPage(Unauthorized(), req)
 }

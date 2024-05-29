@@ -1,4 +1,4 @@
-import db, { userHasTag } from '@db'
+import db, { buyAddTag, userHasTag } from '@db'
 import { renderPage } from '@main'
 import type { SessionRequest } from '@session'
 
@@ -29,10 +29,12 @@ async function getPage(req: SessionRequest) {
           } else {
             return (
               <div>
-                <a href={'/games/'}>
+                <form method="post">
                   <img src={games[gameId].thumbnail} />
                   <h2>{games[gameId].name}</h2>
-                </a>
+                  <input type="hidden" name="gameId" value={gameId} />
+                  <button type="submit">Kúpiť ({games[gameId].cost})</button>
+                </form>
               </div>
             )
           }
@@ -44,6 +46,26 @@ async function getPage(req: SessionRequest) {
 
 export async function get(req: SessionRequest): Promise<Response> {
   return renderPage(await getPage(req), req)
+}
+
+export async function post(req: SessionRequest): Promise<Response> {
+  const user = req.session!.user.id
+  const gameId = (req.data!.get('gameId') as string) ?? 'null'
+  if (await userHasTag(user, gameId)) {
+    return get(req)
+  }
+  try {
+    await buyAddTag(
+      user,
+      games[gameId].cost,
+      'Prístup ku hre ' + games[gameId].name,
+      gameId
+    )
+  } catch (err) {
+    return new Response(err as string)
+  }
+
+  return get(req)
 }
 
 interface Game {
