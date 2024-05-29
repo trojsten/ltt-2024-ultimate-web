@@ -415,6 +415,9 @@
   .fixed {
     position: fixed;
   }
+  .relative {
+    position: relative;
+  }
   .static {
     position: static;
   }
@@ -473,6 +476,12 @@
   .mb-8 {
     margin-bottom: var(--spacing-8, 2rem);
   }
+  .block {
+    display: block;
+  }
+  .contents {
+    display: contents;
+  }
   .flex {
     display: flex;
   }
@@ -481,6 +490,12 @@
   }
   .hidden {
     display: none;
+  }
+  .inline {
+    display: inline;
+  }
+  .list-item {
+    display: list-item;
   }
   .table {
     display: table;
@@ -508,6 +523,12 @@
   }
   .w-screen {
     width: 100vw;
+  }
+  .border-collapse {
+    border-collapse: collapse;
+  }
+  .transform {
+    transform: var(--tw-rotate-x) var(--tw-rotate-y) var(--tw-rotate-z) var(--tw-skew-x) var(--tw-skew-y);
   }
   .grid-cols-3 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -538,6 +559,10 @@
   }
   .rounded-lg {
     border-radius: var(--radius-lg, 0.5rem);
+  }
+  .border {
+    border-style: var(--tw-border-style);
+    border-width: 1px;
   }
   .border-b-2 {
     border-bottom-style: var(--tw-border-style);
@@ -588,6 +613,13 @@
   }
   .text-red-500 {
     color: var(--color-red-500, #f56565);
+  }
+  .underline {
+    text-decoration-line: underline;
+  }
+  .outline {
+    outline-style: var(--tw-outline-style);
+    outline-width: 1px;
   }
   .filter {
     filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
@@ -658,7 +690,13 @@ input[type='text']:focus, input[type='text']:hover, input[type='text']:active {
 @supports (-moz-orient: inline) {
   @layer base {
     *, ::before, ::after, ::backdrop {
+      --tw-rotate-x: rotateX(0);
+      --tw-rotate-y: rotateY(0);
+      --tw-rotate-z: rotateZ(0);
+      --tw-skew-x: skewX(0);
+      --tw-skew-y: skewY(0);
       --tw-border-style: solid;
+      --tw-outline-style: solid;
       --tw-blur:  ;
       --tw-brightness:  ;
       --tw-contrast:  ;
@@ -697,7 +735,37 @@ input[type='text']:focus, input[type='text']:hover, input[type='text']:active {
     animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
   }
 }
+@property --tw-rotate-x {
+  syntax: "<transform-function>";
+  inherits: false;
+  initial-value: rotateX(0);
+}
+@property --tw-rotate-y {
+  syntax: "<transform-function>";
+  inherits: false;
+  initial-value: rotateY(0);
+}
+@property --tw-rotate-z {
+  syntax: "<transform-function>";
+  inherits: false;
+  initial-value: rotateZ(0);
+}
+@property --tw-skew-x {
+  syntax: "<transform-function>";
+  inherits: false;
+  initial-value: skewX(0);
+}
+@property --tw-skew-y {
+  syntax: "<transform-function>";
+  inherits: false;
+  initial-value: skewY(0);
+}
 @property --tw-border-style {
+  syntax: "<custom-ident>";
+  inherits: false;
+  initial-value: solid;
+}
+@property --tw-outline-style {
   syntax: "<custom-ident>";
   inherits: false;
   initial-value: solid;

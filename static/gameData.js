@@ -30,3 +30,24 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }, 500)
 })
+
+async function getdb() {
+  const DBopen = indexedDB.open('/idbfs')
+  DBopen.onsuccess = () => {
+    const db = DBopen.result
+    console.log(db)
+    const store = db
+      .transaction(db.objectStoreNames[0])
+      .objectStore(db.objectStoreNames[0])
+    store.getAllKeys().onsuccess = (e) => {
+      const key = e.target.result.find((e) => e.match(/PlayerPrefs/))
+      store.get(key).onsuccess = (e) => {
+        const content = e.target.result.contents
+        const data = new TextDecoder('utf-8').decode(content)
+        console.log(data)
+      }
+    }
+  }
+}
+
+getdb()
