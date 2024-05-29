@@ -1,0 +1,163 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Drift Boss</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <!-- Use this metatag when Apple fixes their IOS 9
+	<meta name="viewport" content="width=device-width,height=device-height, initial-scale=1, maximum-scale=1, user-scalable=0, minimal-ui"/>
+	-->
+
+    <!--Temporary fix for IOS 9-->
+    <meta
+      name="viewport"
+      content="initial-scale=1.0001, minimum-scale=1.0001, maximum-scale=1.0001, user-scalable=no, minimal-ui"
+    />
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://www.onlinegames.io/games/2023/mjs/drift-boss/game.css"
+    />
+    <script type="text/javascript" async>
+      !(function (e, t) {
+        ;(a = e.createElement('script')),
+          (m = e.getElementsByTagName('script')[0]),
+          (a.async = 1),
+          (a.src = t),
+          m.parentNode.insertBefore(a, m)
+      })(
+        document,
+        'https://universal.wgplayer.com/tag/?lh=' +
+          window.location.hostname +
+          '&wp=' +
+          window.location.pathname +
+          '&ws=' +
+          window.location.search
+      )
+    </script>
+    <link rel="canonical" href="https://www.onlinegames.io/drift-boss/" />
+
+    <script
+      type="text/javascript"
+      src="https://www.onlinegames.io/games/2023/mjs/drift-boss/game.js?v=1694597743"
+    ></script>
+    <script type="text/javascript">
+      function InitApi() {
+        var dateNow = new Date()
+        var secondsSinceEpoch = Math.round(dateNow.getTime() / 1000)
+
+        console.log('InitApi')
+
+        window.callTime = secondsSinceEpoch - 361
+      }
+
+      function ExternEval() {
+        console.log('ExternEval')
+
+        var dateNow = new Date()
+        var secondsSinceEpoch = Math.round(dateNow.getTime() / 1000)
+
+        if (
+          window.callTime != undefined &&
+          secondsSinceEpoch - window.callTime > 360
+        ) {
+          console.log('ExternEval 2')
+
+          window.callTime = secondsSinceEpoch
+
+          if (typeof preroll !== 'undefined') {
+            if (window[preroll.config.loaderObjectName] != undefined) {
+              gameInstance.SendMessage('FreezeNovaAPI', 'AdMessage', 'onOpen')
+              PAUSE()
+
+              try {
+                window[preroll.config.loaderObjectName].refetchAd(
+                  ExternEvalResumeGame
+                )
+              } catch (err) {
+                console.log(err.message)
+                gameInstance.SendMessage(
+                  'FreezeNovaAPI',
+                  'AdMessage',
+                  'onClose'
+                )
+                RESUME()
+              }
+            }
+          }
+        }
+      }
+
+      function ExternEvalResumeGame() {
+        console.log('ExternEvalResumeGame')
+
+        gameInstance.SendMessage('FreezeNovaAPI', 'AdMessage', 'onClose')
+        RESUME()
+      }
+
+      function PAUSE() {
+        ig.game.paused = true
+        ig.game.pauseGame()
+        ig.soundHandler.muteSFX(true)
+        ig.soundHandler.muteBGM(true)
+        ig.soundHandler.sfxPlayer.soundList.engine.pause()
+        ig.soundHandler.sfxPlayer.soundList.engineIn.pause()
+        ig.soundHandler.sfxPlayer.soundList.engineLow.pause()
+      }
+
+      function RESUME() {
+        ig.game.paused = false
+        ig.game.resumeGame()
+        ig.soundHandler.unmuteSFX(true)
+        ig.soundHandler.unmuteBGM(true)
+      }
+
+      function _START_GAME() {
+        //INJECT YOUR OWN CODE HERE
+        console.log('START GAME')
+      }
+
+      function _END_GAME() {
+        //INJECT YOUR OWN CODE HERE
+        console.log('END GAME')
+
+        ExternEval()
+      }
+
+      InitApi()
+    </script>
+
+    <!-- AnalyticsCode -->
+    <!-- Google tag (gtag.js) -->
+
+    <!-- APICode -->
+  </head>
+
+  <body onload="setTimeout(function(){window.scrollTo(0,1)},1);">
+    <!--body-->
+
+    <div id="ajaxbar">
+      <div style="position: absolute" id="game">
+        <canvas id="canvas"></canvas>
+      </div>
+      <div style="position: absolute" id="webgl">
+        <canvas id="webglcanvas"></canvas>
+      </div>
+
+      <div id="orientate">
+        <img src="media/graphics/orientate/landscape.jpg" />
+      </div>
+      <div id="play" class="play" onclick="">
+        <img src="media/graphics/splash/mobile/cover-start.jpg" />
+      </div>
+      <!--<img id="scrollDown" width="220" height="277"></img>-->
+    </div>
+    <!-- <div id="tempdiv"><br><br><br></div> -->
+    <!-- APICode2 -->
+
+    <!-- END OF TEST -->
+  </body>
+</html>

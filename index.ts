@@ -35,7 +35,7 @@ Bun.serve({
     if (
       sessReq.session !== undefined &&
       sessReq.session.ad === undefined &&
-      Math.random() > 0.5 &&
+      Math.random() > 1 &&
       sessReq.method == 'GET'
     ) {
       return startAdWatch(sessReq)

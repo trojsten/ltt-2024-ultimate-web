@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient, type Team, type User } from '@prisma/client'
 
 const db = new PrismaClient()
 
@@ -30,4 +30,36 @@ export async function getAdsForUser(userId: number) {
     }
   })
   return tags.map((tag) => tag.ads).flat()
+}
+
+export async function buy(
+  userId: number,
+  cost: number,
+  description: string | undefined
+) {
+  const team = await getTeamForUser(userId)
+  if (!team) {
+    throw new Error('No team')
+  }
+  if (team.money < cost) {
+    throw new Error('Team has not enough money')
+  }
+
+  await db.team.update({
+    where: {
+      id: team.id
+    },
+    data: {
+      money: team.money - cost
+    }
+  })
+
+  return db.transaction.create({
+    data: {
+      amount: cost,
+      userId: userId,
+      teamId: team.id,
+      description
+    }
+  })
 }

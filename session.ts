@@ -4,6 +4,7 @@ interface Session {
   id?: string
   user: User
   ad: AdState | undefined
+  gameId: string | undefined
 }
 
 interface AdState {

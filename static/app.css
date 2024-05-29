@@ -424,6 +424,12 @@
   .static\/app {
     position: static;
   }
+  .static\/drift-boss {
+    position: static;
+  }
+  .static\/gameData {
+    position: static;
+  }
   .top-0 {
     top: var(--spacing-0, 0px);
   }
@@ -472,6 +478,9 @@
   }
   .grid {
     display: grid;
+  }
+  .hidden {
+    display: none;
   }
   .table {
     display: table;
@@ -580,6 +589,9 @@
   .text-red-500 {
     color: var(--color-red-500, #f56565);
   }
+  .filter {
+    filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
+  }
   .transition-all {
     transition-property: all;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -647,6 +659,15 @@ input[type='text']:focus, input[type='text']:hover, input[type='text']:active {
   @layer base {
     *, ::before, ::after, ::backdrop {
       --tw-border-style: solid;
+      --tw-blur:  ;
+      --tw-brightness:  ;
+      --tw-contrast:  ;
+      --tw-grayscale:  ;
+      --tw-hue-rotate:  ;
+      --tw-invert:  ;
+      --tw-opacity:  ;
+      --tw-saturate:  ;
+      --tw-sepia:  ;
     }
   }
 }
@@ -680,4 +701,40 @@ input[type='text']:focus, input[type='text']:hover, input[type='text']:active {
   syntax: "<custom-ident>";
   inherits: false;
   initial-value: solid;
+}
+@property --tw-blur {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-brightness {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-contrast {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-grayscale {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-hue-rotate {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-invert {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-opacity {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-saturate {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-sepia {
+  syntax: "*";
+  inherits: false;
 }
