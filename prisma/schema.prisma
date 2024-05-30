@@ -13,16 +13,23 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Sex {
+  Male
+  Female
+}
+
 model User {
   id    Int     @id @default(autoincrement())
   email String  @unique
-  name  String?
+  name  String  @unique
   password String
   team  Team   @relation(fields: [teamId], references: [id])
   teamId Int
+  sex Sex
   tags  Tag[]
   beds  Bed[]
   transactions Transaction[]
+  ads  Ad[]
   admin Boolean @default(false)
 }
 
@@ -41,8 +48,9 @@ model Transaction {
   teamId    Int
   user      User    @relation(fields: [userId], references: [id])
   userId    Int
-  item      Item    @relation(fields: [itemId], references: [id])
-  itemId    Int
+  item      Item?    @relation(fields: [itemId], references: [id])
+  itemId    Int?
+  description String?
   createdAt DateTime @default(now())
 }
 
@@ -86,11 +94,20 @@ model Room {
   bed_count Int
 }
 
+enum AdType {
+  IMAGE
+  VIDEO
+}
+
 model Ad {
   id        Int     @id @default(autoincrement())
-  type     String
+  type     AdType
   content  String
   tags     Tag[]
   length   Int
+  viewRemaining Int
+  views    Int
+  createdBy User    @relation(fields: [createdById], references: [id])
+  createdById Int
 }
 

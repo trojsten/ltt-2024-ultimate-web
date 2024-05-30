@@ -1,4 +1,7 @@
+import { startAdWatch } from '@pages/ad'
 import { SessionRequest } from './session'
+import type { ServerWebSocket } from 'bun'
+import config from '@config'
 
 Bun.serve({
   fetch: async (Request) => {
@@ -31,6 +34,21 @@ Bun.serve({
       data = await Request.formData()
     }
     const sessReq = new SessionRequest(Request, data, route.params)
+    if (
+      config().ads.enabled &&
+      sessReq.session !== undefined &&
+      sessReq.session.ad === undefined &&
+      Math.random() > 0.5 &&
+      sessReq.method == 'GET'
+    ) {
+      try {
+        const res = await startAdWatch(sessReq)
+
+        return res
+      } catch (err) {
+        console.error(err)
+      }
+    }
 
     const page = await import(route.filePath)
 
@@ -49,5 +67,13 @@ Bun.serve({
 
     return res ?? new Response('Method Not Allowed', { status: 405 })
   },
-  port: 3000
+  port: 3000,
+  websocket: {
+    message: function (
+      ws: ServerWebSocket<unknown>,
+      message: string | Buffer
+    ): void | Promise<void> {
+      throw new Error('Function not implemented.')
+    }
+  }
 })

@@ -1,15 +1,20 @@
-/*
-  Warnings:
+-- CreateEnum
+CREATE TYPE "Sex" AS ENUM ('Male', 'Female');
 
-  - You are about to drop the column `text` on the `User` table. All the data in the column will be lost.
-  - Added the required column `password` to the `User` table without a default value. This is not possible if the table is not empty.
-  - Added the required column `teamId` to the `User` table without a default value. This is not possible if the table is not empty.
+-- CreateEnum
+CREATE TYPE "AdType" AS ENUM ('IMAGE', 'VIDEO');
 
-*/
--- AlterTable
-ALTER TABLE "User" DROP COLUMN "text",
-ADD COLUMN     "password" TEXT NOT NULL,
-ADD COLUMN     "teamId" INTEGER NOT NULL;
+-- CreateTable
+CREATE TABLE "User" (
+    "id" SERIAL NOT NULL,
+    "email" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
+    "teamId" INTEGER NOT NULL,
+    "admin" BOOLEAN NOT NULL DEFAULT false,
+
+    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
+);
 
 -- CreateTable
 CREATE TABLE "Team" (
@@ -25,6 +30,8 @@ CREATE TABLE "Transaction" (
     "id" SERIAL NOT NULL,
     "amount" INTEGER NOT NULL,
     "teamId" INTEGER NOT NULL,
+    "userId" INTEGER NOT NULL,
+    "itemId" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Transaction_pkey" PRIMARY KEY ("id")
@@ -36,9 +43,10 @@ CREATE TABLE "Item" (
     "name" TEXT NOT NULL,
     "cost" INTEGER NOT NULL,
     "description" TEXT NOT NULL,
-    "teamId" INTEGER,
+    "image" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "bedId" INTEGER,
+    "amount" INTEGER NOT NULL DEFAULT 1,
 
     CONSTRAINT "Item_pkey" PRIMARY KEY ("id")
 );
@@ -77,6 +85,9 @@ CREATE TABLE "Ad" (
     "type" TEXT NOT NULL,
     "content" TEXT NOT NULL,
     "length" INTEGER NOT NULL,
+    "viewRemaining" INTEGER NOT NULL,
+    "views" INTEGER NOT NULL,
+    "createdById" INTEGER NOT NULL,
 
     CONSTRAINT "Ad_pkey" PRIMARY KEY ("id")
 );
@@ -98,6 +109,12 @@ CREATE TABLE "_AdToTag" (
     "A" INTEGER NOT NULL,
     "B" INTEGER NOT NULL
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_name_key" ON "User"("name");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "_ItemToTag_AB_unique" ON "_ItemToTag"("A", "B");
@@ -124,7 +141,10 @@ ALTER TABLE "User" ADD CONSTRAINT "User_teamId_fkey" FOREIGN KEY ("teamId") REFE
 ALTER TABLE "Transaction" ADD CONSTRAINT "Transaction_teamId_fkey" FOREIGN KEY ("teamId") REFERENCES "Team"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Item" ADD CONSTRAINT "Item_teamId_fkey" FOREIGN KEY ("teamId") REFERENCES "Team"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Transaction" ADD CONSTRAINT "Transaction_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Transaction" ADD CONSTRAINT "Transaction_itemId_fkey" FOREIGN KEY ("itemId") REFERENCES "Item"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Bed" ADD CONSTRAINT "Bed_itemId_fkey" FOREIGN KEY ("itemId") REFERENCES "Item"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -134,6 +154,9 @@ ALTER TABLE "Bed" ADD CONSTRAINT "Bed_roomId_fkey" FOREIGN KEY ("roomId") REFERE
 
 -- AddForeignKey
 ALTER TABLE "Bed" ADD CONSTRAINT "Bed_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Ad" ADD CONSTRAINT "Ad_createdById_fkey" FOREIGN KEY ("createdById") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_ItemToTag" ADD CONSTRAINT "_ItemToTag_A_fkey" FOREIGN KEY ("A") REFERENCES "Item"("id") ON DELETE CASCADE ON UPDATE CASCADE;

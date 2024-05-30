@@ -1,5 +1,6 @@
-import { getTeamForUser } from '@db'
-import type { Team } from '@prisma/client'
+import config from '@config'
+import { getTeamForUser, userHasTag } from '@db'
+import type { Team, User } from '@prisma/client'
 import type { SessionRequest } from '@session'
 
 export async function navbar(req: SessionRequest) {
@@ -9,28 +10,16 @@ export async function navbar(req: SessionRequest) {
     team = await getTeamForUser(user.id)
   }
 
+  const visibleModules = await Promise.all(
+    modules.map((module) => isVisible(module.key, user))
+  )
+
   return (
     <nav className="bg-gray-500 w-full p-2">
       <ul className="flex items-center justify-around flex-col-reverse md:flex-row">
-        <li>
-          <a
-            className="hover:bg-gray-600 transition-all"
-            href={'/user/' + user?.id}
-          >
-            Profil
-          </a>
-        </li>
-        {/* TODO: add button to collapse navbar on mobile. */}
-        <li>
-          <a className="hover:bg-gray-600 transition-all" href="/shop">
-            Obchod
-          </a>
-        </li>
-        <li>
-          <a className="hover:bg-gray-600 transition-all" href="/transactions">
-            Vykonané transakcie
-          </a>
-        </li>
+        {modules
+          .filter((_, i) => visibleModules[i])
+          .map((module) => renderModule(module))}
         <li className="flex items-center">
           <span className="material-symbols-outlined">person</span>
           {user?.name} | {team?.money}
@@ -40,3 +29,63 @@ export async function navbar(req: SessionRequest) {
     </nav>
   )
 }
+
+async function isVisible(module: string, user: User | undefined) {
+  if (user === undefined) {
+    return false
+  }
+
+  const visible = config().visibleModules[module]
+  if (visible === undefined) {
+    return false
+  }
+
+  if (visible === 'admin') {
+    return user.admin === true
+  } else if (visible === true) {
+    return true
+  } else if (visible === false) {
+    return false
+  } else {
+    return await userHasTag(user.id, visible)
+  }
+}
+
+function renderModule(module: Module) {
+  return (
+    <li key={module.key}>
+      <a className="hover:bg-gray-600 transition-all" href={module.url}>
+        {module.name}
+      </a>
+    </li>
+  )
+}
+
+interface Module {
+  name: string
+  url: string
+  key: string
+}
+
+const modules: Module[] = [
+  {
+    name: 'Profil',
+    url: '/user',
+    key: 'profile'
+  },
+  {
+    name: 'Obchod',
+    url: '/shop',
+    key: 'shop'
+  },
+  {
+    name: 'Transakcie',
+    url: '/transactions',
+    key: 'transactions'
+  },
+  {
+    name: 'Hry',
+    url: '/games',
+    key: 'games'
+  }
+]

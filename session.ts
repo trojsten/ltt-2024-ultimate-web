@@ -1,8 +1,16 @@
-import type { User } from '@prisma/client'
+import type { Ad, User } from '@prisma/client'
 
 interface Session {
   id?: string
   user: User
+  ad?: AdState
+}
+
+interface AdState {
+  timeRemaining: number
+  lastUpdated: number
+  adWatched: Ad
+  nextPage: string
 }
 
 const sessionStore = new Map<string, Session>()

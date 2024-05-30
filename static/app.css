@@ -409,17 +409,50 @@
   .collapse {
     visibility: collapse;
   }
+  .visible {
+    visibility: visible;
+  }
+  .absolute {
+    position: absolute;
+  }
+  .fixed {
+    position: fixed;
+  }
   .relative {
     position: relative;
   }
   .static {
     position: static;
   }
+  .static\/adSync {
+    position: static;
+  }
   .static\/app {
     position: static;
   }
-  .static\/tailwind {
+  .static\/drift-boss {
     position: static;
+  }
+  .static\/galaxies {
+    position: static;
+  }
+  .static\/gameData {
+    position: static;
+  }
+  .top-0 {
+    top: var(--spacing-0, 0px);
+  }
+  .top-2 {
+    top: var(--spacing-2, 0.5rem);
+  }
+  .right-2 {
+    right: var(--spacing-2, 0.5rem);
+  }
+  .left-0 {
+    left: var(--spacing-0, 0px);
+  }
+  .z-10 {
+    z-index: 10;
   }
   .m-2 {
     margin: var(--spacing-2, 0.5rem);
@@ -440,9 +473,6 @@
     margin-left: auto;
     margin-right: auto;
   }
-  .mb-2 {
-    margin-bottom: var(--spacing-2, 0.5rem);
-  }
   .mb-3 {
     margin-bottom: var(--spacing-3, 0.75rem);
   }
@@ -454,6 +484,9 @@
   }
   .block {
     display: block;
+  }
+  .contents {
+    display: contents;
   }
   .flex {
     display: flex;
@@ -473,29 +506,29 @@
   .table {
     display: table;
   }
-  .table-caption {
-    display: table-caption;
-  }
   .table-header-group {
     display: table-header-group;
-  }
-  .h-32 {
-    height: var(--spacing-32, 8rem);
   }
   .h-48 {
     height: var(--spacing-48, 12rem);
   }
+  .h-full {
+    height: 100%;
+  }
+  .h-screen {
+    height: 100vh;
+  }
   .min-h-screen {
     min-height: 100vh;
-  }
-  .w-32 {
-    width: var(--spacing-32, 8rem);
   }
   .w-auto {
     width: auto;
   }
   .w-full {
     width: 100%;
+  }
+  .w-screen {
+    width: 100vw;
   }
   .border-collapse {
     border-collapse: collapse;
@@ -530,14 +563,8 @@
   .overflow-hidden {
     overflow: hidden;
   }
-  .rounded {
-    border-radius: 0.25rem;
-  }
   .rounded-lg {
     border-radius: var(--radius-lg, 0.5rem);
-  }
-  .rounded-md {
-    border-radius: var(--radius-md, 0.375rem);
   }
   .border {
     border-style: var(--tw-border-style);
@@ -546,6 +573,9 @@
   .border-b-2 {
     border-bottom-style: var(--tw-border-style);
     border-bottom-width: 2px;
+  }
+  .bg-black {
+    background-color: var(--color-black, #000);
   }
   .bg-gray-200 {
     background-color: var(--color-gray-200, #edf2f7);
@@ -600,6 +630,9 @@
     outline-style: var(--tw-outline-style);
     outline-width: 1px;
   }
+  .filter {
+    filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
+  }
   .transition-all {
     transition-property: all;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -628,11 +661,6 @@
   .md\:flex-row {
     @media (width >= 48rem) {
       flex-direction: row;
-    }
-  }
-  .md\:justify-around {
-    @media (width >= 48rem) {
-      justify-content: space-around;
     }
   }
   .lg\:grid-cols-3 {
@@ -678,6 +706,15 @@ input[type='text']:focus, input[type='text']:hover, input[type='text']:active {
       --tw-skew-y: skewY(0);
       --tw-border-style: solid;
       --tw-outline-style: solid;
+      --tw-blur:  ;
+      --tw-brightness:  ;
+      --tw-contrast:  ;
+      --tw-grayscale:  ;
+      --tw-hue-rotate:  ;
+      --tw-invert:  ;
+      --tw-opacity:  ;
+      --tw-saturate:  ;
+      --tw-sepia:  ;
     }
   }
 }
@@ -741,4 +778,40 @@ input[type='text']:focus, input[type='text']:hover, input[type='text']:active {
   syntax: "<custom-ident>";
   inherits: false;
   initial-value: solid;
+}
+@property --tw-blur {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-brightness {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-contrast {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-grayscale {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-hue-rotate {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-invert {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-opacity {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-saturate {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-sepia {
+  syntax: "*";
+  inherits: false;
 }

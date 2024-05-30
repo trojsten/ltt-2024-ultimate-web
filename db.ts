@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient, type Item, type Team, type User } from '@prisma/client'
 
 const db = new PrismaClient()
 
@@ -10,6 +10,109 @@ export async function getTeamForUser(userId: number) {
       users: {
         some: {
           id: userId
+        }
+      }
+    }
+  })
+}
+
+export async function getAdsForUser(userId: number) {
+  const tags = await db.tag.findMany({
+    where: {
+      users: {
+        some: {
+          id: userId
+        }
+      }
+    },
+    include: {
+      ads: true
+    }
+  })
+  return tags.map((tag) => tag.ads).flat()
+}
+
+export async function buy(userId: number, cost: number, item: Item | String) {
+  const team = await getTeamForUser(userId)
+  if (!team) {
+    throw new Error('No team')
+  }
+  if (team.money < cost) {
+    throw new Error('Team has not enough money')
+  }
+
+  await db.team.update({
+    where: {
+      id: team.id
+    },
+    data: {
+      money: {
+        decrement: cost
+      }
+    }
+  })
+
+  const data = {
+    amount: cost,
+    userId: userId,
+    teamId: team.id
+  }
+
+  if (item instanceof String) {
+    //@ts-ignore
+    data.description = item.toString()
+  } else {
+    //@ts-ignore
+    data.itemId = item
+  }
+
+  console.log(data)
+
+  return db.transaction.create({
+    data
+  })
+}
+
+export async function userHasTag(userId: number, tagName: string) {
+  const tag = await db.tag.findFirst({
+    where: {
+      name: tagName,
+      users: {
+        some: {
+          id: userId
+        }
+      }
+    }
+  })
+
+  return tag != null
+}
+
+export async function buyAddTag(
+  userId: number,
+  cost: number,
+  description: string,
+  tag: string
+) {
+  await buy(userId, cost, new String(description))
+  const id = await db.tag.findFirst({
+    where: {
+      name: tag
+    }
+  })
+
+  if (!id) {
+    throw new Error('invalid tag')
+  }
+
+  await db.user.update({
+    where: {
+      id: userId
+    },
+    data: {
+      tags: {
+        connect: {
+          id: id!.id
         }
       }
     }

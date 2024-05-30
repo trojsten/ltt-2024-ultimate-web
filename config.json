@@ -1,0 +1,46 @@
+{
+  "visibleModules": {
+    "profile": false,
+    "shop": true,
+    "transactions": true,
+    "games": true
+  },
+  "system_tags": ["transactions", "drift-boss", "capybara", "galaxie"],
+  "games": {
+    "drift-boss": {
+      "name": "Drift Boss",
+      "sourceUrl": "https://www.onlinegames.io/games/2023/mjs/drift-boss/",
+      "iframeUrl": "./static/drift-boss.html",
+      "thumbnail": "https://www.onlinegames.io/media/posts/378/Drift-Boss-Game.jpg",
+      "cost": 200
+    },
+    "capybara": {
+      "name": "Capybara",
+      "sourceUrl": "https://www.onlinegames.io/games/2023/q2/capybara-clicker-pro/",
+      "iframeUrl": "https://www.onlinegames.io/games/2023/q2/capybara-clicker-pro/",
+      "thumbnail": "https://www.onlinegames.io/media/posts/554/Capybara-Clicker-Pro.jpg",
+      "cost": 200
+    },
+    "galaxie": {
+      "name": "Galaxie",
+      "sourceUrl": "https://medmunds.github.io/puzzles/",
+      "iframeUrl": "./static/galaxies.html",
+      "thumbnail": "https://www.onlinegames.io/media/posts/554/Capybara-Clicker-Pro.jpg",
+      "cost": 100
+    }
+  },
+  "reservations": {
+    "differentSexMultiplier": 1.5,
+    "sameBedMultiplier": 2,
+    "sameRoomMultiplier": 1.5
+  },
+  "ads": {
+    "enabled": false,
+    "adBoostCost": 50,
+    "adBoostAmount": 10,
+    "earnPerAdWatch": 1
+  },
+  "transactions": {
+    "transactionUnlockCost": 200
+  }
+}
