@@ -1,8 +1,7 @@
+import config from '@config'
 import db, { buyAddTag, getTeamForUser, userHasTag } from '@db'
 import { renderPage } from '@main'
 import type { SessionRequest } from '@session'
-
-const TRANSACTION_COST = 100
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function Transactions(transactions: any[], showAll: boolean, isAdmin: boolean) {
@@ -45,13 +44,15 @@ function Transactions(transactions: any[], showAll: boolean, isAdmin: boolean) {
 }
 
 function BuyTransactions() {
+  console.log(config().transactions.transactionUnlockCost)
+
   return (
     <div>
       <h1>Vykonané Transakcie</h1>
       <p>Kúp si možnosť vidieť všetky tvoje minulé transakcie</p>
       <form method="post" action="/transactions">
         <button type="submit" className="btn">
-          Kúpiť
+          Kúpiť ({config().transactions.transactionUnlockCost})
         </button>
       </form>
     </div>
@@ -65,7 +66,7 @@ export async function post(req: SessionRequest): Promise<Response> {
   try {
     await buyAddTag(
       req.session!.user.id,
-      TRANSACTION_COST,
+      config().transactions.transactionUnlockCost,
       'Umožnenie prístupu ku vykonaným transakciám',
       'transactions'
     )

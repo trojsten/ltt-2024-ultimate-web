@@ -1,5 +1,5 @@
+import config from '@config'
 import type { SessionRequest } from '@session'
-import { games } from '..'
 
 function getType(path: string) {
   if (path.endsWith('.js')) {
@@ -21,7 +21,7 @@ function getType(path: string) {
 
 export async function get(req: SessionRequest): Promise<Response> {
   const id = req.params.id
-  const gameId = games[id!]
+  const gameId = config().games[id!]
   if (!id || !gameId) {
     return new Response('No game ID specified', { status: 404 })
   }

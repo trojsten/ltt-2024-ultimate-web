@@ -1,6 +1,7 @@
 import { startAdWatch } from '@pages/ad'
 import { SessionRequest } from './session'
 import type { ServerWebSocket } from 'bun'
+import config from '@config'
 
 Bun.serve({
   fetch: async (Request) => {
@@ -34,6 +35,7 @@ Bun.serve({
     }
     const sessReq = new SessionRequest(Request, data, route.params)
     if (
+      config().ads.enabled &&
       sessReq.session !== undefined &&
       sessReq.session.ad === undefined &&
       Math.random() > 0.5 &&

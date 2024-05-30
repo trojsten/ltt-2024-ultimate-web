@@ -1,3 +1,4 @@
+import config from '@config'
 import db, { buyAddTag, userHasTag } from '@db'
 import { renderPage } from '@main'
 import type { SessionRequest } from '@session'
@@ -12,6 +13,7 @@ async function getPage(req: SessionRequest) {
       }
     }
   })
+  const games = config().games
   return (
     <div>
       <h1>Game</h1>
@@ -57,8 +59,8 @@ export async function post(req: SessionRequest): Promise<Response> {
   try {
     await buyAddTag(
       user,
-      games[gameId].cost,
-      'Prístup ku hre ' + games[gameId].name,
+      config().games[gameId].cost,
+      'Prístup ku hre ' + config().games[gameId].name,
       gameId
     )
   } catch (err) {
@@ -66,38 +68,4 @@ export async function post(req: SessionRequest): Promise<Response> {
   }
 
   return get(req)
-}
-
-interface Game {
-  name: string
-  iframeUrl: string
-  sourceUrl: string
-  thumbnail: string
-  cost: number
-}
-
-export const games: Record<string, Game> = {
-  'drift-boss': {
-    name: 'Drift Boss',
-    sourceUrl: 'https://www.onlinegames.io/games/2023/mjs/drift-boss/',
-    iframeUrl: './static/drift-boss.html',
-    thumbnail: 'https://www.onlinegames.io/media/posts/378/Drift-Boss-Game.jpg',
-    cost: 200
-  },
-  capybara: {
-    name: 'Capybara',
-    sourceUrl: 'https://www.onlinegames.io/games/2023/q2/capybara-clicker-pro/',
-    iframeUrl: 'https://www.onlinegames.io/games/2023/q2/capybara-clicker-pro/',
-    thumbnail:
-      'https://www.onlinegames.io/media/posts/554/Capybara-Clicker-Pro.jpg',
-    cost: 200
-  },
-  galaxie: {
-    name: 'Galaxie',
-    sourceUrl: 'https://medmunds.github.io/puzzles/',
-    iframeUrl: './static/galaxies.html',
-    thumbnail:
-      'https://www.onlinegames.io/media/posts/554/Capybara-Clicker-Pro.jpg',
-    cost: 100
-  }
 }
