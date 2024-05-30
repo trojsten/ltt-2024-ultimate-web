@@ -9,7 +9,12 @@ function renderAd(ad: Ad) {
       {ad.type == 'IMAGE' ? (
         <img src={ad.content} className="w-full h-full" />
       ) : (
-        <video src={ad.content} autoPlay className="w-full h-full" />
+        <video
+          src={ad.content}
+          autoPlay
+          className="w-full h-full"
+          disablePictureInPicture
+        />
       )}
 
       <button className="btn absolute right-2 top-2" id="skipBtn">
@@ -61,6 +66,8 @@ export async function startAdWatch(req: SessionRequest) {
     adWatched: ad,
     nextPage: req.url
   }
+
+  console.log('Ad started', ad.id, ad.name, ad.length)
 
   return setSession(Response.redirect('/ad'), req.session)
 }

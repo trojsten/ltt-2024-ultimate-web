@@ -3,7 +3,8 @@
     "profile": false,
     "shop": true,
     "transactions": true,
-    "games": true
+    "games": true,
+    "ads": true
   },
   "system_tags": ["transactions", "drift-boss", "capybara", "galaxie"],
   "games": {
@@ -35,10 +36,12 @@
     "sameRoomMultiplier": 1.5
   },
   "ads": {
-    "enabled": false,
+    "enabled": true,
     "adBoostCost": 50,
     "adBoostAmount": 10,
-    "earnPerAdWatch": 1
+    "earnPerAdWatch": 20,
+    "adCreationCost": 100,
+    "initialViews": 30
   },
   "transactions": {
     "transactionUnlockCost": 200

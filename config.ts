@@ -26,6 +26,8 @@ export interface Config {
     adBoostCost: number
     adBoostAmount: number
     earnPerAdWatch: number
+    adCreationCost: number
+    initialViews: number
   }
   transactions: {
     transactionUnlockCost: number

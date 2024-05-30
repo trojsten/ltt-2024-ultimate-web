@@ -102,6 +102,7 @@ enum AdType {
 model Ad {
   id        Int     @id @default(autoincrement())
   type     AdType
+  name     String
   content  String
   tags     Tag[]
   length   Int

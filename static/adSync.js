@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   let timeRemaining = 10
   const closeBtn = document.getElementById('skipBtn')
+  const video = document.querySelector('video')
   const closeHTML = closeBtn.innerHTML
   closeBtn.disabled = true
   const interval = setInterval(() => {
@@ -21,4 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       })
   }, 1000)
+
+  video.play()
 })

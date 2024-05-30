@@ -87,5 +87,10 @@ const modules: Module[] = [
     name: 'Hry',
     url: '/games',
     key: 'games'
+  },
+  {
+    name: 'Moje Reklamy',
+    url: '/ad/myads',
+    key: 'ads'
   }
 ]

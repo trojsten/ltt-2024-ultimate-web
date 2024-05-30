@@ -34,6 +34,8 @@ Bun.serve({
       data = await Request.formData()
     }
     const sessReq = new SessionRequest(Request, data, route.params)
+    console.log(sessReq.session?.ad)
+
     if (
       config().ads.enabled &&
       sessReq.session !== undefined &&
