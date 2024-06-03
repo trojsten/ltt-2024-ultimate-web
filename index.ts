@@ -34,12 +34,22 @@ Bun.serve({
       data = await Request.formData()
     }
     const sessReq = new SessionRequest(Request, data, route.params)
+
+    if (
+      sessReq.session?.ad !== undefined &&
+      !sessReq.parsedUrl.pathname.startsWith('/ad')
+    ) {
+      return Response.redirect('/ad')
+    }
+
     console.log(sessReq.session?.ad)
 
     if (
       config().ads.enabled &&
       sessReq.session !== undefined &&
       sessReq.session.ad === undefined &&
+      !sessReq.parsedUrl.pathname.startsWith('/ad') &&
+      !sessReq.parsedUrl.pathname.match(/\/games\/[a-z\-]*\//) &&
       Math.random() > 0.5 &&
       sessReq.method == 'GET'
     ) {

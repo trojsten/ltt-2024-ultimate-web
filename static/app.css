@@ -479,6 +479,9 @@
   .mb-32 {
     margin-bottom: var(--spacing-32, 8rem);
   }
+  .block {
+    display: block;
+  }
   .contents {
     display: contents;
   }
