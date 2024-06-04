@@ -7,13 +7,7 @@
     "ads": true,
     "reservations": true
   },
-  "system_tags": [
-    "transactions",
-    "drift-boss",
-    "capybara",
-    "galaxie",
-    "spins"
-  ],
+  "system_tags": ["transactions", "drift-boss", "capybara", "galaxie", "spins"],
   "games": {
     "drift-boss": {
       "name": "Drift Boss",

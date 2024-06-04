@@ -1,6 +1,6 @@
-import getConfig from "@config";
-import db, { buy } from "@db";
-import type { Bed, Reservation, User } from "@prisma/client";
+import getConfig from '@config'
+import db, { buy } from '@db'
+import type { Reservation, User } from '@prisma/client'
 
 export function getToday() {
   const now = getConfig().reservations.currentDay
@@ -12,8 +12,9 @@ export function getTomorrow() {
   return new Date(getToday().getTime() + 1000 * 60 * 60 * 24)
 }
 
-
-export async function getReservation(userid: number): Promise<Reservation | null> {
+export async function getReservation(
+  userid: number
+): Promise<Reservation | null> {
   return db.reservation.findFirst({
     where: {
       date: {
@@ -24,9 +25,12 @@ export async function getReservation(userid: number): Promise<Reservation | null
   })
 }
 
-export async function createReservation(user: User, bedid: number): Promise<Reservation> {
+export async function createReservation(
+  user: User,
+  bedid: number
+): Promise<Reservation> {
   const cost = await getReservationCost(user, bedid)
-  await buy(user.id, cost, "Rezervácia postele #" + bedid)
+  await buy(user.id, cost, 'Rezervácia postele #' + bedid)
   return db.reservation.create({
     data: {
       userId: user.id,
@@ -43,7 +47,7 @@ export async function cancelReservation(userid: number): Promise<void> {
     throw new Error('No reservation found to cancel')
   }
   const refund = reservation.cost * getConfig().reservations.cancelRefund
-  await buy(userid, -refund, "Zrušenie rezervácie")
+  await buy(userid, -refund, 'Zrušenie rezervácie')
 
   await db.reservation.delete({
     where: {
@@ -56,7 +60,7 @@ export async function getCurrentReservations() {
   return db.reservation.findMany({
     where: {
       date: {
-        gte: getToday(),
+        gte: getToday()
         // lte: getTomorrow()
       }
     },
@@ -124,8 +128,7 @@ export async function getReservationCost(user: User, bedid: number) {
   let wasInThisBed = false
 
   for (const reservation of pastReservations) {
-    if (reservation.user.id != user.id)
-      continue
+    if (reservation.user.id != user.id) continue
     if (reservation.bed.id == bed.id) {
       wasInThisBed = true
       wasInThisRoom = true
@@ -154,7 +157,7 @@ async function getPastReservationsInRoom(roomid: number) {
         roomId: roomid
       },
       date: {
-        lt: getToday(),
+        lt: getToday()
       }
     },
     select: {
