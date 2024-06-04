@@ -20,6 +20,7 @@ export interface Config {
     differentSexMultiplier: number
     sameBedMultiplier: number
     sameRoomMultiplier: number
+    cancelRefund: number
   }
   ads: {
     enabled: boolean

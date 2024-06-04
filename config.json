@@ -6,7 +6,13 @@
     "games": true,
     "ads": true
   },
-  "system_tags": ["transactions", "drift-boss", "capybara", "galaxie", "spins"],
+  "system_tags": [
+    "transactions",
+    "drift-boss",
+    "capybara",
+    "galaxie",
+    "spins"
+  ],
   "games": {
     "drift-boss": {
       "name": "Drift Boss",
@@ -40,7 +46,8 @@
   "reservations": {
     "differentSexMultiplier": 1.5,
     "sameBedMultiplier": 2,
-    "sameRoomMultiplier": 1.5
+    "sameRoomMultiplier": 1.5,
+    "cancelRefund": 0.7
   },
   "ads": {
     "enabled": false,

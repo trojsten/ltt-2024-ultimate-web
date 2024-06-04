@@ -27,10 +27,10 @@ model User {
   teamId       Int
   sex          Sex
   tags         Tag[]
-  beds         Bed[]
   transactions Transaction[]
   ads          Ad[]
   admin        Boolean       @default(false)
+  Reservation  Reservation[]
 }
 
 model Team {
@@ -63,33 +63,42 @@ model Item {
   transactions Transaction[]
   createdAt    DateTime      @default(now())
   tags         Tag[]
-  beds         Bed[]
-  bedId        Int?
   amount       Int           @default(1)
 }
 
 model Tag {
-  id    Int    @id @default(autoincrement())
-  name  String
-  items Item[]
-  users User[]
-  ads   Ad[]
+  id     Int     @id @default(autoincrement())
+  name   String
+  items  Item[]
+  users  User[]
+  ads    Ad[]
+  hidden Boolean @default(false)
 }
 
 model Bed {
-  id       Int    @id @default(autoincrement())
-  item     Item   @relation(fields: [itemId], references: [id])
-  itemId   Int
-  room     Room   @relation(fields: [roomId], references: [id])
-  roomId   Int
-  user     User?  @relation(fields: [userId], references: [id])
-  userId   Int?
-  location String
+  id          Int           @id @default(autoincrement())
+  room        Room          @relation(fields: [roomId], references: [id])
+  roomId      Int
+  cost        Int
+  location    String
+  Reservation Reservation[]
+}
+
+model Reservation {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  bed       Bed      @relation(fields: [bedId], references: [id])
+  bedId     Int
+  date      DateTime
+  cost      Int
+  createdAt DateTime @default(now())
 }
 
 model Room {
-  id        Int    @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   name      String
+  features  String[]
   beds      Bed[]
   bed_count Int
 }
