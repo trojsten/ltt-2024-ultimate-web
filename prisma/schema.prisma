@@ -19,76 +19,76 @@ enum Sex {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String  @unique
-  password String
-  team  Team   @relation(fields: [teamId], references: [id])
-  teamId Int
-  sex Sex
-  tags  Tag[]
-  beds  Bed[]
+  id           Int           @id @default(autoincrement())
+  email        String        @unique
+  name         String        @unique
+  password     String
+  team         Team          @relation(fields: [teamId], references: [id])
+  teamId       Int
+  sex          Sex
+  tags         Tag[]
+  beds         Bed[]
   transactions Transaction[]
-  ads  Ad[]
-  admin Boolean @default(false)
+  ads          Ad[]
+  admin        Boolean       @default(false)
 }
 
 model Team {
-  id    Int     @id @default(autoincrement())
-  name  String
-  users User[]
-  money Int
+  id           Int           @id @default(autoincrement())
+  name         String
+  users        User[]
+  money        Int
   transactions Transaction[]
 }
 
 model Transaction {
-  id        Int     @id @default(autoincrement())
-  amount    Int
-  team      Team    @relation(fields: [teamId], references: [id])
-  teamId    Int
-  user      User    @relation(fields: [userId], references: [id])
-  userId    Int
-  item      Item?    @relation(fields: [itemId], references: [id])
-  itemId    Int?
+  id          Int      @id @default(autoincrement())
+  amount      Int
+  team        Team     @relation(fields: [teamId], references: [id])
+  teamId      Int
+  user        User     @relation(fields: [userId], references: [id])
+  userId      Int
+  item        Item?    @relation(fields: [itemId], references: [id])
+  itemId      Int?
   description String?
-  createdAt DateTime @default(now())
+  createdAt   DateTime @default(now())
 }
 
 model Item {
-  id        Int     @id @default(autoincrement())
-  name      String
-  cost      Int
-  description String
-  image     String
+  id           Int           @id @default(autoincrement())
+  name         String
+  cost         Int
+  description  String
+  image        String?
   transactions Transaction[]
-  createdAt DateTime @default(now())
-  tags      Tag[]
-  beds      Bed[]
-  bedId     Int?
-  amount    Int @default(1)
+  createdAt    DateTime      @default(now())
+  tags         Tag[]
+  beds         Bed[]
+  bedId        Int?
+  amount       Int           @default(1)
 }
 
 model Tag {
-  id        Int     @id @default(autoincrement())
-  name      String
-  items     Item[]
-  users     User[]
-  ads       Ad[]
+  id    Int    @id @default(autoincrement())
+  name  String
+  items Item[]
+  users User[]
+  ads   Ad[]
 }
 
 model Bed {
-  id        Int     @id @default(autoincrement())
-  item      Item    @relation(fields: [itemId], references: [id])
-  itemId    Int
-  room      Room    @relation(fields: [roomId], references: [id])
-  roomId    Int
-  user      User?   @relation(fields: [userId], references: [id])
-  userId    Int?
-  location  String
+  id       Int    @id @default(autoincrement())
+  item     Item   @relation(fields: [itemId], references: [id])
+  itemId   Int
+  room     Room   @relation(fields: [roomId], references: [id])
+  roomId   Int
+  user     User?  @relation(fields: [userId], references: [id])
+  userId   Int?
+  location String
 }
 
 model Room {
-  id        Int     @id @default(autoincrement())
+  id        Int    @id @default(autoincrement())
   name      String
   beds      Bed[]
   bed_count Int
@@ -100,15 +100,14 @@ enum AdType {
 }
 
 model Ad {
-  id        Int     @id @default(autoincrement())
-  type     AdType
-  name     String
-  content  String
-  tags     Tag[]
-  length   Int
+  id            Int    @id @default(autoincrement())
+  type          AdType
+  name          String
+  content       String
+  tags          Tag[]
+  length        Int
   viewRemaining Int
-  views    Int
-  createdBy User    @relation(fields: [createdById], references: [id])
-  createdById Int
+  views         Int
+  createdBy     User   @relation(fields: [createdById], references: [id])
+  createdById   Int
 }
-

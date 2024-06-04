@@ -7,6 +7,19 @@ async function myAds(userId: number) {
   const ads = await db.ad.findMany({
     where: {
       createdById: userId
+    },
+    select: {
+      content: true,
+      id: true,
+      name: true,
+      type: true,
+      viewRemaining: true,
+      views: true,
+      tags: {
+        select: {
+          name: true
+        }
+      }
     }
   })
 
@@ -18,26 +31,44 @@ async function myAds(userId: number) {
         </p>
       )}
       <h1 className="text-2xl">Moje Reklamy</h1>
-      <div className="grid grid-cols-3 gap-4 mb-32">
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 m-2">
         {ads.length > 0 ? (
           ads.map((ad) => (
-            <div>
-              <h2>{ad.name}</h2>
+            <div className="bg-gray-200 rounded-lg overflow-hidden relative">
+              <div className="top-0 w-full bg-gray-500 overflow-hidden">
+                <h2 className="text-lg text-center mb-3 mt-1 font-semibold">
+                  {ad.name}
+                </h2>
+              </div>
               {ad.type == 'IMAGE' ? (
-                <img src={ad.content} className="w-full h-full" />
+                <img src={ad.content} className="h-48 w-auto m-auto" />
               ) : (
                 <video
                   src={ad.content}
-                  className="w-full h-full"
+                  className="h-48 w-auto m-auto"
                   disablePictureInPicture
                   controls
                 />
               )}
-              <p>Skóre: {ad.viewRemaining}</p>
-              <p>Pozretia: {ad.views}</p>
+              <div className="p-2">
+                <p>Skóre: {ad.viewRemaining}</p>
+                <p>Pozretia: {ad.views}</p>
+                {ad.viewRemaining > 0 ? null : (
+                  <p className="text-red-500">
+                    Reklama je neaktívna. Boostni ju, aby sa zobrazovala
+                  </p>
+                )}
+                <p className="mt-1">
+                  {ad.tags.map((tag) => (
+                    <span className="bg-gray-400 rounded-full px-2 py-1 m-1">
+                      {tag.name}
+                    </span>
+                  ))}
+                </p>
+              </div>
               <form method="post">
                 <input type="hidden" name="adId" value={ad.id} />
-                <button type="submit" className="btn">
+                <button type="submit" className="btn w-full">
                   Boost ({config().ads.adBoostCost})
                 </button>
               </form>
@@ -90,7 +121,7 @@ export async function post(req: SessionRequest): Promise<Response> {
     })
   } catch (err) {
     console.log(err)
-  } finally {
-    return get(req)
+    return new Response(err as string, { status: 400 })
   }
+  return get(req)
 }

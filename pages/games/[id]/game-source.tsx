@@ -1,5 +1,5 @@
 import config from '@config'
-import { setSession, type SessionRequest } from '@session'
+import { type SessionRequest } from '@session'
 
 export async function get(req: SessionRequest): Promise<Response> {
   const gameId = req.params.id

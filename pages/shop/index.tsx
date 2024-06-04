@@ -33,9 +33,11 @@ async function getShop(req: SessionRequest) {
         {items.map((e) => itemHTML(e, true, team!.money >= e.cost))}
       </div>
       {req.session?.user.admin ? (
-        <a href="/shop/new" className="btn bg-green-400">
-          Vytvoriť nový produkt
-        </a>
+        <div className="flex justify-center">
+          <a href="/shop/new" className="btn bg-green-400">
+            Vytvoriť nový produkt
+          </a>
+        </div>
       ) : null}
     </div>
   )
@@ -48,28 +50,38 @@ export function itemHTML(
 ): JSX.Element {
   if (item == null) return <div></div>
   return (
-    <div className="bg-gray-200 rounded-lg overflow-hidden p-2">
-      <h2 className="text-lg text-center mb-3 mt-1">{item.name}</h2>
-      <img src={item.image} className="h-48 w-auto" />
-      <p className="mb-4 mt-2">{item.description}</p>
-      <div className="flex justify-between">
-        <p>{item.amount} kusov</p>
-        <p className="font-bold flex items-center">
-          {item.cost}{' '}
-          <span className="material-symbols-outlined">monetization_on</span>
-        </p>
+    <div className="bg-gray-200 rounded-lg overflow-hidden relative">
+      <div className="top-0 w-full bg-gray-500 overflow-hidden">
+        <h2 className="text-lg text-center mb-3 mt-1 font-semibold">
+          {item.name}
+        </h2>
       </div>
-      {buyButton ? (
-        <form action={'/shop/buy/' + item.id} method="post">
-          <button
-            type="submit"
-            disabled={!canbuy}
-            className="btn disabled:opacity-50 w-full"
-          >
-            Kúpiť
-          </button>
-        </form>
-      ) : null}
+      {item.image == null ? (
+        <div className="h-48"></div>
+      ) : (
+        <img src={item.image} className="h-48 w-auto m-auto" />
+      )}
+      <div className="p-2">
+        <p className="mb-4 mt-2">{item.description}</p>
+        <div className="flex justify-between">
+          <p>{item.amount} kusov</p>
+          <p className="font-bold flex items-center">
+            {item.cost}{' '}
+            <span className="material-symbols-outlined">monetization_on</span>
+          </p>
+        </div>
+        {buyButton ? (
+          <form action={'/shop/buy/' + item.id} method="post">
+            <button
+              type="submit"
+              disabled={!canbuy}
+              className="btn disabled:opacity-50 w-full"
+            >
+              Kúpiť
+            </button>
+          </form>
+        ) : null}
+      </div>
     </div>
   )
 }

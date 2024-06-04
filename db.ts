@@ -1,4 +1,4 @@
-import { PrismaClient, type Item, type Team, type User } from '@prisma/client'
+import { PrismaClient, type Item } from '@prisma/client'
 
 const db = new PrismaClient()
 
@@ -23,6 +23,13 @@ export async function getAdsForUser(userId: number) {
         some: {
           id: userId
         }
+      },
+      ads: {
+        every: {
+          viewRemaining: {
+            gt: 0
+          }
+        }
       }
     },
     include: {
@@ -32,6 +39,7 @@ export async function getAdsForUser(userId: number) {
   return tags.map((tag) => tag.ads).flat()
 }
 
+// eslint-disable-next-line @typescript-eslint/ban-types
 export async function buy(userId: number, cost: number, item: Item | String) {
   const team = await getTeamForUser(userId)
   if (!team) {
@@ -59,11 +67,11 @@ export async function buy(userId: number, cost: number, item: Item | String) {
   }
 
   if (item instanceof String) {
-    //@ts-ignore
+    //@ts-expect-error add description to data if item is a string
     data.description = item.toString()
   } else {
-    //@ts-ignore
-    data.itemId = item
+    //@ts-expect-error add itemId to data if item is an Item
+    data.itemId = item.id
   }
 
   console.log(data)

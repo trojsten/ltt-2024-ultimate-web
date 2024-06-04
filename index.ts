@@ -78,10 +78,9 @@ Bun.serve({
   },
   port: 3000,
   websocket: {
-    message: function(
-      // ws: ServerWebSocket<unknown>,
-      // message: string | Buffer
-    ): void | Promise<void> {
+    message: function () // ws: ServerWebSocket<unknown>,
+    // message: string | Buffer
+    : void | Promise<void> {
       throw new Error('Function not implemented.')
     }
   }

@@ -1,4 +1,4 @@
-import db, { getAdsForUser } from '@db'
+import { getAdsForUser } from '@db'
 import { renderPage } from '@main'
 import type { Ad, User } from '@prisma/client'
 import { setSession, type SessionRequest } from '@session'

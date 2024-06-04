@@ -6,13 +6,35 @@ function newItem() {
   return (
     <div>
       <h1>Nový produkt</h1>
-      <form action="/shop/new" method="post" encType="multipart/form-data">
-        <input type="text" name="name" placeholder="Názov" />
-        <input type="number" name="cost" placeholder="Cena" />
-        <input type="number" name="amount" placeholder="Množstvo" />
-        <input type="file" name="image" placeholder="Obrázok" />
-        <textarea name="description">Popis</textarea>
-        <button type="submit">Vytvoriť</button>
+      <form
+        action="/shop/new"
+        method="post"
+        encType="multipart/form-data"
+        className="flex flex-col p-2 border-2 border-blue-500 rounded-md m-2"
+      >
+        <label htmlFor="image">Obrázok</label>
+        <input
+          type="file"
+          name="image"
+          placeholder="Obrázok"
+          id="image"
+          accept="image/*"
+        />
+        <label htmlFor="name">Názov</label>
+        <input type="text" name="name" placeholder="Názov" id="name" />
+        <label htmlFor="cost">Názov</label>
+        <input type="number" name="cost" placeholder="Cena" id="cost" />
+        <label htmlFor="amount">Maximálny počet zakúpení</label>
+        <input type="number" name="amount" placeholder="Množstvo" id="amount" />
+        <label htmlFor="description">Popis</label>
+        <textarea
+          name="description"
+          id="description"
+          placeholder="popis"
+        ></textarea>
+        <button type="submit" className="btn">
+          Vytvoriť
+        </button>
       </form>
     </div>
   )
@@ -27,20 +49,25 @@ export async function get(req: SessionRequest) {
 
 export async function post(req: SessionRequest): Promise<Response> {
   const formdata = req.data!
-  console.log(formdata.get('image'))
-  const imageId = 'uploads/' + crypto.randomUUID()
+  console.log(formdata.get('image') == null)
 
-  await Bun.write(imageId, formdata.get('image')!)
-
-  await db.item.create({
-    data: {
-      cost: parseInt(formdata.get('cost') as string),
-      amount: parseInt(formdata.get('amount') as string),
-      name: formdata.get('name') as string,
-      description: formdata.get('description') as string,
-      image: '/' + imageId
-    }
-  })
+  let imageId: string | null = 'uploads/' + crypto.randomUUID()
+  try {
+    await Bun.write(imageId, formdata.get('image')!)
+    imageId = '/' + imageId
+  } catch (error) {
+    imageId = null
+  } finally {
+    await db.item.create({
+      data: {
+        cost: parseInt(formdata.get('cost') as string),
+        amount: parseInt(formdata.get('amount') as string),
+        name: formdata.get('name') as string,
+        description: formdata.get('description') as string,
+        image: imageId
+      }
+    })
+  }
 
   return Response.redirect('/shop')
 }
