@@ -4,7 +4,8 @@
     "shop": true,
     "transactions": true,
     "games": true,
-    "ads": true
+    "ads": true,
+    "reservations": true
   },
   "system_tags": [
     "transactions",
@@ -47,7 +48,8 @@
     "differentSexMultiplier": 1.5,
     "sameBedMultiplier": 2,
     "sameRoomMultiplier": 1.5,
-    "cancelRefund": 0.7
+    "cancelRefund": 0.7,
+    "currentDay": "2024-08-09"
   },
   "ads": {
     "enabled": false,

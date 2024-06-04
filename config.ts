@@ -21,6 +21,7 @@ export interface Config {
     sameBedMultiplier: number
     sameRoomMultiplier: number
     cancelRefund: number
+    currentDay: string
   }
   ads: {
     enabled: boolean

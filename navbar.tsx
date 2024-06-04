@@ -92,5 +92,10 @@ const modules: Module[] = [
     name: 'Moje Reklamy',
     url: '/ad/myads',
     key: 'ads'
+  },
+  {
+    name: 'Rezervácie',
+    url: '/reservations',
+    key: 'reservations'
   }
 ]

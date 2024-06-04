@@ -536,6 +536,9 @@
   .max-w-48 {
     max-width: var(--spacing-48, 12rem);
   }
+  .list-disc {
+    list-style-type: disc;
+  }
   .grid-cols-3 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -645,6 +648,9 @@
   }
   .font-semibold {
     font-weight: 600;
+  }
+  .text-green-500 {
+    color: var(--color-green-500, #48bb78);
   }
   .text-red-500 {
     color: var(--color-red-500, #f56565);

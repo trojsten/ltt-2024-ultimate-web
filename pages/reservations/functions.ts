@@ -2,14 +2,13 @@ import getConfig from "@config";
 import db, { buy } from "@db";
 import type { Bed, Reservation, User } from "@prisma/client";
 
-function getToday() {
-  const now = Date.now()
-  const day = 1000 * 60 * 60 * 24
-  const today = new Date(now - (now % day))
-  return today
+export function getToday() {
+  const now = getConfig().reservations.currentDay
+  const today = Date.parse(now)
+  return new Date(today)
 }
 
-function getTomorrow() {
+export function getTomorrow() {
   return new Date(getToday().getTime() + 1000 * 60 * 60 * 24)
 }
 
@@ -25,13 +24,13 @@ export async function getReservation(userid: number): Promise<Reservation | null
   })
 }
 
-export async function createReservation(user: User, bed: Bed): Promise<Reservation> {
-  const cost = await getReservationCost(user, bed.id)
-  await buy(user.id, cost, "Rezervácia postele #" + bed.id)
+export async function createReservation(user: User, bedid: number): Promise<Reservation> {
+  const cost = await getReservationCost(user, bedid)
+  await buy(user.id, cost, "Rezervácia postele #" + bedid)
   return db.reservation.create({
     data: {
       userId: user.id,
-      bedId: bed.id,
+      bedId: bedid,
       date: getToday(),
       cost: cost
     }
@@ -53,13 +52,23 @@ export async function cancelReservation(userid: number): Promise<void> {
   })
 }
 
-export async function getCurrentReservations(): Promise<Reservation[]> {
+export async function getCurrentReservations() {
   return db.reservation.findMany({
     where: {
       date: {
         gte: getToday(),
-        lte: getTomorrow()
+        // lte: getTomorrow()
       }
+    },
+    select: {
+      user: {
+        select: {
+          name: true,
+          sex: true,
+          id: true
+        }
+      },
+      bedId: true
     }
   })
 }
