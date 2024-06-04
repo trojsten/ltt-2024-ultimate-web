@@ -38,14 +38,18 @@ export async function get(req: SessionRequest): Promise<Response> {
     return new Response(await res.text(), {
       headers: {
         'Access-Control-Allow-Origin': '*',
-        'Content-Type': getType(path)
+        'Content-Type': getType(path),
+        'Cache-Control': 'public, max-age=31536000, immutable',
+        Expires: 'Thu, 31 Dec 2099 23:59:59 GMT'
       }
     })
   } else {
     return new Response(await res.blob(), {
       headers: {
         'Access-Control-Allow-Origin': '*',
-        'Content-Type': getType(path)
+        'Content-Type': getType(path),
+        'Cache-Control': 'public, max-age=31536000, immutable',
+        Expires: 'Thu, 31 Dec 2099 23:59:59 GMT'
       }
     })
   }

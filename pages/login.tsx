@@ -46,8 +46,8 @@ export async function post(req: SessionRequest): Promise<Response> {
       password: password
     }
   })
+  const redirectUrl = req.parsedUrl.searchParams.get('redirect')
   if (user) {
-    const redirectUrl = req.parsedUrl.searchParams.get('redirect')
     let res: Response
     if (redirectUrl == null) {
       res = Response.redirect('/')

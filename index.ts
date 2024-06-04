@@ -1,6 +1,5 @@
 import { startAdWatch } from '@pages/ad'
 import { SessionRequest } from './session'
-import type { ServerWebSocket } from 'bun'
 import config from '@config'
 
 Bun.serve({
@@ -42,14 +41,12 @@ Bun.serve({
       return Response.redirect('/ad')
     }
 
-    console.log(sessReq.session?.ad)
-
     if (
       config().ads.enabled &&
       sessReq.session !== undefined &&
       sessReq.session.ad === undefined &&
       !sessReq.parsedUrl.pathname.startsWith('/ad') &&
-      !sessReq.parsedUrl.pathname.match(/\/games\/[a-z\-]*\//) &&
+      !sessReq.parsedUrl.pathname.match(/\/games\/[a-z-]*\//) &&
       Math.random() > 0.5 &&
       sessReq.method == 'GET'
     ) {
@@ -81,9 +78,9 @@ Bun.serve({
   },
   port: 3000,
   websocket: {
-    message: function (
-      ws: ServerWebSocket<unknown>,
-      message: string | Buffer
+    message: function(
+      // ws: ServerWebSocket<unknown>,
+      // message: string | Buffer
     ): void | Promise<void> {
       throw new Error('Function not implemented.')
     }

@@ -1,4 +1,4 @@
-import config from '@config'
+import config, { type Game } from '@config'
 import db, { buyAddTag, userHasTag } from '@db'
 import { renderPage } from '@main'
 import type { SessionRequest } from '@session'
@@ -16,31 +16,34 @@ async function getPage(req: SessionRequest) {
   const games = config().games
   return (
     <div>
-      <h1>Game</h1>
-      <div className="flex">
+      <h1 className='text-2xl mb-4 mt-2 text-center'>Hry</h1>
+      <div className="flex flex-wrap justify-center">
         {Object.keys(games).map((gameId) => {
           if (tags.find((e) => e.name == gameId)) {
-            return (
-              <div>
-                <a href={'/games/' + gameId}>
-                  <img src={games[gameId].thumbnail} />
-                  <h2>{games[gameId].name}</h2>
-                </a>
-              </div>
-            )
+            return gameUI(games[gameId], (
+              <a className='btn' href={'/games/' + gameId}>Hrať</a>
+            ))
           } else {
-            return (
-              <div>
-                <form method="post">
-                  <img src={games[gameId].thumbnail} />
-                  <h2>{games[gameId].name}</h2>
-                  <input type="hidden" name="gameId" value={gameId} />
-                  <button type="submit">Kúpiť ({games[gameId].cost})</button>
-                </form>
-              </div>
-            )
+            return gameUI(games[gameId], (
+              <form method="post">
+                <input type="hidden" name="gameId" value={gameId} />
+                <button type="submit" className='btn'>Kúpiť ({games[gameId].cost})</button>
+              </form>
+            ))
           }
         })}
+      </div>
+    </div>
+  )
+}
+
+function gameUI(game: Game, inner: JSX.Element) {
+  return (
+    <div className='relative m-2 max-h-48 max-w-48'>
+      <img src={game.thumbnail} className='rounded-md' />
+      <div className='absolute w-full h-full hover:opacity-100 bg-gray-900 rounded-md bg-opacity-40 opacity-0 text-white top-0 flex items-center justify-center flex-col transition-all'>
+        <h2 className='text-lg font-bold mb-2'>{game.name}</h2>
+        {inner}
       </div>
     </div>
   )

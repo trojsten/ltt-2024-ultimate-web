@@ -6,7 +6,7 @@
     "games": true,
     "ads": true
   },
-  "system_tags": ["transactions", "drift-boss", "capybara", "galaxie"],
+  "system_tags": ["transactions", "drift-boss", "capybara", "galaxie", "spins"],
   "games": {
     "drift-boss": {
       "name": "Drift Boss",
@@ -28,6 +28,13 @@
       "iframeUrl": "./static/galaxies.html",
       "thumbnail": "https://www.onlinegames.io/media/posts/554/Capybara-Clicker-Pro.jpg",
       "cost": 100
+    },
+    "spins": {
+      "name": "Spins",
+      "sourceUrl": "https://free-slots.games/playtechslots/OceanPrincess/index.html",
+      "iframeUrl": "https://free-slots.games/playtechslots/OceanPrincess/",
+      "thumbnail": "https://www.onlinegames.io/media/posts/554/Capybara-Clicker-Pro.jpg",
+      "cost": 100
     }
   },
   "reservations": {
@@ -36,7 +43,7 @@
     "sameRoomMultiplier": 1.5
   },
   "ads": {
-    "enabled": true,
+    "enabled": false,
     "adBoostCost": 50,
     "adBoostAmount": 10,
     "earnPerAdWatch": 20,

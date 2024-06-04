@@ -12,6 +12,11 @@ async function myAds(userId: number) {
 
   return (
     <div>
+      {config().ads.enabled ? null : (
+        <p className="text-red-500">
+          Reklamy sú vypnuté, zapni ich v konfiguračnom súbore
+        </p>
+      )}
       <h1 className="text-2xl">Moje Reklamy</h1>
       <div className="grid grid-cols-3 gap-4 mb-32">
         {ads.length > 0 ? (
