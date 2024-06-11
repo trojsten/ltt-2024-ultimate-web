@@ -6,13 +6,24 @@ import type { SessionRequest } from '@session'
 import getDuration from 'get-video-duration'
 
 async function NewAd() {
-  const tags = await db.tag.findMany()
+  const tags = await db.tag.findMany({
+    where: {
+      hidden: false
+    }
+  })
   return (
-    <div>
+    <div className="container w-full md:w-2/3 m-auto">
       <h1>Pridať novú reklamu</h1>
-      <form method="post" action="/ad/new" encType="multipart/form-data">
+      <form
+        method="post"
+        action="/ad/new"
+        encType="multipart/form-data"
+        className="flex flex-col"
+      >
         <label htmlFor="name">Titulok</label>
-        <input type="text" name="name" id="name" />
+        <input type="text" name="name" id="name" required />
+        <label htmlFor="link">Link</label>
+        <input type="text" name="link" id="link" />
 
         <label htmlFor="content">Content</label>
         <input
@@ -20,17 +31,34 @@ async function NewAd() {
           name="content"
           id="content"
           accept="image/*, video/*"
+          className="mb-4"
+          required
         />
         <label htmlFor="tags">Komu sa má zobrazovať</label>
-        <select name="tags" id="tags" multiple>
+        <select
+          name="tags"
+          id="tags"
+          multiple
+          className="mb-4 border-2 border-gray-200 rounded-md p-2"
+          required
+        >
           {tags.map((tag) => (
-            <option value={tag.id} key={tag.id}>
+            <option
+              value={tag.id}
+              key={tag.id}
+              className="active:bg-blue-400 active:border-none"
+            >
               {tag.name}
             </option>
           ))}
         </select>
         <label htmlFor="type">Typ Reklamy</label>
-        <select name="type" id="type">
+        <select
+          name="type"
+          id="type"
+          className="mb-4 border-2 border-gray-200 rounded-md p-2"
+          required
+        >
           <option value="IMAGE">Obrázok</option>
           <option value="VIDEO">Video</option>
         </select>

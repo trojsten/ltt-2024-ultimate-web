@@ -20,6 +20,9 @@ async function myAds(userId: number) {
           name: true
         }
       }
+    },
+    orderBy: {
+      id: 'desc'
     }
   })
 
@@ -94,7 +97,7 @@ export async function post(req: SessionRequest): Promise<Response> {
   if (!adId) {
     return get(req)
   }
-
+  console.log(adId)
   const ad = await db.ad.findUnique({
     where: {
       id: adId

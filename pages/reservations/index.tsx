@@ -19,8 +19,8 @@ async function Reservations() {
   })
   const currentReservations = await getCurrentReservations()
   return (
-    <div>
-      <h1>Reservácie</h1>
+    <div className="container w-full md:w-2/3 m-auto">
+      <h1>Rezervácie</h1>
       <ul className="flex flex-col border-2 border-blue-500 rounded-md p-2">
         {rooms.map((room) => roomHTML(room, currentReservations))}
       </ul>
