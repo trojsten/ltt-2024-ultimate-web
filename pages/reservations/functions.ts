@@ -30,7 +30,7 @@ export async function createReservation(
   bedid: number
 ): Promise<Reservation> {
   const cost = await getReservationCost(user, bedid)
-  await buy(user.id, cost, 'Rezervácia postele #' + bedid)
+  await buy(user.id, cost, new String('Rezervácia postele #' + bedid))
   return db.reservation.create({
     data: {
       userId: user.id,
@@ -47,7 +47,7 @@ export async function cancelReservation(userid: number): Promise<void> {
     throw new Error('No reservation found to cancel')
   }
   const refund = reservation.cost * getConfig().reservations.cancelRefund
-  await buy(userid, -refund, 'Zrušenie rezervácie')
+  await buy(userid, -refund, new String('Zrušenie rezervácie'))
 
   await db.reservation.delete({
     where: {
@@ -78,14 +78,12 @@ export async function getCurrentReservations() {
 }
 
 export async function getReservationCost(user: User, bedid: number) {
-  const bed = await db.bed.findUnique({
+  const bed = await db.bed.findUniqueOrThrow({
     where: {
       id: bedid
     }
   })
-  if (!bed) {
-    throw new Error('Bed not found')
-  }
+
   const reservation = await getReservation(user.id)
   if (reservation) {
     throw new Error('User already has a reservation')
@@ -108,14 +106,17 @@ export async function getReservationCost(user: User, bedid: number) {
         select: {
           sex: true
         }
-      }
+      },
+      bedId: true
     }
   })
   let hasDifferentSexInRoom = false
   for (const roommate of roommates) {
+    if (roommate.bedId == bedid) {
+      throw new Error('Bed is already reserved')
+    }
     if (roommate.user.sex != user.sex) {
       hasDifferentSexInRoom = true
-      break
     }
   }
 

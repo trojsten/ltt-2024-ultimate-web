@@ -5,7 +5,7 @@ const db = new PrismaClient()
 export default db
 
 export async function getTeamForUser(userId: number) {
-  return db.team.findFirst({
+  return db.team.findFirstOrThrow({
     where: {
       users: {
         some: {
@@ -103,15 +103,11 @@ export async function buyAddTag(
   tag: string
 ) {
   await buy(userId, cost, new String(description))
-  const id = await db.tag.findFirst({
+  const id = await db.tag.findFirstOrThrow({
     where: {
       name: tag
     }
   })
-
-  if (!id) {
-    throw new Error('invalid tag')
-  }
 
   await db.user.update({
     where: {

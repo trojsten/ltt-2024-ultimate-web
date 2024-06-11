@@ -1,21 +1,28 @@
 import { renderPage } from '@main'
 import type { SessionRequest } from '@session'
-import { createReservation, getReservationCost } from '../functions'
-import type { User } from '@prisma/client'
+import { cancelReservation, getReservation } from '../functions'
+import db from '@db'
+import getConfig from '@config'
 
-async function confirmPage(user: User, bedid: number) {
+async function cancelPage(reservationId: number | undefined) {
   try {
-    const cost = await getReservationCost(user, bedid)
+    if (!reservationId) return <p>'Rezervácia neexistuje'</p>
+    const res = await db.reservation.findUnique({
+      where: { id: reservationId },
+      select: { cost: true, bedId: true }
+    })
+    if (!res) return <p>'Rezervácia neexistuje'</p>
+
     return (
       <div>
-        <h1>Rezervovať posteľ #{bedid}</h1>
+        <h1>Rezervovať posteľ #{res.bedId}</h1>
         <p>Naozaj rezervovať túto posteľ?</p>
         <form method="post">
           <a href="/reservations" className="btn">
             Späť
           </a>
           <button type="submit" className="btn">
-            Rezervovať ({cost})
+            Zrusit (+{res.cost * getConfig().reservations.cancelRefund})
           </button>
         </form>
       </div>
@@ -33,17 +40,14 @@ async function confirmPage(user: User, bedid: number) {
 }
 
 export async function get(req: SessionRequest) {
-  return renderPage(
-    await confirmPage(req.session!.user, parseInt(req.params.bedId)),
-    req
-  )
+  const res = await getReservation(req.session!.user.id)
+  return renderPage(await cancelPage(res?.id), req)
 }
 
 export async function post(req: SessionRequest) {
-  const { bedId } = req.params
   const { user } = req.session!
   try {
-    await createReservation(user, parseInt(bedId))
+    await cancelReservation(user.id)
   } catch (e) {
     return get(req)
   }
