@@ -31,6 +31,7 @@ model User {
   ads          Ad[]
   admin        Boolean       @default(false)
   Reservation  Reservation[]
+  Leaderboard  Leaderboard[]
 }
 
 model Team {
@@ -109,14 +110,25 @@ enum AdType {
 }
 
 model Ad {
-  id            Int    @id @default(autoincrement())
+  id            Int     @id @default(autoincrement())
   type          AdType
   name          String
   content       String
+  link          String?
   tags          Tag[]
   length        Int
   viewRemaining Int
   views         Int
-  createdBy     User   @relation(fields: [createdById], references: [id])
+  createdBy     User    @relation(fields: [createdById], references: [id])
   createdById   Int
+}
+
+model Leaderboard {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  score     Float
+  gameData  String
+  gameId    String
+  createdAt DateTime @default(now())
 }

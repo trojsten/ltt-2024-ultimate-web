@@ -8,6 +8,10 @@ export interface Game {
   sourceUrl: string
   thumbnail: string
   cost: number
+  leaderboard: {
+    enabled: boolean
+    order: 'asc' | 'desc'
+  }
 }
 
 export interface Config {

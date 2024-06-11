@@ -1,4 +1,5 @@
 import config from '@config'
+import fs from 'fs'
 import type { SessionRequest } from '@session'
 
 function getType(path: string) {
@@ -26,6 +27,9 @@ export async function get(req: SessionRequest): Promise<Response> {
     return new Response('No game ID specified', { status: 404 })
   }
   const path = req.parsedUrl.pathname.slice(`/games/${id}/`.length)
+  if (fs.existsSync(`static/${id}/${path}`)) {
+    return new Response(Bun.file(`static/${id}/${path}`))
+  }
   const res = await fetch(gameId.sourceUrl + path)
   console.log(req.url + ': ' + res.status)
 

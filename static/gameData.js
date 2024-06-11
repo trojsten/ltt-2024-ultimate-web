@@ -19,16 +19,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
   var gameId = document.getElementById('gameId').value
   console.log('gameData.js loaded ' + gameId)
+  let currScore = 0
 
   setInterval(() => {
     for (let i = 0; i < localStorage.length; i++) {
       let key = localStorage.key(i)
       if (gameId == 'drift-boss' && key.match(/drift-boss/)) {
         let score = JSON.parse(localStorage.getItem(key)).score
-        console.log('drift-boss score', score)
+        if (score > currScore) {
+          uploadScore(score, JSON.parse(localStorage.getItem(key)), gameId)
+        }
+        currScore = score
+      } else if (gameId == 'spect' && key.match(/BestScore/)) {
+        let score = JSON.parse(localStorage.getItem(key))
+        if (score > currScore) {
+          uploadScore(score, JSON.parse(localStorage.getItem(key)), gameId)
+        }
       }
     }
   }, 500)
+
+  window.addEventListener('message', (e) => {
+    console.log(e.data)
+    uploadScore(e.data.score, e.data.data, gameId)
+  })
 })
 
 async function getdb() {
@@ -50,4 +64,14 @@ async function getdb() {
   }
 }
 
-getdb()
+// getdb()
+
+function uploadScore(score, data, gameId) {
+  fetch(gameId + '/leaderboard', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ score, data: JSON.stringify(data) })
+  })
+}

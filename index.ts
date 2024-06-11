@@ -30,8 +30,21 @@ Bun.serve({
 
     let data: FormData | undefined
     if (Request.method == 'POST') {
-      data = await Request.formData()
+      if (
+        Request.headers.get('Content-Type') ==
+          'application/x-www-form-urlencoded' ||
+        Request.headers.get('Content-Type')?.includes('multipart/form-data')
+      ) {
+        data = await Request.formData()
+      } else if (Request.headers.get('Content-Type') == 'application/json') {
+        try {
+          data = await Request.json()
+        } catch (err) {
+          /* empty */
+        }
+      }
     }
+
     const sessReq = new SessionRequest(Request, data, route.params)
 
     if (

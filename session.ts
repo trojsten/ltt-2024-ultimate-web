@@ -19,9 +19,12 @@ export class SessionRequest extends Request {
   session?: Session
   sessionValid = true
   parsedUrl: URL
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  jsonBody: any
   constructor(
     request: Request,
-    public data: FormData | undefined,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    public data: FormData | any | undefined,
     public params: Record<string, string>
   ) {
     super(request)
@@ -34,6 +37,7 @@ export class SessionRequest extends Request {
     if (!this.session) {
       this.sessionValid = false
     }
+    if (this.body != null) this.jsonBody = Bun.readableStreamToJSON(this.body)
     this.parsedUrl = new URL(request.url)
   }
 
