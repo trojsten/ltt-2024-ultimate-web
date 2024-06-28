@@ -31,7 +31,7 @@ export async function get(req: SessionRequest): Promise<Response> {
     return new Response(Bun.file(`static/${id}/${path}`))
   }
   const res = await fetch(gameId.sourceUrl + path)
-  console.log(req.url + ': ' + res.status)
+  // console.log(req.url + ': ' + res.status)
 
   if (
     path.endsWith('.js') ||

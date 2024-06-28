@@ -37,7 +37,6 @@ export class SessionRequest extends Request {
     if (!this.session) {
       this.sessionValid = false
     }
-    if (this.body != null) this.jsonBody = Bun.readableStreamToJSON(this.body)
     this.parsedUrl = new URL(request.url)
   }
 

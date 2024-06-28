@@ -54,6 +54,8 @@ export async function post(req: SessionRequest): Promise<Response> {
     } else {
       res = Response.redirect(atob(redirectUrl) ?? '/')
     }
+    console.log('login success')
+
     return setSession(res, { user: user, ad: undefined })
   } else {
     return renderPage(

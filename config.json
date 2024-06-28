@@ -7,7 +7,13 @@
     "ads": true,
     "reservations": true
   },
-  "system_tags": ["transactions", "drift-boss", "capybara", "galaxie", "spins"],
+  "system_tags": [
+    "transactions",
+    "drift-boss",
+    "cookie-clicker",
+    "galaxie",
+    "spins"
+  ],
   "games": {
     "drift-boss": {
       "name": "Drift Boss",
@@ -20,14 +26,15 @@
         "order": "desc"
       }
     },
-    "capybara": {
-      "name": "Capybara",
-      "sourceUrl": "https://www.onlinegames.io/games/2023/q2/capybara-clicker-pro/",
-      "iframeUrl": "https://www.onlinegames.io/games/2023/q2/capybara-clicker-pro/",
-      "thumbnail": "https://www.onlinegames.io/media/posts/554/Capybara-Clicker-Pro.jpg",
+    "cookie-clicker": {
+      "name": "Cookie clicker",
+      "sourceUrl": "https://games-online.io/game/cake-maker/",
+      "iframeUrl": "./static/cookie-clicker.html",
+      "thumbnail": "https://capybara24.github.io/capybara-clicker/rs/imgs/cooki-clicker.jpg",
       "cost": 200,
       "leaderboard": {
-        "enabled": false
+        "enabled": true,
+        "order": "desc"
       }
     },
     "galaxie": {

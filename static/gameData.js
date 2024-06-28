@@ -18,30 +18,39 @@ document.addEventListener('DOMContentLoaded', () => {
   // })
 
   var gameId = document.getElementById('gameId').value
-  console.log('gameData.js loaded ' + gameId)
+  const iframe = document.querySelector('iframe')
+  iframe.contentWindow.postMessage({ gameId }, '*')
+
   let currScore = 0
 
-  setInterval(() => {
-    for (let i = 0; i < localStorage.length; i++) {
-      let key = localStorage.key(i)
-      if (gameId == 'drift-boss' && key.match(/drift-boss/)) {
-        let score = JSON.parse(localStorage.getItem(key)).score
-        if (score > currScore) {
-          uploadScore(score, JSON.parse(localStorage.getItem(key)), gameId)
-        }
-        currScore = score
-      } else if (gameId == 'spect' && key.match(/BestScore/)) {
-        let score = JSON.parse(localStorage.getItem(key))
-        if (score > currScore) {
-          uploadScore(score, JSON.parse(localStorage.getItem(key)), gameId)
-        }
-      }
-    }
-  }, 500)
+  // setInterval(() => {
+  //   for (let i = 0; i < localStorage.length; i++) {
+  //     let key = localStorage.key(i)
+  //     if (gameId == 'drift-boss' && key.match(/drift-boss/)) {
+  //       let score = JSON.parse(localStorage.getItem(key)).score
+  //       if (score > currScore) {
+  //         uploadData(score, JSON.parse(localStorage.getItem(key)), gameId)
+  //       }
+  //       currScore = score
+  //     } else if (gameId == 'spect' && key.match(/BestScore/)) {
+  //       let score = JSON.parse(localStorage.getItem(key))
+  //       if (score > currScore) {
+  //         uploadData(score, JSON.parse(localStorage.getItem(key)), gameId)
+  //       }
+  //     } else if (gameId == 'cookie-clicker' && key.match(/cookie/)) {
+  //       const save = atob(localStorage.getItem(key).split('%')[0])
+  //       const cookies = Math.round(parseFloat(save.split('|')[4].split(';')))
+  //       console.log(cookies)
+  //       if (cookies > currScore) {
+  //         uploadData(cookies, localStorage.getItem(key), gameId)
+  //       }
+  //     }
+  //   }
+  // }, 500)
 
   window.addEventListener('message', (e) => {
     console.log(e.data)
-    uploadScore(e.data.score, e.data.data, gameId)
+    uploadData(e.data, gameId)
   })
 })
 
@@ -64,14 +73,14 @@ async function getdb() {
   }
 }
 
-// getdb()
+getdb()
 
-function uploadScore(score, data, gameId) {
-  fetch(gameId + '/leaderboard', {
+function uploadData(data, gameId) {
+  fetch(gameId + '/data', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ score, data: JSON.stringify(data) })
+    body: JSON.stringify({ data: data.msg })
   })
 }

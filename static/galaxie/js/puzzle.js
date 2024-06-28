@@ -1,4 +1,3 @@
-/// eslint-disable
 /* puzzle.js
  * Game state logic and JS-side frontend code
  */

@@ -32,16 +32,13 @@ Bun.serve({
     if (Request.method == 'POST') {
       if (
         Request.headers.get('Content-Type') ==
-          'application/x-www-form-urlencoded' ||
+        'application/x-www-form-urlencoded' ||
         Request.headers.get('Content-Type')?.includes('multipart/form-data')
       ) {
         data = await Request.formData()
       } else if (Request.headers.get('Content-Type') == 'application/json') {
-        try {
-          data = await Request.json()
-        } catch (err) {
-          /* empty */
-        }
+        const text = await Request.text()
+        data = JSON.parse(text)
       }
     }
 
@@ -92,8 +89,8 @@ Bun.serve({
   port: 3000,
   websocket: {
     message: function () // ws: ServerWebSocket<unknown>,
-    // message: string | Buffer
-    : void | Promise<void> {
+      // message: string | Buffer
+      : void | Promise<void> {
       throw new Error('Function not implemented.')
     }
   }

@@ -41,78 +41,7 @@ export async function get(req: SessionRequest) {
   return renderPage(await leaderBoard(req.params.id), req)
 }
 
-export async function post(req: SessionRequest) {
-  if (!req.body) {
-    return {
-      status: 400,
-      body: {
-        message: 'No score provided'
-      }
-    }
-  }
-
-  const score = req.data.score
-  console.log(score)
-  const gameId = req.params.id
-  const user = req.session?.user
-
-  if (user == null) {
-    return Response.json(
-      {
-        message: 'You must be logged in to submit a score'
-      },
-      {
-        status: 401
-      }
-    )
-  }
-
-  const leaderboard = await getLeaderboardForUser(user.id, gameId, score)
-  if (isBetterScore(score, leaderboard, gameId)) {
-    await db.leaderboard.update({
-      where: {
-        id: leaderboard.id
-      },
-      data: {
-        score,
-        gameData: req.jsonBody.data,
-        createdAt: new Date()
-      }
-    })
-  } else {
-    await db.leaderboard.update({
-      where: {
-        id: leaderboard.id
-      },
-      data: {
-        gameData: req.jsonBody.data
-      }
-    })
-  }
-
-  return Response.json(
-    {
-      message: 'Score submitted'
-    },
-    {
-      status: 200
-    }
-  )
-}
-
-function isBetterScore(
-  score: number,
-  leaderboard: Leaderboard,
-  gameId: string
-) {
-  if (getConfig().games[gameId].leaderboard.order == 'asc') {
-    return score < leaderboard.score
-  } else {
-    return score > leaderboard.score
-  }
-}
-
-async function getLeaderboardForUser(
+export async function getLeaderboardForUser(
   userid: number,
   gameId: string,
   score: number = 0

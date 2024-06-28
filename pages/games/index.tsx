@@ -22,18 +22,36 @@ async function getPage(req: SessionRequest) {
           if (tags.find((e) => e.name == gameId)) {
             return gameUI(
               games[gameId],
-              <a className="btn" href={'/games/' + gameId}>
-                Hrať
-              </a>
+              <div className="flex flex-col text-center">
+                <a className="btn" href={'/games/' + gameId}>
+                  Hrať
+                </a>
+                {games[gameId].leaderboard?.enabled ? (
+                  <a
+                    className="btn my-3"
+                    href={'/games/' + gameId + '/leaderboard'}
+                  >
+                    Rebricek
+                  </a>
+                ) : null}
+              </div>
             )
           } else {
             return gameUI(
               games[gameId],
-              <form method="post">
+              <form method="post" className="flex flex-col">
                 <input type="hidden" name="gameId" value={gameId} />
                 <button type="submit" className="btn">
                   Kúpiť ({games[gameId].cost})
                 </button>
+                {games[gameId].leaderboard?.enabled ? (
+                  <a
+                    className="btn my-3"
+                    href={'/games/' + gameId + '/leaderboard'}
+                  >
+                    Rebricek
+                  </a>
+                ) : null}
               </form>
             )
           }
@@ -56,7 +74,9 @@ function gameUI(game: Game, inner: JSX.Element) {
 }
 
 export async function get(req: SessionRequest): Promise<Response> {
-  return renderPage(await getPage(req), req)
+  console.log(req.headers.get('Cookie'))
+  const res = renderPage(await getPage(req), req)
+  return res
 }
 
 export async function post(req: SessionRequest): Promise<Response> {
