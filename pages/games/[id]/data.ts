@@ -4,6 +4,7 @@ import getConfig from "@config"
 import { getLeaderboardForUser } from "./leaderboard"
 import db from "@db"
 import crypto from 'node:crypto'
+import { updateLeaderboard } from "./score-parser"
 
 export async function getEncryptionKey(userid: number) {
   const key = await crypto.subtle.generateKey(
@@ -32,7 +33,7 @@ async function decrypt(key: crypto.webcrypto.CryptoKey, msg: {
     Buffer.from(msg.msg, 'base64')
   )
 
-  return JSON.parse(new TextDecoder().decode(buffer))
+  return new TextDecoder().decode(buffer)
 }
 
 async function encrypt(key: crypto.webcrypto.CryptoKey, data: string) {
@@ -115,30 +116,8 @@ export async function post(req: SessionRequest) {
   const userKey = keys[user.id]
 
   const data = await decrypt(userKey, req.data.data)
-  // console.log(data)
 
-  const leaderboard = await getLeaderboardForUser(user.id, gameId)
-  // if (isBetterScore(score, leaderboard, gameId)) {
-  await db.leaderboard.update({
-    where: {
-      id: leaderboard.id
-    },
-    data: {
-      gameData: JSON.stringify(data),
-      createdAt: new Date()
-    }
-  })
-  // } else {
-  //   await db.leaderboard.update({
-  //     where: {
-  //       id: leaderboard.id
-  //     },
-  //     data: {
-  //       gameData: req.jsonBody.data
-  //     }
-  //   })
-  // }
-
+  await updateLeaderboard(gameId, user.id, data)
   return Response.json(
     {
       message: 'Score submitted'
@@ -147,16 +126,4 @@ export async function post(req: SessionRequest) {
       status: 200
     }
   )
-}
-
-function isBetterScore(
-  score: number,
-  leaderboard: Leaderboard,
-  gameId: string
-) {
-  if (getConfig().games[gameId].leaderboard.order == 'asc') {
-    return score < leaderboard.score
-  } else {
-    return score > leaderboard.score
-  }
 }

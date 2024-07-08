@@ -36,7 +36,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 
   const data = await res.json()
   fakeStorage.data = JSON.parse(await decryptGameData(data.encrypted, data.iv))
-  // loadGame()
+  loadGame()
 })
 
 function base64ToArrayBuffer(base64) {
