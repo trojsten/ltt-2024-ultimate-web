@@ -2,9 +2,16 @@ document.addEventListener('DOMContentLoaded', () => {
   let timeRemaining = 10
   const closeBtn = document.getElementById('skipBtn')
   const video = document.querySelector('video')
+  const ad = document.getElementById('ad')
+  const link = document.getElementById('link').href
   const closeHTML = closeBtn.innerHTML
   closeBtn.disabled = true
   closeBtn.style.display = 'none'
+  if (link != null) {
+    ad.addEventListener('click', () => {
+      location.href = link
+    })
+  }
   const interval = setInterval(() => {
     fetch('/ad/sync')
       .then((response) => {
@@ -29,6 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
       video.play()
     } catch (error) {
       video.muted = true
+      video.controls = true
       video.play()
     }
   }

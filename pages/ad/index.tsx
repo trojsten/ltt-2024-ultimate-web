@@ -6,14 +6,17 @@ import { setSession, type SessionRequest } from '@session'
 function renderAd(ad: Ad) {
   return (
     <div className="w-screen h-screen fixed top-0 left-0 z-10 bg-black">
+      <h1 className='absolute top-3 left-5 text-3xl text-white' >{ad.name}</h1  >
+      <a href={ad.link ?? ""} id="link"></a>
       {ad.type == 'IMAGE' ? (
-        <img src={ad.content} className="w-full h-full" />
+        <img src={ad.content} className="w-full h-full" id="ad" />
       ) : (
         <video
           src={ad.content}
           autoPlay
           className="w-full h-full"
           disablePictureInPicture
+          id="ad"
         />
       )}
 

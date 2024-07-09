@@ -75,7 +75,7 @@
     "currentDay": "2024-08-09"
   },
   "ads": {
-    "enabled": false,
+    "enabled": true,
     "adBoostCost": 50,
     "adBoostAmount": 10,
     "earnPerAdWatch": 20,
