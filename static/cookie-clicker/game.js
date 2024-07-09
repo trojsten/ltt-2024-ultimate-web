@@ -111,7 +111,7 @@ CanvasRenderingContext2D.prototype.fillPattern = function (img, X, Y, W, H, iW, 
     for (var y = offY; y < H; y += iH) { for (var x = offX; x < W; x += iW) { this.drawImage(img, X + x, Y + y, iW, iH); } }
   }
 }
-var OldCanvasDrawImage = CanvasRenderingContext2D.prototype.drawImage; CanvasRenderingContext2D.prototype.drawImage = function () { if (arguments[0].alt != 'blank') OldCanvasDrawImage.apply(this, arguments); }
+// var OldCanvasDrawImage = CanvasRenderingContext2D.prototype.drawImage; CanvasRenderingContext2D.prototype.drawImage = function () { if (arguments[0].alt != 'blank') OldCanvasDrawImage.apply(this, arguments); }
 if (!document.hasFocus) document.hasFocus = function () { return document.hidden; }; function AddEvent(html_element, event_name, event_function) { if (html_element.attachEvent) html_element.attachEvent("on" + event_name, function () { event_function.call(html_element); }); else if (html_element.addEventListener) html_element.addEventListener(event_name, event_function, false); }
 function FireEvent(el, etype) {
   if (el.fireEvent) { el.fireEvent('on' + etype); }
