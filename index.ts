@@ -32,7 +32,7 @@ Bun.serve({
     if (Request.method == 'POST') {
       if (
         Request.headers.get('Content-Type') ==
-        'application/x-www-form-urlencoded' ||
+          'application/x-www-form-urlencoded' ||
         Request.headers.get('Content-Type')?.includes('multipart/form-data')
       ) {
         data = await Request.formData()
@@ -89,9 +89,16 @@ Bun.serve({
   port: 3000,
   websocket: {
     message: function () // ws: ServerWebSocket<unknown>,
-      // message: string | Buffer
-      : void | Promise<void> {
+    // message: string | Buffer
+    : void | Promise<void> {
       throw new Error('Function not implemented.')
     }
-  }
+  },
+  tls:
+    Bun.env.DEBUG == 'True'
+      ? {
+          cert: Bun.file('domain.crt'),
+          key: Bun.file('domain.key')
+        }
+      : {}
 })
