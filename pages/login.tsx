@@ -16,8 +16,8 @@ function login(success: boolean = true, redirect: string = '/') {
         encType="multipart/form-data"
         className="flex flex-col w-full md:w-1/2 mx-auto"
       >
-        <label htmlFor="name">Meno</label>
-        <input type="text" name="username" id="name" />
+        <label htmlFor="email">E-mail</label>
+        <input type="text" name="email" id="email" />
         <label htmlFor="pass">Heslo</label>
         <input type="password" name="password" id="pass" />
         <button type="submit" className="btn">
@@ -38,16 +38,15 @@ export function get(req: SessionRequest) {
 export async function post(req: SessionRequest): Promise<Response> {
   const formdata = req.data!
 
-  const username = formdata.get('username') as string
+  const email = formdata.get('email') as string
   const password = formdata.get('password') as string
   const user = await db.user.findFirst({
     where: {
-      name: username,
-      password: password
+      email: email
     }
   })
   const redirectUrl = req.parsedUrl.searchParams.get('redirect')
-  if (user) {
+  if (user && (await Bun.password.verify(password, user.password))) {
     let res: Response
     if (redirectUrl == null) {
       res = Response.redirect('/')
