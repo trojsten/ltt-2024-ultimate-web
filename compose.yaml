@@ -20,6 +20,7 @@ services:
     image: oven/bun:1.1.8-slim
     environment:
       - DATABASE_URL=postgresql://ultimate-ltt:ultimate-ltt@db/ultimate-ltt?schema=public
+      - DEBUG=True
     volumes:
       - .:/home/bun/app
     ports:
