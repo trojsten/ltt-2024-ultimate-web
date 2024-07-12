@@ -1,4 +1,4 @@
-import db, { buy } from '@db'
+import db, { buy, getItemsForUser } from '@db'
 import type { SessionRequest } from '@session'
 
 export async function post(req: SessionRequest): Promise<Response> {
@@ -18,9 +18,18 @@ export async function post(req: SessionRequest): Promise<Response> {
     }
   })
 
+
   if (!team || !item || item.amount == 0) {
     return new Response('Item or team not found', { status: 404 })
   }
+
+  if (item.amountPerUser != null) {
+    const itemCount = (await getItemsForUser(user.id)).filter(e => e.id === item.id).length
+    if (itemCount >= item.amountPerUser) {
+      return new Response('Bought already max allowed copies of ' + item.name, { status: 404 })
+    }
+  }
+
 
   if (team!.money < item!.cost) {
     return new Response('Nemáš dostatok peňazí', { status: 400 })
