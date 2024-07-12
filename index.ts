@@ -1,6 +1,10 @@
 import { startAdWatch } from '@pages/ad'
 import { SessionRequest } from './session'
 import config from '@config'
+import { importTags, importUsersFromCsv } from '@importer'
+
+await importTags()
+await importUsersFromCsv('users.csv')
 
 Bun.serve({
   fetch: async (Request) => {

@@ -4,31 +4,50 @@ import type { Sex } from '@prisma/client'
 
 const system_tags = ['transactions', 'drift-boss', 'capybara']
 
-async function importTags() {
-  await db.tag.createMany({
-    data: system_tags.map((e) => {
-      return {
-        name: e
-      }
+export async function importTags() {
+  await Promise.all(
+    system_tags.map(async (tag) => {
+      await db.tag.upsert({
+        where: {
+          name: tag
+        },
+        update: {},
+        create: {
+          name: tag
+        },
+      })
     })
-  })
+  )
 }
 
-async function importUsersFromCsv(file: string) {
+export async function importUsersFromCsv(file: string) {
   const f = Bun.file(file)
-  const data = f.stream().toString()
+  const data = (await f.text()).trim()
   const lines = data.split('\n')
 
-  db.user.createMany({
-    data: lines.map((e) => {
-      const x = e.split(',')
-      return {
-        name: x[0],
-        password: x[1],
-        email: x[2],
-        sex: x[3] as Sex,
-        teamId: parseInt(x[4])
+  await Promise.all(
+    lines.map(async (line) => {
+      const x = line.split(',')
+
+      const user = await db.user.findFirst({ where: { email: x[2] } })
+
+      if (!user) {
+        const team = await db.team.create({
+          data: {
+            name: x[0].trim(),
+            money: 0
+          }
+        })
+        await db.user.create({
+          data: {
+            name: x[0].trim(),
+            password: await Bun.password.hash(x[1]),
+            email: x[2],
+            sex: x[3] as Sex,
+            teamId: team.id
+          }
+        })
       }
     })
-  })
+  )
 }
