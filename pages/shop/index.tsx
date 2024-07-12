@@ -1,10 +1,24 @@
-import db, { getTeamForUser } from '@db'
+import db, { getItemsForUser, getTeamForUser } from '@db'
 import { renderPage } from '@main'
 import type { Item } from '@prisma/client'
 import type { SessionRequest } from '@session'
 
 async function getShop(req: SessionRequest) {
-  const items = await db.item.findMany({
+  const userItems = await getItemsForUser(req.session!.user.id)
+  const counts: Record<number, number> = {}
+
+  console.log(userItems)
+
+  for (const item of userItems) {
+    if (counts[item.id] == undefined) {
+      counts[item.id] = 0
+    }
+    counts[item.id]++
+  }
+
+  console.log(counts)
+
+  const items = (await db.item.findMany({
     where: {
       tags: {
         every: {
@@ -19,7 +33,9 @@ async function getShop(req: SessionRequest) {
         gt: 0
       }
     }
-  })
+  })).filter(e => e.amountPerUser == null || counts[e.id] == undefined || counts[e.id] < e.amountPerUser)
+
+
 
   const team = await getTeamForUser(req.session!.user.id)
 

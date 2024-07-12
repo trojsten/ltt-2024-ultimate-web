@@ -29,7 +29,6 @@ export async function navbar(req: SessionRequest) {
     </nav>
   )
 }
-
 async function isVisible(module: string, user: User | undefined) {
   if (user === undefined) {
     return false
@@ -97,5 +96,10 @@ const modules: Module[] = [
     name: 'Rezervácie',
     url: '/reservations',
     key: 'reservations'
+  },
+  {
+    name: 'Platby',
+    url: '/payments/quickPay',
+    key: 'payments'
   }
 ]
