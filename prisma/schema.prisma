@@ -56,15 +56,17 @@ model Transaction {
 }
 
 model Item {
-    id           Int           @id @default(autoincrement())
-    name         String
-    cost         Int
-    description  String
-    image        String?
-    transactions Transaction[]
-    createdAt    DateTime      @default(now())
-    tags         Tag[]
-    amount       Int           @default(1)
+  id             Int           @id @default(autoincrement())
+  name           String
+  cost           Int
+  description    String
+  image          String?
+  transactions   Transaction[]
+  createdAt      DateTime      @default(now())
+  tags           Tag[]
+  amount         Int           @default(1)
+  amountPerUser  Int?
+  expirationDate DateTime?
 }
 
 model Tag {

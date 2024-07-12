@@ -22,10 +22,12 @@ function newItem() {
         />
         <label htmlFor="name">Názov</label>
         <input type="text" name="name" placeholder="Názov" id="name" />
-        <label htmlFor="cost">Názov</label>
+        <label htmlFor="cost">Cena</label>
         <input type="number" name="cost" placeholder="Cena" id="cost" />
-        <label htmlFor="amount">Maximálny počet zakúpení</label>
+        <label htmlFor="amount">Maximálny počet zakúpení (celkovo)</label>
         <input type="number" name="amount" placeholder="Množstvo" id="amount" />
+        <label htmlFor="amountPerUser">Maximálny počet zakúpení (na osobu)</label>
+        <input type="number" name="amountPerUser" placeholder="Množstvo na osobu" id="amountPerUser" />
         <label htmlFor="description">Popis</label>
         <textarea
           name="description"
@@ -49,7 +51,6 @@ export async function get(req: SessionRequest) {
 
 export async function post(req: SessionRequest): Promise<Response> {
   const formdata = req.data!
-  console.log(formdata.get('image') == null)
 
   let imageId: string | null = 'uploads/' + crypto.randomUUID()
   try {
@@ -64,7 +65,8 @@ export async function post(req: SessionRequest): Promise<Response> {
         amount: parseInt(formdata.get('amount') as string),
         name: formdata.get('name') as string,
         description: formdata.get('description') as string,
-        image: imageId
+        image: imageId,
+        amountPerUser: parseInt(formdata.get('amountPerUser') as string)
       }
     })
   }

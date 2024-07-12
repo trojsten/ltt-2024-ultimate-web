@@ -5,7 +5,8 @@
     "transactions": true,
     "games": true,
     "ads": true,
-    "reservations": true
+    "reservations": true,
+    "payments": true
   },
   "system_tags": [
     "transactions",
