@@ -1,4 +1,4 @@
-/*! tailwindcss v4.0.0-alpha.17 | MIT License | https://tailwindcss.com */
+/*! tailwindcss v4.0.0-alpha.16 | MIT License | https://tailwindcss.com */
 @layer theme, base, components, utilities;
 @layer theme {
   :root {
@@ -406,9 +406,6 @@
   }
 }
 @layer utilities {
-  .collapse {
-    visibility: collapse;
-  }
   .invisible {
     visibility: hidden;
   }
@@ -434,6 +431,9 @@
     position: static;
   }
   .static\/app {
+    position: static;
+  }
+  .static\/bridges {
     position: static;
   }
   .static\/cookie-clicker {
@@ -471,9 +471,6 @@
   }
   .left-5 {
     left: var(--spacing-5, 1.25rem);
-  }
-  .z-1 {
-    z-index: 1;
   }
   .z-1\.0 {
     z-index: 1.0;
@@ -540,14 +537,8 @@
   .hidden {
     display: none;
   }
-  .inline {
-    display: inline;
-  }
   .inline-block {
     display: inline-block;
-  }
-  .list-item {
-    display: list-item;
   }
   .table {
     display: table;
@@ -569,9 +560,6 @@
   }
   .min-h-screen {
     min-height: 100vh;
-  }
-  .w-1 {
-    width: var(--spacing-1, 0.25rem);
   }
   .w-1\/2 {
     width: calc(1/2 * 100%);
@@ -599,9 +587,6 @@
   }
   .grow {
     flex-grow: 1;
-  }
-  .border-collapse {
-    border-collapse: collapse;
   }
   .transform {
     transform: var(--tw-rotate-x) var(--tw-rotate-y) var(--tw-rotate-z) var(--tw-skew-x) var(--tw-skew-y);
@@ -747,9 +732,6 @@
   .text-white {
     color: var(--color-white, #fff);
   }
-  .underline {
-    text-decoration-line: underline;
-  }
   .opacity-0 {
     opacity: 0%;
   }
@@ -770,11 +752,7 @@
     outline-width: 1px;
   }
   .blur {
-    --tw-blur: blur(var(--blur, 8px));
-    filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
-  }
-  .contrast-1 {
-    --tw-contrast: contrast(1%);
+    --tw-blur: blur(8px);
     filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
   }
   .contrast-1\.0 {
@@ -787,10 +765,6 @@
   }
   .filter {
     filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
-  }
-  .backdrop-filter {
-    -webkit-backdrop-filter: var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);
-    backdrop-filter: var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);
   }
   .transition {
     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter;
@@ -860,7 +834,7 @@
   }
 }
 .btn {
-  border-radius: var(--radius, 0.25rem);
+  border-radius: 0.25rem;
   background-color: var(--color-blue-500, #4299e1);
   padding-top: var(--spacing-2, 0.5rem);
   padding-bottom: var(--spacing-2, 0.5rem);
@@ -877,14 +851,14 @@
   }
 }
 input[type='text'], input[type='password'], input[type='email'], input[type='number'], input[type='file'] {
-  border-radius: var(--radius, 0.25rem);
+  border-radius: 0.25rem;
   border-style: var(--tw-border-style);
   border-width: 1px;
   border-color: var(--color-gray-400, #cbd5e0);
   padding: var(--spacing-2, 0.5rem);
 }
 textarea {
-  border-radius: var(--radius, 0.25rem);
+  border-radius: 0.25rem;
   border-style: var(--tw-border-style);
   border-width: 1px;
   border-color: var(--color-gray-400, #cbd5e0);
@@ -914,33 +888,24 @@ h1 {
       --tw-shadow-colored: 0 0 #0000;
       --tw-inset-shadow: 0 0 #0000;
       --tw-inset-shadow-colored: 0 0 #0000;
-      --tw-ring-color: initial;
+      --tw-ring-color:  ;
       --tw-ring-shadow: 0 0 #0000;
-      --tw-inset-ring-color: initial;
+      --tw-inset-ring-color:  ;
       --tw-inset-ring-shadow: 0 0 #0000;
-      --tw-ring-inset: initial;
+      --tw-ring-inset:  ;
       --tw-ring-offset-width: 0px;
       --tw-ring-offset-color: #fff;
       --tw-ring-offset-shadow: 0 0 #0000;
       --tw-outline-style: solid;
-      --tw-blur: initial;
-      --tw-brightness: initial;
-      --tw-contrast: initial;
-      --tw-grayscale: initial;
-      --tw-hue-rotate: initial;
-      --tw-invert: initial;
-      --tw-opacity: initial;
-      --tw-saturate: initial;
-      --tw-sepia: initial;
-      --tw-backdrop-blur: initial;
-      --tw-backdrop-brightness: initial;
-      --tw-backdrop-contrast: initial;
-      --tw-backdrop-grayscale: initial;
-      --tw-backdrop-hue-rotate: initial;
-      --tw-backdrop-invert: initial;
-      --tw-backdrop-opacity: initial;
-      --tw-backdrop-saturate: initial;
-      --tw-backdrop-sepia: initial;
+      --tw-blur:  ;
+      --tw-brightness:  ;
+      --tw-contrast:  ;
+      --tw-grayscale:  ;
+      --tw-hue-rotate:  ;
+      --tw-invert:  ;
+      --tw-opacity:  ;
+      --tw-saturate:  ;
+      --tw-sepia:  ;
     }
   }
 }
@@ -1095,42 +1060,6 @@ h1 {
   inherits: false;
 }
 @property --tw-sepia {
-  syntax: "*";
-  inherits: false;
-}
-@property --tw-backdrop-blur {
-  syntax: "*";
-  inherits: false;
-}
-@property --tw-backdrop-brightness {
-  syntax: "*";
-  inherits: false;
-}
-@property --tw-backdrop-contrast {
-  syntax: "*";
-  inherits: false;
-}
-@property --tw-backdrop-grayscale {
-  syntax: "*";
-  inherits: false;
-}
-@property --tw-backdrop-hue-rotate {
-  syntax: "*";
-  inherits: false;
-}
-@property --tw-backdrop-invert {
-  syntax: "*";
-  inherits: false;
-}
-@property --tw-backdrop-opacity {
-  syntax: "*";
-  inherits: false;
-}
-@property --tw-backdrop-saturate {
-  syntax: "*";
-  inherits: false;
-}
-@property --tw-backdrop-sepia {
   syntax: "*";
   inherits: false;
 }
