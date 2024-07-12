@@ -14,7 +14,7 @@ export async function importTags() {
         update: {},
         create: {
           name: tag
-        },
+        }
       })
     })
   )
@@ -44,7 +44,8 @@ export async function importUsersFromCsv(file: string) {
             password: await Bun.password.hash(x[1]),
             email: x[2],
             sex: x[3] as Sex,
-            teamId: team.id
+            teamId: team.id,
+            admin: x[4] == '1'
           }
         })
       }
