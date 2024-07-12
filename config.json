@@ -13,7 +13,7 @@
     "drift-boss",
     "cookie-clicker",
     "galaxie",
-    "spins"
+    "bridges"
   ],
   "games": {
     "drift-boss": {
@@ -42,7 +42,18 @@
       "name": "Galaxie",
       "sourceUrl": "https://medmunds.github.io/puzzles/",
       "iframeUrl": "./static/galaxies.html",
-      "thumbnail": "https://www.onlinegames.io/media/posts/554/Capybara-Clicker-Pro.jpg",
+      "thumbnail": "https://medmunds.github.io/puzzles/img/galaxies-ibase.png",
+      "cost": 100,
+      "leaderboard": {
+        "enabled": true,
+        "order": "asc"
+      }
+    },
+    "bridges": {
+      "name": "Mosty",
+      "sourceUrl": "https://medmunds.github.io/puzzles/",
+      "iframeUrl": "./static/bridges.html",
+      "thumbnail": "https://medmunds.github.io/puzzles/img/bridges-ibase.png",
       "cost": 100,
       "leaderboard": {
         "enabled": true,
@@ -59,13 +70,6 @@
         "enabled": true,
         "order": "desc"
       }
-    },
-    "spins": {
-      "name": "Spins",
-      "sourceUrl": "https://free-slots.games/playtechslots/OceanPrincess/index.html",
-      "iframeUrl": "https://free-slots.games/playtechslots/OceanPrincess/",
-      "thumbnail": "https://www.onlinegames.io/media/posts/554/Capybara-Clicker-Pro.jpg",
-      "cost": 100
     }
   },
   "reservations": {

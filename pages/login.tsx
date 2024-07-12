@@ -4,7 +4,7 @@ import { setSession, type SessionRequest } from '@session'
 
 function login(success: boolean = true, redirect: string = '/') {
   return (
-    <div className="flex flex-col m-3 justify-center items-center min-h-screen">
+    <div className="flex flex-col p-3 justify-center items-center min-h-screen">
       <h1 className="text-3xl text-center "></h1>
       <h2 className="text-xl text-center">Prihlásiť sa</h2>
       {success ? null : (
@@ -14,15 +14,13 @@ function login(success: boolean = true, redirect: string = '/') {
         action={'/login?redirect=' + redirect}
         method="post"
         encType="multipart/form-data"
-        className="flex flex-col w-full md:w-1/2 mx-auto"
+        className="flex flex-col w-full md:w-1/2 mx-auto gap-1"
       >
         <label htmlFor="email">E-mail</label>
-        <input type="text" name="email" id="email" />
+        <input type="email" name="email" id="email" />
         <label htmlFor="pass">Heslo</label>
         <input type="password" name="password" id="pass" />
-        <button type="submit" className="btn">
-          Prihlásiť sa
-        </button>
+        <input type="submit" className="btn" value="Prihlásiť sa" />
       </form>
     </div>
   )

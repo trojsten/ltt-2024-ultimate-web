@@ -13,10 +13,21 @@ async function getPage(content: JSX.Element, req: SessionRequest) {
         />
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <script src="/static/navbar.js" defer async />
       </head>
       <body>
-        {req.sessionValid ? await navbar(req) : null}
-        {content}
+        <main className="flex h-screen min-w-screen flex-col md:flex-row">
+          {req.sessionValid ? await navbar(req) : null}
+          <section
+            className={
+              req.sessionValid
+                ? 'overflow-y-auto w-full md:h-dvh h-[calc(100dvh-3.5rem)]'
+                : 'overflow-y-auto w-full h-dvh'
+            }
+          >
+            {content}
+          </section>
+        </main>
       </body>
     </html>
   )

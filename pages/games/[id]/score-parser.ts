@@ -4,6 +4,7 @@ import type { Leaderboard } from "@prisma/client"
 import getConfig from "@config"
 
 function getScore(gameId: string, gameData: Record<string, string>) {
+  console.log(gameId, gameData)
   switch (gameId) {
     case 'drift-boss':
       return JSON.parse(gameData['mjs-drift-boss-game-v1.0.1-dailyreward']).score
@@ -15,7 +16,12 @@ function getScore(gameId: string, gameData: Record<string, string>) {
         console.log(save)
         return Math.round(parseFloat(save.split('|')[4].split(';')[0]))
       }
+    case 'galaxie':
+      return JSON.parse(gameData['result']).score
+    case 'bridges':
+      return JSON.parse(gameData['result']).score
     default:
+      console.log('Unknown game', gameId)
       return 0
   }
 }
