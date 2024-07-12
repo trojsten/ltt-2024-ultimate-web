@@ -8,6 +8,46 @@
 <script src="base64.js"></script>
 <script src="game.js"></script>
 <script src="/static/fakeStorage.js"></script>
+<script>
+            //            lan code;
+            function optionButtonCheck() {
+                var Op = document.getElementById("prefsButton").classList.contains("selected");
+                var St = document.getElementById("statsButton").classList.contains("selected");
+                if (St == false && Op == false) {
+                    addZIndex();
+                    return;
+                }
+                if (St == true && Op == false) {
+                    return;
+                }
+                if (Op == true) {
+                    removeZIndex();
+                }
+            }
+            function statsButtonCheck() {
+                var Op = document.getElementById("prefsButton").classList.contains("selected");
+                var St = document.getElementById("statsButton").classList.contains("selected");
+                if (St == false && Op == false) {
+                    addZIndex();
+                    return;
+                }
+                if (St == false && Op == true) {
+                    return;
+                }
+                if (St == true) {
+                    removeZIndex();
+                }
+            }
+            function addZIndex() {
+                document.getElementById("sectionMiddle").classList.add("index0");
+                document.getElementById("sectionRight").classList.add("index0");
+            }
+            function removeZIndex() {
+                document.getElementById("sectionMiddle").classList.remove("index0");
+                document.getElementById("sectionRight").classList.remove("index0");
+            }
+            //lan code
+        </script>
 <link href="style.css?v=2.050" rel="stylesheet" type="text/css">
 <link href="reponsiveStyle.css" rel="stylesheet" type="text/css">
 </head>

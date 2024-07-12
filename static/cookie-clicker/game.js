@@ -3,10 +3,13 @@ function l(what) { return document.getElementById(what); }
 function choose(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 function escapeRegExp(str) { return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&"); }
 function replaceAll(find, replace, str) { return str.replace(new RegExp(escapeRegExp(find), 'g'), replace); }
-var realAudio = Audio; Audio = function (src) {
-  if (src && src.indexOf('soundjay') > -1) { Game.Popup('Sorry, no sounds hotlinked from soundjay.com.'); this.play = function () { }; }
-  else return new realAudio(src);
-}; if (!Array.prototype.indexOf) {
+// var realAudio = Audio; Audio = function (src) {
+//   // console.log(src)
+//   if (src && src.indexOf('soundjay') > -1) { Game.Popup('Sorry, no sounds hotlinked from soundjay.com.'); this.play = function () { }; }
+//   else return new realAudio(src);
+// };
+var ready = false;
+if (!Array.prototype.indexOf) {
   Array.prototype.indexOf = function (needle) {
     for (var i = 0; i < this.length; i++) { if (this[i] === needle) { return i; } }
     return -1;
@@ -2228,7 +2231,13 @@ var Game = {}; Game.Launch = function () {
     }
     Timer.reset(); Game.loopT++; setTimeout(Game.Loop, 1000 / Game.fps);
   }
+  ready = true;
 }
 Game.Launch(); window.onload = function () {
-  if (!Game.ready) { Game.Load(); }
+  function load() {
+    setTimeout(() => {
+      if (!Game.ready) { Game.Load(); }
+    }, 3000)
+  }
+  load()
 };
