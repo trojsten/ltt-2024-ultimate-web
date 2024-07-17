@@ -727,6 +727,9 @@
   .p-4 {
     padding: var(--spacing-4, 1rem);
   }
+  .p-10 {
+    padding: var(--spacing-10, 2.5rem);
+  }
   .py-1 {
     padding-top: var(--spacing-1, 0.25rem);
     padding-bottom: var(--spacing-1, 0.25rem);

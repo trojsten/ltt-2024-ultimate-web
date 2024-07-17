@@ -126,6 +126,11 @@ const modules: NavGroup[] = [
         name: 'Platby',
         url: '/payments/quickPay',
         key: 'payments'
+      },
+      {
+        name: 'Peniaze',
+        url: "/management",
+        key: 'management'
       }
     ]
   }

@@ -6,7 +6,8 @@
     "games": true,
     "ads": true,
     "reservations": true,
-    "payments": true
+    "payments": true,
+    "management": "admin"
   },
   "system_tags": [
     "transactions",
