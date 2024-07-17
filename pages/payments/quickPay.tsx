@@ -11,18 +11,18 @@ async function paymentPage(req: SessionRequest, error?: string) {
   const recipient = parseInt(req.parsedUrl.searchParams.get("recipient") ?? "NaN")
 
   return <div>
-    <h1>Payment</h1>
+    <h1>Platby</h1>
     {error && <p>{error}</p>}
-    <form method="post">
-      <label htmlFor="amount">Amount</label>
-      <input type="number" name="amount" min="0" max={team.money} id="amount" value={amount} />
-      <label htmlFor="recipient">Recipient</label>
-      <select name="recipient" id="recipient">
+    <form method="post" className="flex flex-col p-10">
+      <label htmlFor="amount">Množstvo</label>
+      <input type="number" name="amount" min="0" max={team.money} id="amount" value={amount} required />
+      <label htmlFor="recipient">Príjemca</label>
+      <select name="recipient" id="recipient" className="border border-gray-400 p-2 rounded hover:border-blue-500 outline-none" required>
         {users.map(user => <option value={user.id} selected={user.id == recipient}>{user.name}</option>)}
       </select>
-      <label htmlFor="message">Message</label>
-      <input type="text" id="message" name="message" />
-      <button type="submit">Pay</button>
+      <label htmlFor="message">Správa</label>
+      <input type="text" id="message" name="message" className="mb-3" required />
+      <button type="submit" className="btn">Zaplatiť</button>
     </form>
   </div>
 }
