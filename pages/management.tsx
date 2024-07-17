@@ -10,18 +10,28 @@ async function getPage(req: SessionRequest) {
     }
   });
 
-  return <form className="p-10" method="post">
+  return <div>
     <h1>Manažment peňazí</h1>
-    <div className="flex flex-col mb-3">
-      <label htmlFor="note">Poznámka</label>
-      <input type="text" name="note" id="note" className="w-full" required />
-    </div>
-    {teams.map(team => <div className="flex items-center justify-between mb-3" key={team.id}>
-      {team.name} ({team.money})
-      <input type="number" name={'money' + team.id} placeholder="Peniaze" defaultValue={req.parsedUrl.searchParams.get('money' + team.id) ?? undefined} />
-    </div>)}
-    <input type="submit" className="btn" />
-  </form>
+    <form className="p-10" method="post">
+      <div className="flex flex-col mb-3">
+        <label htmlFor="note">Poznámka</label>
+        <input type="text" name="note" id="note" className="w-full" required />
+      </div>
+      {teams.map(team => <div className="flex items-center justify-between mb-3" key={team.id}>
+        {team.name} ({team.money})
+        <input type="number" name={'money' + team.id} placeholder="Peniaze" defaultValue={req.parsedUrl.searchParams.get('money' + team.id) ?? undefined} />
+      </div>)}
+      <input type="submit" className="btn" />
+    </form>
+    <h3>Inflácia</h3>
+    <form action="/inflation" className="p-10" method="post">
+      <div className="flex flex-col mb-3">
+        <label htmlFor="inflation">Inflácia</label>
+        <input type="number" name="inflation" id="inflation" className="w-full" required step={0.001} />
+      </div>
+      <input type="submit" className="btn" />
+    </form>
+  </div>
 }
 
 export async function get(req: SessionRequest): Promise<Response> {
