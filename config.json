@@ -13,7 +13,8 @@
     "drift-boss",
     "cookie-clicker",
     "galaxie",
-    "bridges"
+    "bridges",
+    "loopy"
   ],
   "games": {
     "drift-boss": {
@@ -54,6 +55,17 @@
       "sourceUrl": "https://medmunds.github.io/puzzles/",
       "iframeUrl": "./static/bridges.html",
       "thumbnail": "https://medmunds.github.io/puzzles/img/bridges-ibase.png",
+      "cost": 100,
+      "leaderboard": {
+        "enabled": true,
+        "order": "asc"
+      }
+    },
+    "loopy": {
+      "name": "Ohrady",
+      "sourceUrl": "https://medmunds.github.io/puzzles/",
+      "iframeUrl": "./static/loopy.html",
+      "thumbnail": "https://medmunds.github.io/puzzles/img/loopy-ibase.png",
       "cost": 100,
       "leaderboard": {
         "enabled": true,

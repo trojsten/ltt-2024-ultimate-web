@@ -63,8 +63,8 @@ async function getPage(req: SessionRequest) {
 
 function gameUI(game: Game, inner: JSX.Element) {
   return (
-    <div className="relative m-2 max-h-48 max-w-48">
-      <img src={game.thumbnail} className="rounded-md" />
+    <div className="relative m-2 h-48 w-48">
+      <img src={game.thumbnail} className="rounded-md h-48 w-48" />
       <div className="absolute w-full h-full hover:opacity-100 bg-gray-900 rounded-md bg-opacity-40 opacity-0 text-white top-0 flex items-center justify-center flex-col transition-all">
         <h2 className="text-lg font-bold mb-2">{game.name}</h2>
         {inner}

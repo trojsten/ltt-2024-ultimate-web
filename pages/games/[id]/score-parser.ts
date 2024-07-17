@@ -20,6 +20,8 @@ function getScore(gameId: string, gameData: Record<string, string>) {
       return JSON.parse(gameData['result']).score
     case 'bridges':
       return JSON.parse(gameData['result']).score
+    case 'loopy':
+      return JSON.parse(gameData['result']).score
     default:
       console.log('Unknown game', gameId)
       return 0

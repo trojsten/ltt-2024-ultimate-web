@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import getConfig from '@config'
 import db from '@db'
 import type { Sex } from '@prisma/client'
 
-const system_tags = ['transactions', 'drift-boss', 'capybara']
+const system_tags = getConfig().system_tags
 
 export async function importTags() {
   await Promise.all(
