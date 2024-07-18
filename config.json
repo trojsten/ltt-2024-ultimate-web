@@ -76,7 +76,7 @@
     "spect": {
       "name": "Spect",
       "sourceUrl": "https://cdn2.addictinggames.com/addictinggames-content/ag-assets/content-items/html5-games/spect/",
-      "iframeUrl": "https://cdn2.addictinggames.com/addictinggames-content/ag-assets/content-items/html5-games/spect/index.html",
+      "iframeUrl": "./static/spect.html",
       "thumbnail": "https://static.gamezop.com/REwFeKcoN/cover.jpg",
       "cost": 200,
       "leaderboard": {
@@ -93,7 +93,7 @@
     "currentDay": "2024-08-09"
   },
   "ads": {
-    "enabled": true,
+    "enabled": false,
     "adBoostCost": 50,
     "adBoostAmount": 10,
     "earnPerAdWatch": 20,

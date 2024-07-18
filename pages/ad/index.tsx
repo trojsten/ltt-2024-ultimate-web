@@ -51,7 +51,7 @@ export async function pickAd(user: User) {
   }
 }
 
-export async function startAdWatch(req: SessionRequest) {
+export async function startAdWatch(req: SessionRequest, backUrl?: string) {
   if (req.session?.ad !== undefined) {
     return new Response('An ad is already being watched', { status: 400 })
   } else if (req.session?.user === undefined) {
@@ -67,7 +67,7 @@ export async function startAdWatch(req: SessionRequest) {
     timeRemaining: ad.length,
     lastUpdated: Date.now(),
     adWatched: ad,
-    nextPage: req.url
+    nextPage: backUrl ?? req.url
   }
 
   console.log('Ad started', ad.id, ad.name, ad.length)

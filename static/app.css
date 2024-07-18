@@ -457,6 +457,9 @@
   .static\/navbar {
     position: static;
   }
+  .static\/spect {
+    position: static;
+  }
   .sticky {
     position: sticky;
   }
@@ -685,6 +688,9 @@
   .border-gray-200 {
     border-color: var(--color-gray-200, #edf2f7);
   }
+  .border-gray-400 {
+    border-color: var(--color-gray-400, #cbd5e0);
+  }
   .border-gray-500 {
     border-color: var(--color-gray-500, #a0aec0);
   }
@@ -823,6 +829,10 @@
     --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
   }
+  .outline-none {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+  }
   .outline {
     outline-style: var(--tw-outline-style);
     outline-width: 1px;
@@ -851,6 +861,11 @@
     transition-property: all;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 150ms;
+  }
+  .hover\:border-blue-500 {
+    &:hover {
+      border-color: var(--color-blue-500, #4299e1);
+    }
   }
   .hover\:bg-blue-700 {
     &:hover {
@@ -956,7 +971,7 @@
     outline-offset: 2px;
   }
 }
-input[type='text'], input[type='password'], input[type='email'], input[type='number'], input[type='file'] {
+input[type='text'], input[type='password'], input[type='email'], input[type='number'], input[type='file'], select {
   border-radius: 0.25rem;
   border-style: var(--tw-border-style);
   border-width: 1px;
@@ -970,7 +985,7 @@ textarea {
   border-color: var(--color-gray-400, #cbd5e0);
   padding: var(--spacing-2, 0.5rem);
 }
-input[type='text']:focus, input[type='text']:hover, input[type='text']:active, input[type='password']:focus, input[type='password']:hover, input[type='password']:active, input[type='email']:focus, input[type='email']:hover, input[type='email']:active, input[type='number']:focus, input[type='number']:hover, input[type='number']:active {
+input[type='text']:focus, input[type='text']:hover, input[type='text']:active, input[type='password']:focus, input[type='password']:hover, input[type='password']:active, input[type='email']:focus, input[type='email']:hover, input[type='email']:active, input[type='number']:focus, input[type='number']:hover, input[type='number']:active, select:focus, select:hover, select:active {
   border-color: var(--color-blue-500, #4299e1);
 }
 h1 {
