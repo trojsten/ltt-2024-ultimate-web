@@ -1,18 +1,38 @@
 import { renderPage } from '@/main'
+import db from '@db'
 import { type SessionRequest } from '@session'
 
-function home(req: SessionRequest) {
+async function home(req: SessionRequest) {
+  const myItems = (await db.transaction.findMany({
+    where: {
+      userId: req.session!.user.id,
+      consumed: false,
+      NOT: {
+        item: null
+      }
+    },
+    select: {
+      item: true
+    }
+  })).map(e => e.item).filter(e => e != null)
+
+  console.log(myItems)
+
   return (
     <div>
       <div className="bg-red-500">
-        <h1>Home</h1>
-        <p>Session: {req.session?.user.name}</p>
-        <p>Welcome to the home page.</p>
-        <form action="/" method="post">
-          <input type="text" name="test" />
-          <button type="submit">Submit</button>
-        </form>
+        <h1>LTT 2024 Ultimate Web</h1>
       </div>
+      <section>
+        <h2>Moje itemy</h2>
+        <ul>
+          {myItems.map((item) => (
+            <li key={item.id}>
+              {item.name}
+            </li>
+          ))}
+        </ul>
+      </section>
     </div>
   )
 }

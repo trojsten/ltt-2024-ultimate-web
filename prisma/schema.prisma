@@ -5,54 +5,55 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 enum Sex {
-    Male
-    Female
+  Male
+  Female
 }
 
 model User {
-    id           Int           @id @default(autoincrement())
-    email        String        @unique
-    name         String        @unique
-    password     String
-    team         Team          @relation(fields: [teamId], references: [id])
-    teamId       Int
-    sex          Sex
-    tags         Tag[]
-    transactions Transaction[]
-    ads          Ad[]
-    admin        Boolean       @default(false)
-    Reservation  Reservation[]
-    Leaderboard  Leaderboard[]
+  id           Int           @id @default(autoincrement())
+  email        String        @unique
+  name         String        @unique
+  password     String
+  team         Team          @relation(fields: [teamId], references: [id])
+  teamId       Int
+  sex          Sex
+  tags         Tag[]
+  transactions Transaction[]
+  ads          Ad[]
+  admin        Boolean       @default(false)
+  Reservation  Reservation[]
+  Leaderboard  Leaderboard[]
 }
 
 model Team {
-    id           Int           @id @default(autoincrement())
-    name         String
-    users        User[]
-    money        Int
-    transactions Transaction[]
+  id           Int           @id @default(autoincrement())
+  name         String
+  users        User[]
+  money        Int
+  transactions Transaction[]
 }
 
 model Transaction {
-    id          Int      @id @default(autoincrement())
-    amount      Int
-    team        Team     @relation(fields: [teamId], references: [id])
-    teamId      Int
-    user        User     @relation(fields: [userId], references: [id])
-    userId      Int
-    item        Item?    @relation(fields: [itemId], references: [id])
-    itemId      Int?
-    description String?
-    createdAt   DateTime @default(now())
+  id          Int      @id @default(autoincrement())
+  amount      Int
+  team        Team     @relation(fields: [teamId], references: [id])
+  teamId      Int
+  user        User     @relation(fields: [userId], references: [id])
+  userId      Int
+  item        Item?    @relation(fields: [itemId], references: [id])
+  itemId      Int?
+  description String?
+  createdAt   DateTime @default(now())
+  consumed    Boolean  @default(false)
 }
 
 model Item {
@@ -67,70 +68,71 @@ model Item {
   amount         Int           @default(1)
   amountPerUser  Int?
   expirationDate DateTime?
+  consumable     Boolean       @default(false)
 }
 
 model Tag {
-    id     Int     @id @default(autoincrement())
-    name   String  @unique
-    items  Item[]
-    users  User[]
-    ads    Ad[]
-    hidden Boolean @default(false)
+  id     Int     @id @default(autoincrement())
+  name   String  @unique
+  items  Item[]
+  users  User[]
+  ads    Ad[]
+  hidden Boolean @default(false)
 }
 
 model Bed {
-    id          Int           @id @default(autoincrement())
-    room        Room          @relation(fields: [roomId], references: [id])
-    roomId      Int
-    cost        Int
-    location    String
-    Reservation Reservation[]
+  id          Int           @id @default(autoincrement())
+  room        Room          @relation(fields: [roomId], references: [id])
+  roomId      Int
+  cost        Int
+  location    String
+  Reservation Reservation[]
 }
 
 model Reservation {
-    id        Int      @id @default(autoincrement())
-    user      User     @relation(fields: [userId], references: [id])
-    userId    Int
-    bed       Bed      @relation(fields: [bedId], references: [id])
-    bedId     Int
-    date      DateTime
-    cost      Int
-    createdAt DateTime @default(now())
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  bed       Bed      @relation(fields: [bedId], references: [id])
+  bedId     Int
+  date      DateTime
+  cost      Int
+  createdAt DateTime @default(now())
 }
 
 model Room {
-    id        Int      @id @default(autoincrement())
-    name      String
-    features  String[]
-    beds      Bed[]
-    bed_count Int
+  id        Int      @id @default(autoincrement())
+  name      String
+  features  String[]
+  beds      Bed[]
+  bed_count Int
 }
 
 enum AdType {
-    IMAGE
-    VIDEO
+  IMAGE
+  VIDEO
 }
 
 model Ad {
-    id            Int     @id @default(autoincrement())
-    type          AdType
-    name          String
-    content       String
-    link          String?
-    tags          Tag[]
-    length        Int
-    viewRemaining Int
-    views         Int
-    createdBy     User    @relation(fields: [createdById], references: [id])
-    createdById   Int
+  id            Int     @id @default(autoincrement())
+  type          AdType
+  name          String
+  content       String
+  link          String?
+  tags          Tag[]
+  length        Int
+  viewRemaining Int
+  views         Int
+  createdBy     User    @relation(fields: [createdById], references: [id])
+  createdById   Int
 }
 
 model Leaderboard {
-    id        Int      @id @default(autoincrement())
-    user      User     @relation(fields: [userId], references: [id])
-    userId    Int
-    score     Float
-    gameData  String
-    gameId    String
-    createdAt DateTime @default(now())
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  score     Float
+  gameData  String
+  gameId    String
+  createdAt DateTime @default(now())
 }

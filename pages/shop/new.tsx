@@ -28,6 +28,10 @@ function newItem() {
         <input type="number" name="amount" placeholder="Množstvo" id="amount" />
         <label htmlFor="amountPerUser">Maximálny počet zakúpení (na osobu)</label>
         <input type="number" name="amountPerUser" placeholder="Množstvo na osobu" id="amountPerUser" />
+        <div className='flex justify-between items-center my-2'>
+          <label htmlFor="consumable">Minuteľný (Power-up)</label>
+          <input type="checkbox" name="consumable" id="consumable" />
+        </div>
         <label htmlFor="description">Popis</label>
         <textarea
           name="description"
@@ -66,7 +70,8 @@ export async function post(req: SessionRequest): Promise<Response> {
         name: formdata.get('name') as string,
         description: formdata.get('description') as string,
         image: imageId,
-        amountPerUser: parseInt(formdata.get('amountPerUser') as string)
+        amountPerUser: parseInt(formdata.get('amountPerUser') as string),
+        consumable: formdata.get('consumable') === 'on',
       }
     })
   }
