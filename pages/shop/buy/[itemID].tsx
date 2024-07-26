@@ -51,7 +51,7 @@ export async function post(req: SessionRequest): Promise<Response> {
 
   await buy(user.id, item!.cost, item)
 
-  const hook = (item.data as JsonObject).hook as string | undefined
+  const hook = (item.data as JsonObject)?.hook as string | undefined
   if (hook) {
     await hooks[hook]({
       user,
