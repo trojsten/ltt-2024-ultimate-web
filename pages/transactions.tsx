@@ -14,7 +14,7 @@ function Transactions(transactions: any[], showAll: boolean, isAdmin: boolean) {
           <tr>
             <th>Hodnota</th>
             <th>Meno</th>
-            <th>Produkt</th>
+            <th>Produkt / Popis</th>
             {showAll ? <th>Družinka</th> : null}
             <th>Čas</th>
           </tr>
@@ -22,11 +22,11 @@ function Transactions(transactions: any[], showAll: boolean, isAdmin: boolean) {
         <tbody>
           {transactions.map((e) => (
             <tr className="text-center">
-              <td>{e.amount}</td>
+              {amountHTML(e.amount)}
               <td>{e.user.name}</td>
               <td>{e.item?.name ?? e.description}</td>
               {showAll ? <td>{e.team.name}</td> : null}
-              <td>{e.createdAt.toLocaleTimeString()}</td>
+              {timeHTML(e.createdAt)}
             </tr>
           ))}
         </tbody>
@@ -40,6 +40,24 @@ function Transactions(transactions: any[], showAll: boolean, isAdmin: boolean) {
         </a>
       ) : null}
     </div>
+  )
+}
+
+function amountHTML(amount: number) {
+  return (
+    <td className={amount > 0 ? 'text-red-500 flex justify-center' : 'text-green-500 flex justify-center'}>
+      <span className='material-symbols-outlined block'>{amount > 0 ? 'arrow_drop_down' : 'arrow_drop_up'}</span> {Math.abs(amount)}
+    </td>
+  )
+}
+
+function timeHTML(time: Date) {
+  const diff = Date.now() - time.getTime()
+  const day = 1000 * 60 * 60 * 24
+  return (
+    <td className="flex justify-center">
+      {diff > day ? time.toDateString() : time.toLocaleTimeString()}
+    </td>
   )
 }
 
