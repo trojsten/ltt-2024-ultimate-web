@@ -6,7 +6,7 @@ import { importTags, importUsersFromCsv } from '@importer'
 await importTags()
 await importUsersFromCsv('users.csv')
 
-Bun.serve({
+export const server = Bun.serve({
   fetch: async (Request) => {
     const path = new URL(Request.url).pathname
     if (
@@ -36,7 +36,7 @@ Bun.serve({
     if (Request.method == 'POST') {
       if (
         Request.headers.get('Content-Type') ==
-          'application/x-www-form-urlencoded' ||
+        'application/x-www-form-urlencoded' ||
         Request.headers.get('Content-Type')?.includes('multipart/form-data')
       ) {
         data = await Request.formData()
@@ -93,16 +93,16 @@ Bun.serve({
   port: 3000,
   websocket: {
     message: function () // ws: ServerWebSocket<unknown>,
-    // message: string | Buffer
-    : void | Promise<void> {
+      // message: string | Buffer
+      : void | Promise<void> {
       throw new Error('Function not implemented.')
     }
   },
   tls:
     Bun.env.DEBUG == 'True'
       ? {
-          cert: Bun.file('domain.crt'),
-          key: Bun.file('domain.key')
-        }
+        cert: Bun.file('domain.crt'),
+        key: Bun.file('domain.key')
+      }
       : {}
 })

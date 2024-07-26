@@ -1,5 +1,8 @@
 import db, { buy, getItemsForUser } from '@db'
+import type { JsonObject } from '@prisma/client/runtime/library'
 import type { SessionRequest } from '@session'
+import { hooks } from './hooks'
+import { server } from '@index'
 
 export async function post(req: SessionRequest): Promise<Response> {
   const user = req.session!.user
@@ -47,6 +50,16 @@ export async function post(req: SessionRequest): Promise<Response> {
   })
 
   await buy(user.id, item!.cost, item)
+
+  const hook = (item.data as JsonObject).hook as string | undefined
+  if (hook) {
+    await hooks[hook]({
+      user,
+      item,
+      ip: server.requestIP(req),
+      ...(item.data as JsonObject)
+    })
+  }
 
   return Response.redirect('/shop')
 }

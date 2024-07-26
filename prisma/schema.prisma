@@ -70,6 +70,7 @@ model Item {
   amountPerUser  Int?
   expirationDate DateTime?
   consumable     Boolean       @default(false)
+  data           Json?
 }
 
 model Tag {

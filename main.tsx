@@ -2,7 +2,7 @@ import { renderToReadableStream } from 'react-dom/server'
 import { navbar } from './navbar'
 import type { SessionRequest } from '@session'
 
-async function getPage(content: JSX.Element, req: SessionRequest, nav: boolean = true) {
+async function getPage(content: JSX.Element, req: SessionRequest) {
   return (
     <html>
       <head>
@@ -17,7 +17,7 @@ async function getPage(content: JSX.Element, req: SessionRequest, nav: boolean =
       </head>
       <body>
         <main className="flex h-screen min-w-screen flex-col md:flex-row">
-          {nav && req.sessionValid ? await navbar(req) : null}
+          {req.sessionValid ? await navbar(req) : null}
           <section
             className={
               req.sessionValid
@@ -36,10 +36,9 @@ async function getPage(content: JSX.Element, req: SessionRequest, nav: boolean =
 export async function renderPage(
   content: JSX.Element,
   req: SessionRequest,
-  status: number = 200,
-  nav: boolean = true
+  status: number = 200
 ) {
-  const page = await getPage(content, req, nav)
+  const page = await getPage(content, req)
   const stream = await renderToReadableStream(page)
   return new Response(stream, {
     headers: {

@@ -89,8 +89,6 @@ export async function buy(userId: number, cost: number, item: Item | String) {
     data.itemId = item.id
   }
 
-  console.log(data)
-
   return db.transaction.create({
     data
   })
