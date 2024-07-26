@@ -32,6 +32,7 @@ model User {
   admin        Boolean       @default(false)
   Reservation  Reservation[]
   Leaderboard  Leaderboard[]
+  activated    Boolean       @default(false)
 }
 
 model Team {

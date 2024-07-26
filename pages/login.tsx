@@ -46,6 +46,13 @@ export async function post(req: SessionRequest): Promise<Response> {
   const redirectUrl = req.parsedUrl.searchParams.get('redirect')
   if (user && (await Bun.password.verify(password, user.password))) {
     let res: Response
+    if (!user.activated) {
+      return setSession(Response.redirect('/user/activate'), {
+        user: user,
+        ad: undefined
+      })
+    }
+
     if (redirectUrl == null) {
       res = Response.redirect('/')
     } else {

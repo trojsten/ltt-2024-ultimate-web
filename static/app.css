@@ -803,11 +803,17 @@
   .uppercase {
     text-transform: uppercase;
   }
+  .text-blue-300 {
+    color: var(--color-blue-300, #90cdf4);
+  }
   .text-gray-200 {
     color: var(--color-gray-200, #edf2f7);
   }
   .text-gray-400 {
     color: var(--color-gray-400, #cbd5e0);
+  }
+  .text-gray-500 {
+    color: var(--color-gray-500, #a0aec0);
   }
   .text-green-500 {
     color: var(--color-green-500, #48bb78);
