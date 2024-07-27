@@ -2,6 +2,9 @@ import db, { getTeamForUser } from "@db";
 import type { User } from "@prisma/client";
 
 export async function pay(sender: User, receiver: User, amount: number, message: string) {
+  if (amount < 0) {
+    throw new Error('Amount must be positive')
+  }
   const team = await getTeamForUser(sender.id)
   if (team.money < amount) {
     throw new Error('Not enough money')
