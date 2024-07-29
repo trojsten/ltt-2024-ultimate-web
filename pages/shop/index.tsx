@@ -53,6 +53,9 @@ async function getShop(req: SessionRequest) {
           <a href="/shop/new" className="btn bg-green-400">
             Vytvoriť nový produkt
           </a>
+          <a href="/shop/orders" className="btn bg-green-400">
+            Nevybavené objednávky
+          </a>
         </div>
       ) : null}
     </div>

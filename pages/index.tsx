@@ -27,8 +27,11 @@ async function home(req: SessionRequest) {
         <h2>Moje itemy</h2>
         <ul>
           {myItems.map((item) => (
-            <li key={item.id}>
-              {item.name}
+            <li key={item!.id} className='bg-gray-300 rounded-2xl p-2 m-1 flex items-center'>
+              {item!.image && (
+                <img src={item!.image} alt={item!.name} className='w-12 h-12 mr-3 rounded-2xl' />
+              )}
+              {item!.name}
             </li>
           ))}
         </ul>

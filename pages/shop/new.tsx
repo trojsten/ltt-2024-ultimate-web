@@ -2,7 +2,8 @@ import db from '@db'
 import { renderPage } from '@main'
 import type { SessionRequest } from '@session'
 
-function newItem() {
+async function newItem() {
+  const tags = await db.tag.findMany()
   return (
     <div>
       <h1>Nový produkt</h1>
@@ -28,16 +29,18 @@ function newItem() {
         <input type="number" name="amount" placeholder="Množstvo" id="amount" />
         <label htmlFor="amountPerUser">Maximálny počet zakúpení (na osobu)</label>
         <input type="number" name="amountPerUser" placeholder="Množstvo na osobu" id="amountPerUser" />
-        <div className='flex justify-between items-center my-2'>
-          <label htmlFor="consumable">Minuteľný (Power-up)</label>
-          <input type="checkbox" name="consumable" id="consumable" />
-        </div>
         <label htmlFor="description">Popis</label>
         <textarea
           name="description"
           id="description"
           placeholder="popis"
         ></textarea>
+        <label htmlFor="tags">Tagy (kto si môže tento item kúpiť)</label>
+        <select name='tags' multiple id='tags'>
+          {tags.map(e => {
+            return <option value={e.id}>{e.name}</option>
+          })}
+        </select>
         <button type="submit" className="btn">
           Vytvoriť
         </button>
@@ -48,7 +51,7 @@ function newItem() {
 
 export async function get(req: SessionRequest) {
   if (req.session?.user.admin) {
-    return renderPage(newItem(), req)
+    return renderPage(await newItem(), req)
   }
   return new Response('Unauthorized', { status: 403 })
 }
@@ -72,6 +75,11 @@ export async function post(req: SessionRequest): Promise<Response> {
         image: imageId,
         amountPerUser: parseInt(formdata.get('amountPerUser') as string),
         consumable: formdata.get('consumable') === 'on',
+        tags: {
+          connect: formdata.getAll('tags').map(e => {
+            return { id: e }
+          })
+        }
       }
     })
   }
