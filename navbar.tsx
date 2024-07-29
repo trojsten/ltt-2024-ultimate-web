@@ -45,7 +45,6 @@ export async function navbar(req: SessionRequest) {
   )
 }
 async function isVisible(module: string, user: User | undefined) {
-  console.log(module)
   if (user === undefined) {
     return false
   }

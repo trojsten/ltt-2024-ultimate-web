@@ -181,9 +181,9 @@ var Game = {}; Game.Launch = function () {
     Game.seed = Game.makeSeed(); Game.volume = 50; Game.elderWrath = 0; Game.elderWrathOld = 0; Game.elderWrathD = 0; Game.pledges = 0; Game.pledgeT = 0; Game.researchT = 0; Game.nextResearch = 0; Game.cookiesSucked = 0; Game.cpsSucked = 0; Game.wrinklersPopped = 0; Game.santaLevel = 0; Game.reindeerClicked = 0; Game.seasonT = 0; Game.seasonUses = 0; Game.dragonLevel = 0; Game.dragonAura = 0; Game.dragonAura2 = 0; Game.fortuneGC = 0; Game.fortuneCPS = 0; Game.blendModesOn = (document.createElement('detect').style.mixBlendMode === ''); Game.bg = ''; Game.bgFade = ''; Game.bgR = 0; Game.bgRd = 0; Game.windowW = window.innerWidth; Game.windowH = window.innerHeight; window.addEventListener('resize', function (event) {
       Game.windowW = window.innerWidth; Game.windowH = window.innerHeight; for (var i in Game.Objects) { var me = Game.Objects[i]; me.toResize = true; if (me.minigame && me.minigame.onResize) me.minigame.onResize(); }
     }); Game.startDate = parseInt(Date.now()); Game.fullDate = parseInt(Date.now()); Game.lastDate = parseInt(Date.now()); Game.prefs = []; Game.DefaultPrefs = function () { Game.prefs.particles = 1; Game.prefs.numbers = 1; Game.prefs.autosave = 1; Game.prefs.autoupdate = 1; Game.prefs.milk = 1; Game.prefs.fancy = 1; Game.prefs.warn = 0; Game.prefs.cursors = 1; Game.prefs.focus = 1; Game.prefs.popups = 0; Game.prefs.format = 0; Game.prefs.notifs = 0; Game.prefs.animate = 1; Game.prefs.wobbly = 1; Game.prefs.monospace = 0; Game.prefs.filters = 0; Game.prefs.cookiesound = 1; Game.prefs.crates = 0; Game.prefs.altDraw = 0; Game.prefs.showBackupWarning = 0; Game.prefs.extraButtons = 1; Game.prefs.askLumps = 0; Game.prefs.customGrandmas = 1; Game.prefs.timeout = 0; }
-    Game.DefaultPrefs(); window.onbeforeunload = function (event) {
-      if (Game.prefs && Game.prefs.warn) { if (typeof event == 'undefined') event = window.event; if (event) event.returnValue = 'Are you sure you want to close Cookie Clicker?'; }
-    }
+    Game.DefaultPrefs();// window.onbeforeunload = function (event) {
+    //if (Game.prefs && Game.prefs.warn) { if (typeof event == 'undefined') event = window.event; if (event) event.returnValue = 'Are you sure you want to close Cookie Clicker?'; }
+    //}
     Game.Mobile = function () {
       if (!Game.mobile) { l('wrapper').className = 'mobile'; Game.mobile = 1; }
       else { l('wrapper').className = ''; Game.mobile = 0; }

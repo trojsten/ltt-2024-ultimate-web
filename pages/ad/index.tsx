@@ -9,12 +9,11 @@ function renderAd(ad: Ad) {
       <h1 className='absolute top-3 left-5 text-3xl text-white' >{ad.name}</h1  >
       <a href={ad.link ?? ""} id="link"></a>
       {ad.type == 'IMAGE' ? (
-        <img src={ad.content} className="w-full h-full" id="ad" />
+        <img src={ad.content} className="w-full h-full object-contain" id="ad" />
       ) : (
         <video
           src={ad.content}
-          autoPlay
-          className="w-full h-full"
+          className="w-full h-full object-contain"
           disablePictureInPicture
           id="ad"
         />
