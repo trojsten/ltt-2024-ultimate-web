@@ -22,7 +22,7 @@ function login(errors: Record<string, string>, req: SessionRequest, data: FormDa
         <p className="text-sm text-gray-500">Heslo si môžeš zvoliť hocijake avšak neskôr si ho nevieš zmeniť.</p>
         {errors['passwordCheck'] ? <p className="text-red-500">{errors['passwordCheck']}</p> : null}
         <div className="flex justify-between my-3">
-          <label htmlFor="terms">Súhlasím s <a href="/conditions" className="text-blue-300">podmienkami používania aplikácie</a></label>
+          <label htmlFor="terms">Súhlasím s <a href="/static/terms-and-conditions.pdf" className="text-blue-300" target="_blank">podmienkami používania aplikácie</a></label>
           <input type="checkbox" name="terms" id="terms" checked={data.has("terms") && data.get("terms") === 'on'} />
         </div>
         {errors['terms'] ? <p className="text-red-500">{errors['terms']}</p> : null}

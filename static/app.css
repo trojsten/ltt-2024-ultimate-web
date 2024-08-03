@@ -460,6 +460,9 @@
   .static\/spect {
     position: static;
   }
+  .static\/terms-and-conditions {
+    position: static;
+  }
   .sticky {
     position: sticky;
   }
