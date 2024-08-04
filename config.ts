@@ -26,6 +26,7 @@ export interface Config {
     sameRoomMultiplier: number
     cancelRefund: number
     currentDay: string
+    sameRoommateMultiplier: number
   }
   ads: {
     enabled: boolean

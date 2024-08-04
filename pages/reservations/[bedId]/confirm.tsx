@@ -5,19 +5,27 @@ import type { User } from '@prisma/client'
 
 async function confirmPage(user: User, bedid: number) {
   try {
-    const cost = await getReservationCost(user, bedid)
+    const result = await getReservationCost(user, bedid)
     return (
-      <div>
-        <h1>Rezervovať posteľ #{bedid}</h1>
-        <p>Naozaj rezervovať túto posteľ?</p>
-        <form method="post">
-          <a href="/reservations" className="btn">
-            Späť
-          </a>
-          <button type="submit" className="btn">
-            Rezervovať ({cost})
-          </button>
-        </form>
+      <div className='flex flex-col justify-center items-center h-screen'>
+        <h1 className='mb-3'>Rezervovať posteľ #{bedid}</h1>
+        <div>
+          <ul className='my-3'>
+            {result.sameBed ? (<li className='text-red-500'>Príplatok za repetitívne použitie postele</li>) : null}
+            {result.sameRoom ? (<li className='text-red-500'>Príplatok za repetitívne použitie izby</li>) : null}
+            {result.sameSex ? (<li className='text-red-500'>Príplatok za zmiešanú izbu</li>) : null}
+            {result.sameRoommate ? (<li className='text-red-500'>Príplatok za repetitívnu zostavu izby</li>) : null}
+          </ul>
+          <p>Naozaj rezervovať túto posteľ?</p>
+          <form method="post" className='flex w-full justify-between'>
+            <a href="/reservations" className="btn">
+              <span>Späť</span>
+            </a>
+            <button type="submit" className="btn">
+              <span>Rezervovať ({result.cost})</span>
+            </button>
+          </form>
+        </div>
       </div>
     )
   } catch (e) {

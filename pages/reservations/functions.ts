@@ -104,13 +104,35 @@ export async function getReservationCost(user: User, bedid: number) {
     select: {
       user: {
         select: {
-          sex: true
+          sex: true,
+          id: true
         }
       },
       bedId: true
     }
   })
+
+  const allRoommates = (await db.reservation.findMany({
+    where: {
+      date: {
+        lt: getToday()
+      },
+      bed: {
+        roomId: bed.roomId
+      },
+      NOT: {
+        userId: user.id
+      }
+    },
+    select: {
+      userId: true
+    }
+  })).map(e => e.userId)
+
+  console.log(allRoommates)
+
   let hasDifferentSexInRoom = false
+  let hasSameRoommate = false
   for (const roommate of roommates) {
     if (roommate.bedId == bedid) {
       throw new Error('Bed is already reserved')
@@ -118,10 +140,17 @@ export async function getReservationCost(user: User, bedid: number) {
     if (roommate.user.sex != user.sex) {
       hasDifferentSexInRoom = true
     }
+    if (allRoommates.includes(roommate.user.id)) {
+      hasSameRoommate = true
+    }
   }
 
   if (hasDifferentSexInRoom) {
     bedCost *= getConfig().reservations.differentSexMultiplier
+  }
+
+  if (hasSameRoommate) {
+    bedCost *= getConfig().reservations.sameRoommateMultiplier
   }
 
   const pastReservations = await getPastReservationsInRoom(bed.roomId)
@@ -129,6 +158,7 @@ export async function getReservationCost(user: User, bedid: number) {
   let wasInThisBed = false
 
   for (const reservation of pastReservations) {
+    getToday
     if (reservation.user.id != user.id) continue
     if (reservation.bed.id == bed.id) {
       wasInThisBed = true
@@ -148,7 +178,13 @@ export async function getReservationCost(user: User, bedid: number) {
     bedCost *= getConfig().reservations.sameBedMultiplier
   }
 
-  return bedCost
+  return {
+    cost: bedCost,
+    sameRoom: wasInThisRoom,
+    sameBed: wasInThisBed,
+    sameSex: hasDifferentSexInRoom,
+    sameRoommate: hasSameRoommate
+  }
 }
 
 async function getPastReservationsInRoom(roomid: number) {

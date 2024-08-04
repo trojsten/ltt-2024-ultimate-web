@@ -21,7 +21,7 @@ async function Reservations() {
   return (
     <div className="container w-full md:w-2/3 m-auto">
       <h1>Rezervácie</h1>
-      <ul className="flex flex-col border-2 border-blue-500 rounded-md p-2">
+      <ul className="flex flex-col">
         {rooms.map((room) => roomHTML(room, currentReservations))}
       </ul>
       <p className="opacity-70">
@@ -38,7 +38,7 @@ function roomHTML(room: any, reservations: any[]) {
     (e) => e.user.id === request.session!.user.id
   )
   return (
-    <li className="m-2">
+    <li className="m-2 border-2 border-blue-500 rounded-md p-2">
       <h2 className="text-xl">{room.name}</h2>
       <p>
         Počet postelí: <strong>{room.bed_count}</strong>

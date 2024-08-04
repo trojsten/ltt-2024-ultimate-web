@@ -21,10 +21,10 @@ async function home(req: SessionRequest) {
   return (
     <div>
       <div className="bg-red-500">
-        <h1>LTT 2024 Ultimate Web</h1>
+        <h1>Legálne Transakcie Trojstenu</h1>
       </div>
-      <section>
-        <h2>Moje itemy</h2>
+      <section className='mx-2'>
+        <h2>Moje kúpené veci</h2>
         <ul>
           {myItems.map((item) => (
             <li key={item!.id} className='bg-gray-300 rounded-2xl p-2 m-1 flex items-center'>
@@ -40,6 +40,6 @@ async function home(req: SessionRequest) {
   )
 }
 
-export function get(req: SessionRequest) {
-  return renderPage(home(req), req)
+export async function get(req: SessionRequest) {
+  return renderPage(await home(req), req)
 }

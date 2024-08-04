@@ -27,7 +27,7 @@ async function myAds(userId: number) {
   })
 
   return (
-    <div>
+    <section className='mx-2'>
       {config().ads.enabled ? null : (
         <p className="text-red-500">
           Reklamy sú vypnuté, zapni ich v konfiguračnom súbore
@@ -84,7 +84,7 @@ async function myAds(userId: number) {
       <a href="new" className="btn">
         Nová reklama
       </a>
-    </div>
+    </section>
   )
 }
 
