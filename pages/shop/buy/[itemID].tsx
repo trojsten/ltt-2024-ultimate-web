@@ -56,7 +56,7 @@ export async function post(req: SessionRequest): Promise<Response> {
     await hooks[hook]({
       user,
       item,
-      ip: req.ip,
+      ip: req.headers.get("X-Forwarded-For")?.split(',')[0] ?? req.ip,
       ...(item.data as JsonObject)
     })
   }
