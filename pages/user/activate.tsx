@@ -50,7 +50,7 @@ export async function post(req: SessionRequest) {
   req.sessionValid = false
   const data = req.data as FormData
   const errors: Record<string, string> = {}
-  const validName = /^[a-zA-Z0-9_\s]{3,20}$/
+  const validName = /^[a-zA-Z0-9_À-ž\s]{3,20}$/
   const userName = data.get('username') as string
   if (!data.has('username'))
     errors['username'] = 'Meno je povinné'
