@@ -101,6 +101,7 @@ export async function post(req: SessionRequest): Promise<Response> {
         viewRemaining: config().ads.initialViews,
         views: 0,
         createdById: req.session!.user.id,
+        link: formdata.get('link') as string,
         length: duration * 1000
       }
     })
