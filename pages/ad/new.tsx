@@ -83,7 +83,7 @@ export async function post(req: SessionRequest): Promise<Response> {
   const contentId = crypto.randomUUID()
   await Bun.write('uploads/' + contentId, formdata.get('content')!)
   const duration =
-    type == 'IMAGE' ? 10 : await getDuration('uploads/' + contentId)
+    type == 'IMAGE' ? 10 : Math.min(await getDuration('uploads/' + contentId), 30)
   try {
     await buy(
       req.session!.user.id,

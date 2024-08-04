@@ -23,11 +23,23 @@ export async function get(req: SessionRequest): Promise<Response> {
   req.session.ad.timeRemaining = timeRemaining
   req.session.ad.lastUpdated = Date.now()
   if (timeRemaining <= 0) {
+    const adByAdmin = (await db.ad.findFirst({
+      where: {
+        id: req.session.ad.adWatched.id,
+      },
+      select: {
+        createdBy: {
+          select: {
+            id: true,
+          }
+        }
+      }
+    }))!.createdBy.id
     await db.ad.update({
       where: { id: req.session.ad.adWatched.id },
       data: {
         views: req.session.ad.adWatched.views + 1,
-        viewRemaining: req.session.ad.adWatched.viewRemaining - 1
+        viewRemaining: adByAdmin ? req.session.ad.adWatched.viewRemaining : req.session.ad.adWatched.viewRemaining - 1
       }
     })
 
