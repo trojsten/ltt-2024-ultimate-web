@@ -47,7 +47,8 @@ export const server = Bun.serve({
     }
 
     const sessReq = new SessionRequest(Request, data, route.params)
-
+    const ip = server.requestIP(Request)
+    sessReq.ip = ip?.address ?? 'unknown'
     if (
       sessReq.session?.ad !== undefined &&
       !sessReq.parsedUrl.pathname.startsWith('/ad')

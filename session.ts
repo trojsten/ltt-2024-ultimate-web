@@ -19,6 +19,7 @@ export class SessionRequest extends Request {
   session?: Session
   sessionValid = true
   parsedUrl: URL
+  ip!: string
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   jsonBody: any
   constructor(

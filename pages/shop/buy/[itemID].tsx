@@ -56,7 +56,7 @@ export async function post(req: SessionRequest): Promise<Response> {
     await hooks[hook]({
       user,
       item,
-      ip: server.requestIP(req),
+      ip: req.ip,
       ...(item.data as JsonObject)
     })
   }
