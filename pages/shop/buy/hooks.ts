@@ -1,11 +1,10 @@
-import db, { buy, getTeamForUser } from "@db";
-import type { Item, User } from "@prisma/client";
+import db, { buy, getTeamForUser } from '@db'
+import type { Item, User } from '@prisma/client'
 
 interface HookArgs extends Record<string, unknown> {
-  item: Item,
-  user: User,
+  item: Item
+  user: User
 }
-
 
 /// lootbox item type:
 // {
@@ -16,30 +15,30 @@ interface HookArgs extends Record<string, unknown> {
 // }
 
 interface LootboxItem {
-  itemId?: number,
-  type: "coins" | "item" | "none",
-  amount?: number,
+  itemId?: number
+  type: 'coins' | 'item' | 'none'
+  amount?: number
   count: number
 }
 
 export const hooks: Record<string, (args: HookArgs) => Promise<void>> = {
-  "internet": async (args: HookArgs) => {
+  internet: async (args: HookArgs) => {
     const body = {
-      list: "purchased",
+      list: 'purchased',
       address: args.ip,
-      timeout: args.timeout + "m",
+      timeout: args.timeout + 'm'
     }
     console.log(body)
-    await fetch("http://10.85.255.4/rest/ip/firewall/address-list", {
-      method: "PUT",
+    await fetch('http://10.85.255.4/rest/ip/firewall/address-list', {
+      method: 'PUT',
       headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Basic ltt:yJy0zY8x"
+        'Content-Type': 'application/json',
+        Authorization: 'Basic bHR0OnlKeTB6WTh4'
       },
       body: JSON.stringify(body)
     })
   },
-  "lootbox": async (args: HookArgs) => {
+  lootbox: async (args: HookArgs) => {
     const items = args.items as LootboxItem[]
     const itemCount = items.reduce((acc, e) => acc + e.count, 0)
     let rand = Math.floor(Math.random() * itemCount)
@@ -52,9 +51,9 @@ export const hooks: Record<string, (args: HookArgs) => Promise<void>> = {
       rand -= items[i].count
     }
 
-    if (item?.type == "coins") {
-      await buy(args.user.id, -item.amount!, "Výhra z lootboxu")
-    } else if (item?.type == "item") {
+    if (item?.type == 'coins') {
+      await buy(args.user.id, -item.amount!, 'Výhra z lootboxu')
+    } else if (item?.type == 'item') {
       await db.transaction.create({
         data: {
           amount: 0,
