@@ -53,6 +53,7 @@ export async function post(req: SessionRequest) {
   try {
     await createReservation(user, parseInt(bedId))
   } catch (e) {
+    console.log(e)
     return get(req)
   }
   return Response.redirect('/reservations')

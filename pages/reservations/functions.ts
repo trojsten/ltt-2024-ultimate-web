@@ -30,13 +30,13 @@ export async function createReservation(
   bedid: number
 ): Promise<Reservation> {
   const cost = await getReservationCost(user, bedid)
-  await buy(user.id, cost, new String('Rezervácia postele #' + bedid))
+  await buy(user.id, cost.cost, new String('Rezervácia postele #' + bedid))
   return db.reservation.create({
     data: {
       userId: user.id,
       bedId: bedid,
       date: getToday(),
-      cost: cost
+      cost: cost.cost
     }
   })
 }

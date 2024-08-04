@@ -48,4 +48,5 @@ export async function post(req: SessionRequest) {
     await Bun.write("uploads/" + fileName, file)
     return renderPage(getPage('Súbor uploadnutý do /uploads/' + fileName), req)
   }
+  return renderPage(getPage('Prosím špecifikuj meno súboru'), req)
 }
