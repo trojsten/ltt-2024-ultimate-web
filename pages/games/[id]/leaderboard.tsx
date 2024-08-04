@@ -29,7 +29,7 @@ async function leaderBoard(gameId: string) {
           <li className="flex m-1" key={i}>
             <p className="w-1/6 text-right pr-2">{i + 1}.</p>{' '}
             <p className="w-1/2">{entry.user.name}</p>{' '}
-            <p className="font-bold w-1/3">{entry.score}</p>
+            <p className="font-bold w-1/3">{entry.score.toFixed(2)}</p>
           </li>
         ))}
       </ul>

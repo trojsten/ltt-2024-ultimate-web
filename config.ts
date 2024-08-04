@@ -44,11 +44,11 @@ export interface Config {
 let config: Config = loadConfig()
 
 export function loadConfig(): Config {
-  const str = fs.readFileSync('config.json', 'utf-8')
+  const str = fs.readFileSync('uploads/config.json', 'utf-8')
   return JSON.parse(str) as Config
 }
 
-const watcher = fs.watch(import.meta.dir, (event, filename) => {
+const watcher = fs.watch(import.meta.dir + '/uploads', (event, filename) => {
   console.log(`Detected ${event} in ${filename}`)
   if (event !== 'change' || filename !== 'config.json') return
   console.log('Reloading config')
