@@ -51,7 +51,6 @@ export function loadConfig(): Config {
 const watcher = fs.watch(import.meta.dir + '/uploads', (event, filename) => {
   console.log(`Detected ${event} in ${filename}`)
   if (event !== 'change' || filename !== 'config.json') return
-  console.log('Reloading config')
   const currConfig = JSON.parse(JSON.stringify(config))
   try {
     config = loadConfig()

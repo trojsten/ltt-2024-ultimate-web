@@ -77,7 +77,7 @@ export async function post(req: SessionRequest): Promise<Response> {
         consumable: formdata.get('consumable') === 'on',
         tags: {
           connect: formdata.getAll('tags').map(e => {
-            return { id: e }
+            return { id: parseInt(e) }
           })
         }
       }
