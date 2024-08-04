@@ -41,9 +41,11 @@ async function getPage(req: SessionRequest) {
               games[gameId],
               <form method="post" className="flex flex-col">
                 <input type="hidden" name="gameId" value={gameId} />
-                <button type="submit" className="btn">
-                  Kúpiť ({games[gameId].cost})
-                </button>
+                {gameId != 'hovna' && (
+                  <button type="submit" className="btn">
+                    Kúpiť ({games[gameId].cost})
+                  </button>
+                )}
                 {games[gameId].leaderboard?.enabled ? (
                   <a
                     className="btn my-3"
