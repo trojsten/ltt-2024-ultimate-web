@@ -83,7 +83,7 @@ export function itemHTML(
       <div className="p-2">
         <p className="mb-4 mt-2">{item.description}</p>
         <div className="flex justify-between">
-          <p>{item.amount} kusov</p>
+          {item.amount < 1000 ? (<p>{item.amount} kusov</p>) : <p>&infin; kusov</p>}
           <p className="font-bold flex items-center">
             {item.cost}{' '}
             <span className="material-symbols-outlined">monetization_on</span>
