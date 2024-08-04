@@ -33,7 +33,7 @@ async function getShop(req: SessionRequest) {
         gt: 0
       }
     }
-  })).filter(e => e.amountPerUser == null || counts[e.id] == undefined || counts[e.id] < e.amountPerUser)
+  })).filter(e => e.amountPerUser == null || counts[e.id] == undefined || (counts[e.id] < e.amountPerUser && !req.session!.user.admin))
 
 
 
