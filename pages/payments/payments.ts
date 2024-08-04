@@ -1,7 +1,12 @@
-import db, { getTeamForUser } from "@db";
-import type { User } from "@prisma/client";
+import db, { getTeamForUser } from '@db'
+import type { User } from '@prisma/client'
 
-export async function pay(sender: User, receiver: User, amount: number, message: string) {
+export async function pay(
+  sender: User,
+  receiver: User,
+  amount: number,
+  message: string
+) {
   if (amount < 0) {
     throw new Error('Amount must be positive')
   }
@@ -12,7 +17,7 @@ export async function pay(sender: User, receiver: User, amount: number, message:
 
   await db.transaction.create({
     data: {
-      amount,
+      amount: -amount,
       userId: receiver.id,
       teamId: (await getTeamForUser(receiver.id)).id,
       description: message
@@ -21,7 +26,7 @@ export async function pay(sender: User, receiver: User, amount: number, message:
 
   await db.transaction.create({
     data: {
-      amount: -amount,
+      amount,
       userId: sender.id,
       teamId: team.id,
       description: message
