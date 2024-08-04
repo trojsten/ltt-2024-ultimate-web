@@ -2,6 +2,7 @@ import { startAdWatch } from '@pages/ad'
 import { SessionRequest } from './session'
 import config from '@config'
 import { importTags, importUsersFromCsv } from '@importer'
+import getConfig from '@config'
 
 await importTags()
 await importUsersFromCsv('users.csv')
@@ -62,7 +63,7 @@ export const server = Bun.serve({
       sessReq.session.ad === undefined &&
       !sessReq.parsedUrl.pathname.startsWith('/ad') &&
       !sessReq.parsedUrl.pathname.match(/\/games\/[a-z-]*\//) &&
-      Math.random() > 0.5 &&
+      Math.random() > 1 - getConfig().ads.adShowProbability / 100 &&
       sessReq.method == 'GET'
     ) {
       try {

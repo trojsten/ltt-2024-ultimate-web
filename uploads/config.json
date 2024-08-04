@@ -94,12 +94,13 @@
     "currentDay": "2024-08-10"
   },
   "ads": {
-    "enabled": false,
+    "enabled": true,
     "adBoostCost": 50,
     "adBoostAmount": 10,
     "earnPerAdWatch": 20,
     "adCreationCost": 100,
-    "initialViews": 30
+    "initialViews": 30,
+    "adShowProbability": 0.1
   },
   "transactions": {
     "transactionUnlockCost": 200

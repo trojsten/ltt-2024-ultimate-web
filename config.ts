@@ -35,6 +35,7 @@ export interface Config {
     earnPerAdWatch: number
     adCreationCost: number
     initialViews: number
+    adShowProbability: number
   }
   transactions: {
     transactionUnlockCost: number
@@ -57,6 +58,7 @@ const watcher = fs.watch(import.meta.dir + '/uploads', (event, filename) => {
   } catch (err) {
     console.error(err)
     config = currConfig
+    fs.writeFileSync('uploads/config.json', JSON.stringify(config, null, 2))
   }
 })
 

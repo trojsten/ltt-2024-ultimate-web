@@ -42,12 +42,6 @@ async function getShop(req: SessionRequest) {
   return (
     <div>
       <h1 className="text-xl text-center mb-8 mt-3 font-bold">Obchod</h1>
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 m-2">
-        {items.length == 0 ? (
-          <p className="text-red-500">Momentálne sa nič nedá kúpiť</p>
-        ) : null}
-        {items.map((e) => itemHTML(e, true, team!.money >= e.cost))}
-      </div>
       {req.session?.user.admin ? (
         <div className="flex justify-center">
           <a href="/shop/new" className="btn bg-green-400">
@@ -58,6 +52,12 @@ async function getShop(req: SessionRequest) {
           </a>
         </div>
       ) : null}
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 m-2">
+        {items.length == 0 ? (
+          <p className="text-red-500">Momentálne sa nič nedá kúpiť</p>
+        ) : null}
+        {items.map((e) => itemHTML(e, true, team!.money >= e.cost))}
+      </div>
     </div>
   )
 }
