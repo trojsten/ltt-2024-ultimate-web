@@ -3,8 +3,6 @@ import { renderPage } from "@main"
 import type { SessionRequest } from "@session"
 
 
-
-
 async function Page(req: SessionRequest) {
 
   let items = await db.transaction.findMany({
