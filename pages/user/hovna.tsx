@@ -1,5 +1,6 @@
-import db from "@db";
-import type { SessionRequest } from "@session";
+import db from '@db'
+import { getLeaderboardForUser } from '@pages/games/[id]/leaderboard'
+import type { SessionRequest } from '@session'
 
 export async function post(req: SessionRequest) {
   let current = (await db.user.findUnique({
@@ -11,12 +12,11 @@ export async function post(req: SessionRequest) {
     }
   }))!.hovna
 
-
-  if (req.data.get("remove")) {
-    current--;
+  if (req.data.get('remove')) {
+    current--
     current = Math.max(0, current)
   } else {
-    current++;
+    current++
   }
 
   await db.user.update({
@@ -25,6 +25,15 @@ export async function post(req: SessionRequest) {
     },
     data: {
       hovna: current
+    }
+  })
+  const id = (await getLeaderboardForUser(req.session!.user.id, 'hovna')).id
+  await db.leaderboard.update({
+    where: {
+      id: id
+    },
+    data: {
+      score: current
     }
   })
 

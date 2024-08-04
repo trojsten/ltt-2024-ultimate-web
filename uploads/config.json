@@ -83,6 +83,14 @@
         "enabled": true,
         "order": "desc"
       }
+    },
+    "hovna": {
+      "name": "hovna",
+      "thumbnail": "./static/pou.png",
+      "leaderboard": {
+        "enabled": true,
+        "order": "asc"
+      }
     }
   },
   "reservations": {
