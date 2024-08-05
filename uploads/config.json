@@ -7,7 +7,8 @@
     "ads": "admin",
     "reservations": true,
     "payments": true,
-    "management": "admin"
+    "management": "admin",
+    "videos": false
   },
   "system_tags": [
     "transactions",

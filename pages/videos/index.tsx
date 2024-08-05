@@ -1,16 +1,19 @@
 import db from '@db'
 import { renderPage } from '@main'
+import type { User } from '@prisma/client'
 import type { SessionRequest } from '@session'
 
-async function myVideos(userId: number) {
+async function myVideos(user: User) {
   const videos = await db.video.findMany({
     where: {
-      userId: userId
+      userId: user.id
     },
     select: {
       name: true,
       content: true,
-      id: true
+      id: true,
+      rating: true,
+      users: true
     },
     orderBy: {
       id: 'desc'
@@ -35,19 +38,27 @@ async function myVideos(userId: number) {
                 disablePictureInPicture
                 controls
               />
+              <div className="mx-5 mt-3">
+                Hodnotenie: {video.rating} / {video.users.length * 10}
+              </div>
             </div>
           ))
         ) : (
           <p>Žiadne videá</p>
         )}
       </div>
-      <a href="/videos/new" className="btn">
+      <a href="/videos/new" className="btn mx-2">
         Nové video
       </a>
+      {user.admin && (
+        <a href="/videos/watch" className="btn mx-2">
+          Pozrieť si videá
+        </a>
+      )}
     </section>
   )
 }
 
 export async function get(req: SessionRequest): Promise<Response> {
-  return renderPage(await myVideos(req.session!.user.id), req)
+  return renderPage(await myVideos(req.session!.user), req)
 }

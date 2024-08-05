@@ -13,10 +13,12 @@ export async function navbar(req: SessionRequest) {
   return (
     <aside className="shrink-0 md:w-64 bg-gray-800 flex flex-col">
       <header className="bg-blue-500 flex items-center h-14">
-        <a href='/' className='pl-4 flex gap-1 justify-center items-center'>
+        <a href="/" className="pl-4 flex gap-1 justify-center items-center">
           <span className="block material-symbols-outlined">person</span>
           {user?.name} | {team?.money}
-          <span className="block material-symbols-outlined">monetization_on</span>
+          <span className="block material-symbols-outlined">
+            monetization_on
+          </span>
         </a>
         <div
           className="flex justify-center items-center ml-auto mr-2 text-white text-sm md:hidden px-4 py-2 hover:bg-blue-700 rounded-md cursor-pointer"
@@ -130,8 +132,13 @@ const modules: NavGroup[] = [
       },
       {
         name: 'Peniaze',
-        url: "/management",
+        url: '/management',
         key: 'management'
+      },
+      {
+        name: 'Videá',
+        url: '/videos',
+        key: 'videos'
       }
     ]
   }
