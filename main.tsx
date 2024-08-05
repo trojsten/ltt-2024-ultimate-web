@@ -11,7 +11,7 @@ async function getPage(content: JSX.Element, req: SessionRequest) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <script src="/static/navbar.js" defer async />
         <link rel="manifest" href="/static/manifest.json" />
-        <link rel="icon" href="favicon.ico" type="image/x-icon" />
+        <link rel="icon" href="/static/favicon.ico" type="image/x-icon" />
         <meta property="og:image" content="/static/ltt.svg" />
         <meta property="twitter:image" content="/static/ltt.svg" />
         <link rel="apple-touch-icon" href="/static/icon512_rounded.png" />
