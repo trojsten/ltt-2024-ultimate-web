@@ -27,7 +27,8 @@ var filesToCache = [
   '/static/icon512_rounded.png',
   '/static/ltt.svg',
   '/static/sw.js',
-  '/static/favicon.ico'
+  '/static/favicon.ico',
+  '/static/icons.woff2'
 ]
 
 /* Start the service worker and cache all of the app's content */
