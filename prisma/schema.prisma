@@ -36,6 +36,7 @@ model User {
     hovna         Int           @default(0)
     createdVideos Video[]       @relation("users_createdVideos")
     watchedVideos Video[]       @relation("users_watchedVideos")
+    Quest         Quest[]
 }
 
 model Team {
@@ -47,17 +48,19 @@ model Team {
 }
 
 model Transaction {
-    id          Int      @id @default(autoincrement())
+    id          Int         @id @default(autoincrement())
     amount      Int
-    team        Team     @relation(fields: [teamId], references: [id])
+    team        Team        @relation(fields: [teamId], references: [id])
     teamId      Int
-    user        User     @relation(fields: [userId], references: [id])
+    user        User        @relation(fields: [userId], references: [id])
     userId      Int
-    item        Item?    @relation(fields: [itemId], references: [id])
+    item        Item?       @relation(fields: [itemId], references: [id])
     itemId      Int?
+    bet         BetOutcome? @relation(fields: [betId], references: [id])
+    betId       Int?
     description String?
-    createdAt   DateTime @default(now())
-    consumed    Boolean  @default(false)
+    createdAt   DateTime    @default(now())
+    consumed    Boolean     @default(false)
 }
 
 model Item {
@@ -83,6 +86,7 @@ model Tag {
     users  User[]
     ads    Ad[]
     hidden Boolean @default(false)
+    bet    Bet[]
 }
 
 model Bed {
@@ -149,4 +153,42 @@ model Video {
     users     User[] @relation("users_watchedVideos")
     CreatedBy User   @relation(name: "users_createdVideos", fields: [userId], references: [id])
     userId    Int
+}
+
+enum QuestType {
+    Simple
+    Numeric
+}
+
+model Quest {
+    id         Int     @id @default(autoincrement())
+    task       String
+    type       String
+    answer     Int?
+    requiredBy Quest[] @relation("questRequire")
+    requiring  Quest[] @relation("questRequire")
+    user       User?   @relation(fields: [userId], references: [id])
+    userId     Int?
+    priority   Int
+}
+
+model BetOutcome {
+    id           Int           @id @default(autoincrement())
+    description  String
+    odds         Float
+    PossileBet   Bet           @relation(name: "possibleOutcomes", fields: [PossileBetId], references: [id])
+    PossileBetId Int
+    FinalBet     Bet           @relation(name: "finalOutcomes", fields: [FinalBetId], references: [id])
+    FinalBetId   Int
+    limit        Int?
+    Transaction  Transaction[]
+}
+
+model Bet {
+    id              Int          @id @default(autoincrement())
+    description     String
+    possileOutcomes BetOutcome[] @relation("possibleOutcomes")
+    finalOutcomes   BetOutcome[] @relation("finalOutcomes")
+    eveluated       Boolean      @default(false)
+    tags            Tag[]
 }

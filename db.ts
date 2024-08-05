@@ -16,19 +16,34 @@ export async function getTeamForUser(userId: number) {
   })
 }
 
-
-export async function getItemsForUser(userId: number) {
-  return (await db.transaction.findMany({
+export async function getQuestForUser(userId: number) {
+  return await db.quest.findFirst({
     where: {
-      userId: userId,
-      NOT: {
-        itemId: null
-      }
+      userId: userId
     },
     select: {
-      item: true
+      id: true,
+      task: true,
+      type: true,
+      answer: true
     }
-  })).map((transaction) => transaction.item)
+  })
+}
+
+export async function getItemsForUser(userId: number) {
+  return (
+    await db.transaction.findMany({
+      where: {
+        userId: userId,
+        NOT: {
+          itemId: null
+        }
+      },
+      select: {
+        item: true
+      }
+    })
+  ).map((transaction) => transaction.item)
 }
 
 export async function getAdsForUser(userId: number) {
