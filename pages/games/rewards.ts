@@ -5,6 +5,8 @@ import type { SessionRequest } from "@session";
 async function claimRewards() {
   for (const gameId of Object.keys(getConfig().games)) {
     const game = getConfig().games[gameId]
+    if (gameId == 'hovna')
+      continue
     const entries = await db.leaderboard.findMany({
       where: {
         gameId

@@ -22,7 +22,7 @@
       "name": "Drift Boss",
       "sourceUrl": "https://www.onlinegames.io/games/2023/mjs/drift-boss/",
       "iframeUrl": "./static/drift-boss.html",
-      "thumbnail": "https://www.onlinegames.io/media/posts/378/Drift-Boss-Game.jpg",
+      "thumbnail": "./uploads/drift.jpg",
       "cost": 200,
       "leaderboard": {
         "enabled": true,
@@ -33,7 +33,7 @@
       "name": "Cookie clicker",
       "sourceUrl": "https://games-online.io/game/cake-maker/",
       "iframeUrl": "./static/cookie-clicker.html",
-      "thumbnail": "https://capybara24.github.io/capybara-clicker/rs/imgs/cooki-clicker.jpg",
+      "thumbnail": "./uploads/clicker.jpg",
       "cost": 200,
       "leaderboard": {
         "enabled": true,
@@ -44,29 +44,29 @@
       "name": "Galaxie",
       "sourceUrl": "https://medmunds.github.io/puzzles/",
       "iframeUrl": "./static/galaxies.html",
-      "thumbnail": "https://medmunds.github.io/puzzles/img/galaxies-ibase.png",
+      "thumbnail": "./uploads/galaxie.png",
       "cost": 100,
       "leaderboard": {
         "enabled": true,
-        "order": "asc"
+        "order": "desc"
       }
     },
     "bridges": {
       "name": "Mosty",
       "sourceUrl": "https://medmunds.github.io/puzzles/",
       "iframeUrl": "./static/bridges.html",
-      "thumbnail": "https://medmunds.github.io/puzzles/img/bridges-ibase.png",
+      "thumbnail": "./uploads/mosty.png",
       "cost": 100,
       "leaderboard": {
         "enabled": true,
-        "order": "asc"
+        "order": "desc"
       }
     },
     "loopy": {
       "name": "Ohrady",
       "sourceUrl": "https://medmunds.github.io/puzzles/",
       "iframeUrl": "./static/loopy.html",
-      "thumbnail": "https://medmunds.github.io/puzzles/img/loopy-ibase.png",
+      "thumbnail": "./uploads/ploty.png",
       "cost": 100,
       "leaderboard": {
         "enabled": true,
