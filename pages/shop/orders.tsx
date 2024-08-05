@@ -95,7 +95,19 @@ function timeHTML(time: Date) {
   const day = 1000 * 60 * 60 * 24
   return (
     <td className="flex justify-center items-center">
-      {diff > day ? time.toDateString() : time.toLocaleTimeString()}
+      {diff > day
+        ? time.toLocaleTimeString('sk-SK', {
+            timeZone: 'Europe/Bratislava',
+            hour: '2-digit',
+            minute: '2-digit'
+          }) +
+          ', ' +
+          time.toLocaleDateString('sk-SK')
+        : time.toLocaleTimeString('sk-SK', {
+            timeZone: 'Europe/Bratislava',
+            hour: '2-digit',
+            minute: '2-digit'
+          })}
     </td>
   )
 }
