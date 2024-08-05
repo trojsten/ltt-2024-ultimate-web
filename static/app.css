@@ -1,4 +1,4 @@
-/*! tailwindcss v4.0.0-alpha.18 | MIT License | https://tailwindcss.com */
+/*! tailwindcss v4.0.0-alpha.16 | MIT License | https://tailwindcss.com */
 @layer theme, base, components, utilities;
 @layer theme {
   :root {
@@ -424,6 +424,45 @@
   .static {
     position: static;
   }
+  .static\/ {
+    position: static;
+  }
+  .static\/adSync {
+    position: static;
+  }
+  .static\/app {
+    position: static;
+  }
+  .static\/bridges {
+    position: static;
+  }
+  .static\/cookie-clicker {
+    position: static;
+  }
+  .static\/drift-boss {
+    position: static;
+  }
+  .static\/fakeStorage {
+    position: static;
+  }
+  .static\/galaxies {
+    position: static;
+  }
+  .static\/gameData {
+    position: static;
+  }
+  .static\/loopy {
+    position: static;
+  }
+  .static\/navbar {
+    position: static;
+  }
+  .static\/pou {
+    position: static;
+  }
+  .static\/terms-and-conditions {
+    position: static;
+  }
   .sticky {
     position: sticky;
   }
@@ -601,9 +640,6 @@
   .cursor-pointer {
     cursor: pointer;
   }
-  .resize {
-    resize: both;
-  }
   .list-disc {
     list-style-type: disc;
   }
@@ -641,7 +677,7 @@
     overflow-y: auto;
   }
   .rounded {
-    border-radius: var(--radius, 0.25rem);
+    border-radius: 0.25rem;
   }
   .rounded-2xl {
     border-radius: var(--radius-2xl, 1rem);
@@ -849,11 +885,15 @@
     outline-width: 1px;
   }
   .blur {
-    --tw-blur: blur(var(--blur, 8px));
+    --tw-blur: blur(8px);
     filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
   }
   .contrast-1\.0 {
     --tw-contrast: contrast(1.0%);
+    filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
+  }
+  .grayscale {
+    --tw-grayscale: grayscale(100%);
     filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
   }
   .invert {
@@ -966,7 +1006,7 @@
   }
 }
 .btn {
-  border-radius: var(--radius, 0.25rem);
+  border-radius: 0.25rem;
   background-color: var(--color-blue-500, #4299e1);
   padding-top: var(--spacing-2, 0.5rem);
   padding-bottom: var(--spacing-2, 0.5rem);
@@ -983,14 +1023,14 @@
   }
 }
 input[type='text'], input[type='password'], input[type='email'], input[type='number'], input[type='file'], select {
-  border-radius: var(--radius, 0.25rem);
+  border-radius: 0.25rem;
   border-style: var(--tw-border-style);
   border-width: 1px;
   border-color: var(--color-gray-400, #cbd5e0);
   padding: var(--spacing-2, 0.5rem);
 }
 textarea {
-  border-radius: var(--radius, 0.25rem);
+  border-radius: 0.25rem;
   border-style: var(--tw-border-style);
   border-width: 1px;
   border-color: var(--color-gray-400, #cbd5e0);
@@ -1007,6 +1047,27 @@ h1 {
   line-height: var(--font-size-4xl--line-height, 2.5rem);
   font-weight: 700;
 }
+@font-face {
+  font-family: 'Material Symbols Outlined';
+  font-style: normal;
+  font-weight: 100 700;
+  src: url(/static/icons.woff2) format('woff2');
+}
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -moz-font-feature-settings: 'liga';
+  -moz-osx-font-smoothing: grayscale;
+}
 @supports (-moz-orient: inline) {
   @layer base {
     *, ::before, ::after, ::backdrop {
@@ -1020,24 +1081,24 @@ h1 {
       --tw-shadow-colored: 0 0 #0000;
       --tw-inset-shadow: 0 0 #0000;
       --tw-inset-shadow-colored: 0 0 #0000;
-      --tw-ring-color: initial;
+      --tw-ring-color:  ;
       --tw-ring-shadow: 0 0 #0000;
-      --tw-inset-ring-color: initial;
+      --tw-inset-ring-color:  ;
       --tw-inset-ring-shadow: 0 0 #0000;
-      --tw-ring-inset: initial;
+      --tw-ring-inset:  ;
       --tw-ring-offset-width: 0px;
       --tw-ring-offset-color: #fff;
       --tw-ring-offset-shadow: 0 0 #0000;
       --tw-outline-style: solid;
-      --tw-blur: initial;
-      --tw-brightness: initial;
-      --tw-contrast: initial;
-      --tw-grayscale: initial;
-      --tw-hue-rotate: initial;
-      --tw-invert: initial;
-      --tw-opacity: initial;
-      --tw-saturate: initial;
-      --tw-sepia: initial;
+      --tw-blur:  ;
+      --tw-brightness:  ;
+      --tw-contrast:  ;
+      --tw-grayscale:  ;
+      --tw-hue-rotate:  ;
+      --tw-invert:  ;
+      --tw-opacity:  ;
+      --tw-saturate:  ;
+      --tw-sepia:  ;
     }
   }
 }
