@@ -27,8 +27,26 @@ async function newItem() {
         <input type="number" name="cost" placeholder="Cena" id="cost" />
         <label htmlFor="amount">Maximálny počet zakúpení (celkovo)</label>
         <input type="number" name="amount" placeholder="Množstvo" id="amount" />
-        <label htmlFor="amountPerUser">Maximálny počet zakúpení (na osobu)</label>
-        <input type="number" name="amountPerUser" placeholder="Množstvo na osobu" id="amountPerUser" />
+        <label htmlFor="amountPerUser">
+          Maximálny počet zakúpení (na osobu)
+        </label>
+        <input
+          type="number"
+          name="amountPerUser"
+          placeholder="Množstvo na osobu"
+          id="amountPerUser"
+        />
+        <label className="my-2" htmlFor="consumable">
+          <input
+            className="mr-2"
+            type="checkbox"
+            name="consumable"
+            id="consumable"
+            defaultChecked
+          />
+          Použitie u vedúceho
+        </label>
+
         <label htmlFor="description">Popis</label>
         <textarea
           name="description"
@@ -36,8 +54,8 @@ async function newItem() {
           placeholder="popis"
         ></textarea>
         <label htmlFor="tags">Tagy (kto si môže tento item kúpiť)</label>
-        <select name='tags' multiple id='tags'>
-          {tags.map(e => {
+        <select name="tags" multiple id="tags">
+          {tags.map((e) => {
             return <option value={e.id}>{e.name}</option>
           })}
         </select>
@@ -76,7 +94,7 @@ export async function post(req: SessionRequest): Promise<Response> {
         amountPerUser: parseInt(formdata.get('amountPerUser') as string),
         consumable: formdata.get('consumable') === 'on',
         tags: {
-          connect: formdata.getAll('tags').map(e => {
+          connect: formdata.getAll('tags').map((e) => {
             return { id: parseInt(e) }
           })
         }

@@ -15,6 +15,9 @@ async function home(req: SessionRequest) {
         consumed: false,
         NOT: {
           item: null
+        },
+        item: {
+          consumable: true
         }
       },
       select: {
