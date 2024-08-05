@@ -45,8 +45,17 @@ function Transactions(transactions: any[], showAll: boolean, isAdmin: boolean) {
 
 function amountHTML(amount: number) {
   return (
-    <td className={amount > 0 ? 'text-red-500 flex justify-center' : 'text-green-500 flex justify-center'}>
-      <span className='material-symbols-outlined block'>{amount > 0 ? 'arrow_drop_down' : 'arrow_drop_up'}</span> {Math.abs(amount)}
+    <td
+      className={
+        amount > 0
+          ? 'text-red-500 flex justify-center'
+          : 'text-green-500 flex justify-center'
+      }
+    >
+      <span className="material-symbols-outlined block">
+        {amount > 0 ? 'arrow_drop_down' : 'arrow_drop_up'}
+      </span>{' '}
+      {Math.abs(amount)}
     </td>
   )
 }
@@ -56,7 +65,19 @@ function timeHTML(time: Date) {
   const day = 1000 * 60 * 60 * 24
   return (
     <td className="flex justify-center">
-      {diff > day ? time.toDateString() : time.toLocaleTimeString()}
+      {diff > day
+        ? time.toLocaleTimeString('sk-SK', {
+            timeZone: 'Europe/Bratislava',
+            hour: '2-digit',
+            minute: '2-digit'
+          }) +
+          ', ' +
+          time.toLocaleDateString('sk-SK')
+        : time.toLocaleTimeString('sk-SK', {
+            timeZone: 'Europe/Bratislava',
+            hour: '2-digit',
+            minute: '2-digit'
+          })}
     </td>
   )
 }
