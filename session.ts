@@ -49,7 +49,7 @@ export class SessionRequest extends Request {
   }
 }
 
-export function setSession(res: Response, session: Session): Response {
+export function setSession(res: Response, session: Session | undefined): Response {
   if (session == undefined) {
     res.headers.append(
       'Set-Cookie',

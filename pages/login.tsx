@@ -62,10 +62,11 @@ export async function post(req: SessionRequest): Promise<Response> {
 
     return setSession(res, { user: user, ad: undefined })
   } else {
-    return renderPage(
+    req.clearSession();
+    return setSession(await renderPage(
       login(false, req.parsedUrl.searchParams.get('redirect') ?? '/'),
       req,
       403
-    )
+    ), req.session)
   }
 }
