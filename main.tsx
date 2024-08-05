@@ -10,6 +10,30 @@ async function getPage(content: JSX.Element, req: SessionRequest) {
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <script src="/static/navbar.js" defer async />
+        <link rel="manifest" href="/static/manifest.json" />
+        <link rel="icon" href="favicon.ico" type="image/x-icon" />
+        <meta property="og:image" content="/static/ltt.svg" />
+        <meta property="twitter:image" content="/static/ltt.svg" />
+        <link rel="apple-touch-icon" href="/static/icon512_rounded.png" />
+        <meta name="theme-color" content="white" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <meta name="apple-mobile-web-app-title" content="LTT" />
+        <meta
+          name="msapplication-TileImage"
+          content="/static/icon512_maskable.png"
+        />
+        <meta name="msapplication-TileColor" content="#FFFFFF" />
+        <meta name="description" content="LTT" />
+        <meta name="og:description" content="LTT" />
+        <meta name="twitter:description" content="LTT" />
+        <meta name="author" content="Trojsten" />
+        <meta name="robots" content="all" />
+        <meta name="keywords" content="kapitalizmius, peniaze, Trojsten" />
+        <meta property="og:site_name" content="LTT" />
+        <title>LTT APP</title>
+        <meta property="og:title" content="LTT" />
+        <meta property="twitter:title" content="LTT" />
       </head>
       <body>
         <main className="flex h-screen min-w-screen flex-col md:flex-row">
