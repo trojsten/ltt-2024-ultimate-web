@@ -509,6 +509,10 @@
     margin-left: var(--spacing-2, 0.5rem);
     margin-right: var(--spacing-2, 0.5rem);
   }
+  .my-2 {
+    margin-top: var(--spacing-2, 0.5rem);
+    margin-bottom: var(--spacing-2, 0.5rem);
+  }
   .my-3 {
     margin-top: var(--spacing-3, 0.75rem);
     margin-bottom: var(--spacing-3, 0.75rem);
@@ -890,10 +894,6 @@
   }
   .contrast-1\.0 {
     --tw-contrast: contrast(1.0%);
-    filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
-  }
-  .grayscale {
-    --tw-grayscale: grayscale(100%);
     filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
   }
   .invert {
