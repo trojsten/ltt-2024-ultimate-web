@@ -1,12 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.querySelector('form')
-  // const submitBtn = document.querySelector('button[type="submit"]')
-  // submitBtn.disabled = true
-  // submitBtn.style.opacity = 0.5
-  // setTimeout(() => {
-  //   submitBtn.disabled = false
-  //   submitBtn.style.opacity = 1
-  // }, 10000)
+  const submitBtn = document.querySelector('button[type="submit"]')
+  submitBtn.disabled = true
+  submitBtn.style.opacity = 0.5
+  setTimeout(() => {
+    submitBtn.disabled = false
+    submitBtn.style.opacity = 1
+  }, 10000)
   form.addEventListener('submit', async (e) => {
     e.preventDefault()
     show()
