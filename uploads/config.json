@@ -7,8 +7,7 @@
     "ads": "admin",
     "reservations": true,
     "payments": true,
-    "management": "admin",
-    "lootboxes": "admin"
+    "management": "admin"
   },
   "system_tags": [
     "transactions",
