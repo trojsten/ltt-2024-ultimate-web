@@ -27,6 +27,23 @@ async function getHTML(req: SessionRequest) {
     return <div>Invalid bet id</div>
   }
 
+  const team = await getTeamForUser(req.session!.user.id)
+  const hasBet = await db.transaction.findFirst({
+    where: {
+      teamId: team.id,
+      bet: {
+        PossileBet: {
+          id: bet.id
+        }
+      }
+    }
+  })
+
+  if (hasBet != null) {
+    return (<p>Už si stávil na túto stávku</p>)
+  }
+
+
   return (
     <div className='mx-2'>
       <h1 className='my-2'>Stav si</h1>
@@ -90,8 +107,27 @@ export async function post(req: SessionRequest) {
       possileOutcomes: true
     }
   })
+
+  const team = await getTeamForUser(req.session!.user.id)
+
+
   if (!bet) {
     return Response.redirect(`/bets`)
+  }
+
+  const hasBet = await db.transaction.findFirst({
+    where: {
+      teamId: team.id,
+      bet: {
+        PossileBet: {
+          id: bet.id
+        }
+      }
+    }
+  })
+
+  if (hasBet != null) {
+    return renderPage((<p>Už si stávil na túto stávku</p>), { status: 400 })
   }
 
   for (const outcome of req.data.entries()) {
@@ -100,7 +136,6 @@ export async function post(req: SessionRequest) {
       const outcomeId = parseInt(key.slice(7))
       const amount = parseInt(value)
       if (amount > 0) {
-        const team = await getTeamForUser(req.session!.user.id)
         if (team.money < amount) {
           return renderPage(<div>Nemáš dosť peňazí</div>, req)
         }
