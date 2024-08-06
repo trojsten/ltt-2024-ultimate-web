@@ -39,7 +39,7 @@ async function getHTML(req: SessionRequest) {
     }
   })
 
-  if (hasBet != null) {
+  if (!bet.eveluated && hasBet != null) {
     return (<p>Už si stávil na túto stávku</p>)
   }
 
