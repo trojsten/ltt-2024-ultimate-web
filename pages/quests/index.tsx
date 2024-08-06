@@ -74,11 +74,13 @@ async function getQuest(req: SessionRequest) {
   }
 
   return (
-    <form action="/quests" method="post">
+    <form action="/quests" method="post" className='flex flex-col justify-center items-center h-screen'>
+      <script src='/static/confetti.js'></script>
+      <script src='/static/quest.js'></script>
       <h1>{quest!.task}</h1>
       {quest!.type === 'text' && <input type="text" name="answer" />}
       {quest!.type === 'number' && <input type="number" name="answer" />}
-      <button type="submit">Submit</button>
+      <button type="submit" className='btn text-3xl'>Hotovo</button>
     </form>
   )
 }
