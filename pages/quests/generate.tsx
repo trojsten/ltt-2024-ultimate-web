@@ -21,7 +21,7 @@ export async function get(req: SessionRequest) {
 
 export async function post(req: SessionRequest): Promise<Response> {
   await obrazok()
-  await kamzik()
-  await osprchuj()
+  // await kamzik()
+  // await osprchuj()
   return Response.redirect('/quests/generate')
 }

@@ -236,7 +236,7 @@ export async function kamzik() {
       `Vezmi lepiacu pásku od vedúcich a odnes ju pred záchody v spoločenskej.`,
       'normal',
       undefined,
-      4,
+      3,
       10,
       undefined
     )
@@ -246,9 +246,9 @@ export async function kamzik() {
       `Pred záchodmi v spoločenskej pomocou lepiacej pásky, ktorú tam nájdeš, vyznač číslo 1.`,
       'normal',
       undefined,
-      4,
+      3,
       10,
-      undefined
+      poziadavky
     )
   )
 
@@ -258,7 +258,7 @@ export async function kamzik() {
         `Pred záchodmi v spoločenskej pomocou lepiacej pásky, ktorú tam nájdeš, vyznač číslo ${i + 1}, tak aby bolo na pravo od čísla ${i}.`,
         'normal',
         undefined,
-        4,
+        3,
         10,
         poziadavky
       )
@@ -277,7 +277,7 @@ export async function kamzik() {
             : `Pred záchodmi v spoločenske sa postav na vyznačené číslo ${i} a urob tam drep.`,
           'normal',
           undefined,
-          4,
+          3,
           10,
           stara_sestica
         )
