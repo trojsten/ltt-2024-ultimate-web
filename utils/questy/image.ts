@@ -186,6 +186,8 @@ let mapf = [
 ]
 export async function obrazok() {
   let poziadavky = []
+  let stara_sestica = []
+  let nova_sestica = []
   for (let i = 0; i < image.length; i++) {
     poziadavky.push(
       await createQuest(
@@ -194,10 +196,17 @@ export async function obrazok() {
         undefined,
         3,
         10,
-        undefined
+        stara_sestica
       )
     )
+    nova_sestica.push(poziadavky[poziadavky.length - 1])
+    if (nova_sestica.length == 6) {
+      stara_sestica = nova_sestica
+      nova_sestica = []
+    }
   }
+  stara_sestica = []
+  nova_sestica = []
   for (let i = 0; i < image[0].length; i++) {
     poziadavky.push(
       await createQuest(
@@ -206,21 +215,34 @@ export async function obrazok() {
         undefined,
         3,
         10,
-        undefined
+        stara_sestica
       )
     )
+    nova_sestica.push(poziadavky[poziadavky.length - 1])
+    if (nova_sestica.length == 6) {
+      stara_sestica = nova_sestica
+      nova_sestica = []
+    }
   }
+  stara_sestica = []
+  nova_sestica = []
   for (let i = 0; i < image.length; i++) {
     for (let j = 0; j < image[0].length; j++)
       if (image[i][j] != 0) {
-        await createQuest(
-          `Prídi ku stolu v strede spoločenskej a na štvorčekovom papieri vyfarbi políčko na riadku označenom ${mapr[i] + 1} a stĺpci ${maps[j] + 1} farbou ${mapf[image[i][j]]}.`,
-          'normal',
-          undefined,
-          3,
-          15,
-          poziadavky
+        nova_sestica.push(
+          await createQuest(
+            `Prídi ku stolu v strede spoločenskej a na štvorčekovom papieri vyfarbi políčko na riadku označenom ${mapr[i] + 1} a stĺpci ${maps[j] + 1} farbou ${mapf[image[i][j]]}.`,
+            'normal',
+            undefined,
+            3,
+            15,
+            [...poziadavky, ...stara_sestica]
+          )
         )
+        if (nova_sestica.length == 6) {
+          stara_sestica = nova_sestica
+          nova_sestica = []
+        }
       }
   }
 }
@@ -236,7 +258,7 @@ export async function kamzik() {
       `Vezmi lepiacu pásku od vedúcich a odnes ju pred záchody v spoločenskej.`,
       'normal',
       undefined,
-      3,
+      10,
       20,
       undefined
     )
@@ -246,7 +268,7 @@ export async function kamzik() {
       `Pred záchodmi v spoločenskej pomocou lepiacej pásky, ktorú tam nájdeš, vyznač číslo 1.`,
       'normal',
       undefined,
-      3,
+      10,
       20,
       poziadavky
     )
@@ -258,7 +280,7 @@ export async function kamzik() {
         `Pred záchodmi v spoločenskej pomocou lepiacej pásky, ktorú tam nájdeš, vyznač číslo ${i + 1}, tak aby bolo na pravo od čísla ${i}.`,
         'normal',
         undefined,
-        3,
+        10,
         20,
         poziadavky
       )
@@ -307,7 +329,7 @@ export async function fotenie() {
   let poziadavka = []
   for (let i = 0; i < 500; i++) {
     let zaciatok = await createQuest(
-      'Vyber kostym zo skrinky pri TV a zaves ho na TV.',
+      'Vyber kostym zo kresla na terase a zaves ho na TV.',
       'normal',
       undefined,
       4,
@@ -316,7 +338,7 @@ export async function fotenie() {
     )
     poziadavka.push(
       await createQuest(
-        'Nájdi kostým na TV a obleč si ho.',
+        'Nájdi kostým na TV a obleč si ho. Počkaj kým ťa niekto neodfotí. Potom si kostým vyzleč a vráť ho späť na TV.',
         'normal',
         undefined,
         100,
@@ -325,12 +347,24 @@ export async function fotenie() {
       )
     )
     poziadavka.push(
-      await createQuest('odfot cloveka tam ', 'normal', undefined, 100, 20, [
-        zaciatok
-      ])
+      await createQuest(
+        'Odfoť človeka stojaceho pri TV.',
+        'normal',
+        undefined,
+        100,
+        20,
+        [zaciatok]
+      )
     )
     poziadavka = [
-      await createQuest('vrat kostym', 'normal', undefined, 4, 10, poziadavka)
+      await createQuest(
+        'Zober kostým z TV a odlož ho na kreslo na terase.',
+        'normal',
+        undefined,
+        4,
+        10,
+        poziadavka
+      )
     ]
   }
 }
@@ -385,8 +419,10 @@ export async function generateChains() {
   await generateChain(['Sprav 5 klikov.'], 2, 6)
   await generateChain(
     [
-      'Vezmi nenatretý chlebík zo stal pri trojuholníkovom okne s výhľadom na roľnícke družstvo a natri ho.',
-      'Vezmi natretý chlebík zo stola pri trojuholníkovom okne s výhˇdom na roľnícke družstvo a spapaj ho.'
+      'Vezmi jeden krajec nenatretého chlebíka z parapetu pod obdĺžnikovým oknom a odnes ho na stôl pri trojuholníkovom okne s výhľadom na roľnícke družstvo.',
+      'Nájdi nenatretý krajec chlebíka na stola pri trojuholníkovom okne s výhľadom na roľnícke družstvo a natri ho.',
+      'Vezmi natretý krajec chlebík zo stola pri trojuholníkovom okne s výhľdom na roľnícke družstvo a odnes ho stôl pri okne s výhľadom na les.',
+      'Nájdi natretý krajec chlebíka na stole pri trouholníkovom okne s výhľadom na les a spapaj ho.'
     ],
     2,
     50
@@ -394,7 +430,7 @@ export async function generateChains() {
   await generateChain(['Zvýš hlasitosť reproduktoru v spoločenskej.'], 2, 7)
   await generateChain(['Zníž hlasitosť reproduktoru v spoločenskej.'], 2, 7)
 
-  await generateChain(['Rozlož gauč.', 'Zlož gauč.'], 2, 15)
+  await generateChain(['Zlož gauč.', 'Rozlož gauč.'], 2, 15)
 
   await generateChain(
     [
@@ -490,4 +526,27 @@ export async function nasobenie() {
   }
 }
 
-export async function najdiASprav() { }
+export async function najdiASprav() {
+  let deti = await db.user.findMany({
+    where: { teamId: { in: [61, 70, 73, 75, 76] } }
+  })
+  let akcie = [
+    'daj mu high5',
+    'poštekli ho',
+    'zakrič mu do ucha peniazeeee',
+    'utri si doňho ruky'
+  ]
+  for (let i = 0; i < 6; i++) {
+    let poziadavka
+    for (let j = 0; j < 500; j++) {
+      poziadavka = await createQuest(
+        `Choď za ${deti[Math.floor(Math.random() * deti.length)].name}, a ${akcie[Math.floor(Math.random() * akcie.length)]}`,
+        'normal',
+        undefined,
+        2,
+        10,
+        poziadavka ? [poziadavka] : undefined
+      )
+    }
+  }
+}
