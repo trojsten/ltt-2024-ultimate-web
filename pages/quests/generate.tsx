@@ -1,13 +1,12 @@
 import { renderPage } from '@main'
 import type { SessionRequest } from '@session'
 import {
-  fotenie,
   nasobenie,
   obrazok,
   generateChains,
   najdiASprav,
   kamzik
-} from '@utils/questy/image'
+} from '@utils/questy/longterm'
 
 export async function getGenerate(req: SessionRequest) {
   return (
@@ -27,7 +26,6 @@ export async function get(req: SessionRequest) {
 }
 
 export async function post(req: SessionRequest): Promise<Response> {
-  await fotenie()
   await nasobenie()
   await generateChains()
   await obrazok()
