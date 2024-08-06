@@ -245,7 +245,8 @@ export async function generateChain(popisy, priority, reward, pocet = 1000) {
 }
 
 export async function generateChains() {
-  await generateChain(['Choď sa osprchovať!'], 1, 1)
+  await generateChain(['Uprac pár topánok!'], 1, 1)
+  /*await generateChain(['Choď sa osprchovať!'], 1, 1)
   await generateChain(
     [
       'Na parapete pri trojuholníkovom okne s výhľadom na les je sudoku, doplň doň jedno číslo.'
@@ -350,7 +351,7 @@ export async function generateChains() {
     ],
     1,
     0
-  )
+    )*/
 }
 
 async function gen() {

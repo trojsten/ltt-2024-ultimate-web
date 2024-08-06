@@ -40,11 +40,17 @@ async function cancelPage(reservationId: number | undefined) {
 }
 
 export async function get(req: SessionRequest) {
+  if (new Date().getHours() >= 19 || new Date().getHours() <= 8) {
+    return new Response('Unauthorized', { status: 401 })
+  }
   const res = await getReservation(req.session!.user.id)
   return renderPage(await cancelPage(res?.id), req)
 }
 
 export async function post(req: SessionRequest) {
+  if (new Date().getHours() >= 19 || new Date().getHours() <= 8) {
+    return new Response('Unauthorized', { status: 401 })
+  }
   const { user } = req.session!
   try {
     await cancelReservation(user.id)

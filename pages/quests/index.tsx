@@ -25,14 +25,14 @@ async function AssignNewQuest(req: SessionRequest) {
     let quest = await getQuestForUser(req.session!.user.id)
     if (quest) {
       const team = await getTeamForUser(req.session!.user.id)
-      await db.transaction.create({
+      /*await db.transaction.create({
         data: {
           amount: -quest!.reward,
           userId: req.session!.user.id,
           teamId: team.id,
           description: 'Splnený quest'
         }
-      })
+        })*/
 
       await db.team.update({
         where: {
@@ -74,13 +74,23 @@ async function getQuest(req: SessionRequest) {
   }
 
   return (
-    <form action="/quests" method="post" className='flex flex-col justify-center items-center h-screen'>
-      <script src='/static/confetti.js'></script>
-      <script src='/static/quest.js'></script>
+    <form
+      action="/quests"
+      method="post"
+      className="flex flex-col justify-center items-center h-screen"
+    >
+      <script src="/static/confetti.js"></script>
+      <script src="/static/quest.js"></script>
       <h1>{quest!.task}</h1>
-      {quest!.type === 'text' && <input type="text" name="answer" className='mb-3' />}
-      {quest!.type === 'number' && <input type="number" name="answer" className='mb-3' />}
-      <button type="submit" className='btn text-6xl'>Hotovo</button>
+      {quest!.type === 'text' && (
+        <input type="text" name="answer" className="mb-3" />
+      )}
+      {quest!.type === 'number' && (
+        <input type="number" name="answer" className="mb-3" />
+      )}
+      <button type="submit" className="btn text-6xl">
+        Hotovo
+      </button>
     </form>
   )
 }
