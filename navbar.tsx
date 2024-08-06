@@ -93,7 +93,7 @@ interface NavGroup {
 
 const modules: NavGroup[] = [
   {
-    name: 'default',
+    name: 'Nákup',
     items: [
       {
         name: 'Profil',
@@ -106,10 +106,16 @@ const modules: NavGroup[] = [
         key: 'shop'
       },
       {
-        name: 'Transakcie',
-        url: '/transactions',
-        key: 'transactions'
-      },
+        name: 'Rezervácie',
+        url: '/reservations',
+        key: 'reservations'
+      }
+    ]
+  },
+
+  {
+    name: 'fun',
+    items: [
       {
         name: 'Hry',
         url: '/games',
@@ -121,9 +127,29 @@ const modules: NavGroup[] = [
         key: 'ads'
       },
       {
-        name: 'Rezervácie',
-        url: '/reservations',
-        key: 'reservations'
+        name: 'Videá',
+        url: '/videos',
+        key: 'videos'
+      },
+      {
+        name: 'Stávky',
+        url: '/bets',
+        key: 'bets'
+      },
+      {
+        name: 'Questy',
+        url: '/quests',
+        key: 'quests'
+      }
+    ]
+  },
+  {
+    name: 'peniaze',
+    items: [
+      {
+        name: 'Transakcie',
+        url: '/transactions',
+        key: 'transactions'
       },
       {
         name: 'Platby',
@@ -131,24 +157,29 @@ const modules: NavGroup[] = [
         key: 'payments'
       },
       {
-        name: 'Peniaze',
+        name: 'Pridaj Peniaze družinkám',
         url: '/management',
         key: 'management'
+      }
+    ]
+  },
+  {
+    name: 'Admin management',
+    items: [
+      {
+        name: 'Mergovanie družiniek',
+        url: '/teams',
+        key: 'teams'
       },
       {
-        name: 'Videá',
-        url: '/videos',
-        key: 'videos'
+        name: 'Aktuálne guesty',
+        url: '/quests/board',
+        key: 'quests-admin'
       },
       {
-        name: "Stávky",
-        url: "/bets",
-        key: "bets"
-      },
-      {
-        name: "Questy",
-        url: "/quests",
-        key: "quests"
+        name: 'Fix upload',
+        url: '/upload',
+        key: 'upload'
       }
     ]
   }

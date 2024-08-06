@@ -10,7 +10,10 @@
     "management": "admin",
     "videos": false,
     "bets": "admin",
-    "quests": true
+    "quests": true,
+    "quests-admin": "admin",
+    "teams": "admin",
+    "upload": "admin"
   },
   "system_tags": [
     "transactions",
@@ -100,7 +103,7 @@
     "earnPerAdWatch": 20,
     "adCreationCost": 100,
     "initialViews": 30,
-    "adShowProbability": 0.1
+    "adShowProbability": 10
   },
   "transactions": {
     "transactionUnlockCost": 200
