@@ -17,7 +17,7 @@ async function getHTML(req: SessionRequest) {
   return (
     <div>
       <h1>Vyhodnotiť stávku</h1>
-      <form>
+      <form method='post'>
         <ul>
           {bet!.possileOutcomes.map((outcome, index) => (
             <li key={index}>
@@ -40,7 +40,7 @@ async function getHTML(req: SessionRequest) {
 }
 
 export async function get(req: SessionRequest) {
-  return renderPage(getHTML(req), req)
+  return renderPage(await getHTML(req), req)
 }
 
 export async function post(req: SessionRequest) {
@@ -56,53 +56,54 @@ export async function post(req: SessionRequest) {
   if (!bet) {
     return Response.redirect(`/bets`)
   }
-
-  let outcomeId = 0
-
   for (const outcome of bet.possileOutcomes) {
-    if (req.data.get('outcome' + outcome.id) === 'on') {
-      outcomeId = outcome.id
-      break
-    }
-  }
-
-  await db.bet.update({
-    where: {
-      id: bet.id
-    },
-    data: {
-      eveluated: true,
-      finalOutcomes: {
-        connect: {
-          id: outcomeId
-        }
-      }
-    }
-  })
-
-  const transactions = await db.transaction.findMany({
-    where: {
-      betId: bet.id
-    },
-    select: {
-      id: true,
-      userId: true,
-      amount: true
-    }
-  })
-
-  for (const transaction of transactions) {
-    const team = await getTeamForUser(transaction.userId)
-    await db.team.update({
+    if (req.data.get('outcome' + outcome.id) !== 'on') continue
+    await db.bet.update({
       where: {
-        id: team.id
+        id: bet.id
       },
       data: {
-        money: {
-          increment: transaction.amount
+        eveluated: true,
+        finalOutcomes: {
+          connect: {
+            id: outcome.id
+          }
         }
       }
     })
+
+    const transactions = await db.transaction.findMany({
+      where: {
+        betId: outcome.id
+      },
+      select: {
+        id: true,
+        userId: true,
+        amount: true
+      }
+    })
+
+    for (const transaction of transactions) {
+      const team = await getTeamForUser(transaction.userId)
+      await db.team.update({
+        where: {
+          id: team.id
+        },
+        data: {
+          money: {
+            increment: transaction.amount * outcome.odds
+          }
+        }
+      })
+      await db.transaction.update({
+        where: {
+          id: transaction.id
+        },
+        data: {
+          amount: -transaction.amount * outcome.odds
+        }
+      })
+    }
   }
 
   return Response.redirect(`/bets`)

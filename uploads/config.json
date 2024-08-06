@@ -8,7 +8,8 @@
     "reservations": true,
     "payments": true,
     "management": "admin",
-    "videos": false
+    "videos": false,
+    "bets": "admin"
   },
   "system_tags": [
     "transactions",

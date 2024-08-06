@@ -139,6 +139,12 @@ const modules: NavGroup[] = [
         name: 'Videá',
         url: '/videos',
         key: 'videos'
+      },
+      {
+        name: "Stávky",
+        url: "/bets",
+        key: "bets"
+>>>>>>> 84b2beb (bets)
       }
     ]
   }

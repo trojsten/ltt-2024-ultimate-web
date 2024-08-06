@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     xhr.send(formData)
     xhr.onload = () => {
       if (xhr.status === 200) {
-        console.log(xhr.responseText)
+        window.location.href = '/bets'
       }
     }
   })
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const div = document.createElement('div')
     div.innerHTML = `
       <input type="text" name="description"  placeholder="Popis">
-      <input type="number" name="odds" class="odds" placeholder="Šanca" min="0" max="1" step="0.01">
+      <input type="number" name="odds" class="odds" placeholder="Šanca" min="1" step="0.01">
       <input type="number" name="limit" class="limit" placeholder="Limit" min="0">
       `
     outcomesDiv.appendChild(div)
