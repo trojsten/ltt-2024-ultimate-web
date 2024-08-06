@@ -10,10 +10,10 @@ async function getShop(req: SessionRequest) {
   console.log(userItems)
 
   for (const item of userItems) {
-    if (counts[item.id] == undefined) {
-      counts[item.id] = 0
+    if (counts[item!.id] == undefined) {
+      counts[item!.id] = 0
     }
-    counts[item.id]++
+    counts[item!.id]++
   }
 
   console.log(counts)
@@ -22,6 +22,9 @@ async function getShop(req: SessionRequest) {
     where: {
       tags: {
         every: {
+          /*NOT: {
+            name: "lootbox"
+          },*/
           users: {
             some: {
               id: req.session?.user.id

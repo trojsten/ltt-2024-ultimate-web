@@ -21,12 +21,39 @@ async function home(req: SessionRequest) {
         }
       },
       select: {
-        item: true
-      }
+        id: true,
+        item: {
+          select: {
+            tags: true,
+            id: true,
+            name: true,
+            image: true
+          }
+        }
+      },
     })
   )
     .map((e) => e.item)
     .filter((e) => e != null)
+  
+  let itemTransactionsPromises = [];
+  myItems.forEach(e => {
+    itemTransactionsPromises.push(
+      db.transaction.findFirst({
+        where: {
+          userId: req.session!.user.id,
+          consumed: false,
+          NOT: {
+            item: null
+          },
+          item: {
+            consumable: true,
+            id: e.id
+          }
+        }
+    }))
+  });
+  const itemTransactions = await Promise.all(itemTransactionsPromises);
 
   console.log(myItems)
 
@@ -39,7 +66,7 @@ async function home(req: SessionRequest) {
         <h2>Moje kúpené veci</h2>
         <ul>
           {myItems.map((item) => (
-            <li
+            <li 
               key={item!.id}
               className="bg-gray-300 rounded-2xl p-2 m-1 flex items-center"
             >
@@ -50,7 +77,15 @@ async function home(req: SessionRequest) {
                   className="w-12 h-12 mr-3 rounded-2xl"
                 />
               )}
-              {item!.name}
+              <div className="flex justify-between grow">
+                <p>{item!.name}</p>
+                {item!.tags.some(e => e.name == "lootbox") ? (
+                  <p><a type="button" className="bg-green-500 px-2 py-1 rounded-md"
+                    href={"/ad/show?back=/lootboxes/open/" + itemTransactions[myItems.indexOf(item)].id}>Otvoriť</a></p>
+                ) : (
+                  null
+                )}
+              </div>
             </li>
           ))}
         </ul>
