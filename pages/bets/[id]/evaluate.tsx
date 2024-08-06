@@ -17,7 +17,7 @@ async function getHTML(req: SessionRequest) {
   return (
     <div>
       <h1>Vyhodnotiť stávku</h1>
-      <form method='post'>
+      <form method="post">
         <ul>
           {bet!.possileOutcomes.map((outcome, index) => (
             <li key={index}>
@@ -33,7 +33,9 @@ async function getHTML(req: SessionRequest) {
             </li>
           ))}
         </ul>
-        <button type="submit">Vyhodnotiť</button>
+        <button type="submit" className="btn">
+          Vyhodnotiť
+        </button>
       </form>
     </div>
   )
