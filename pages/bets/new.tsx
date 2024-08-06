@@ -31,7 +31,6 @@ export async function post(req: SessionRequest) {
 
   for (const outcome of JSON.parse(req.data.get("outcomes"))) {
     const { description, odds, limit } = outcome
-    console.log(outcome)
     await db.betOutcome.create({
       data: {
         description,

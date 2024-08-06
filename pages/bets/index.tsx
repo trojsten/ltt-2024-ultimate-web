@@ -40,5 +40,3 @@ export function betHTML(bet: Bet, canFinish: boolean = false) {
 export async function get(req: SessionRequest) {
   return renderPage(await getPage(req), req)
 }
-
-export async function post(req: SessionRequest) { }
