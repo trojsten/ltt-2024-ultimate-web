@@ -9,7 +9,8 @@
     "payments": true,
     "management": "admin",
     "videos": false,
-    "bets": "admin"
+    "bets": "admin",
+    "quests": true
   },
   "system_tags": [
     "transactions",
