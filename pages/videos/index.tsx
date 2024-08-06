@@ -38,8 +38,11 @@ async function myVideos(user: User) {
                 disablePictureInPicture
                 controls
               />
-              <div className="mx-5 mt-3">
-                Hodnotenie: {video.rating} / {video.users.length * 10}
+              <div className="mx-5 mt-3 mb-1.5">
+                Hodnotenie:{' '}
+                {video.users.length == 0
+                  ? 'Žiadne hodnotenie'
+                  : `${video.rating} / ${video.users.length * 10}`}
               </div>
             </div>
           ))
@@ -51,9 +54,14 @@ async function myVideos(user: User) {
         Nové video
       </a>
       {user.admin && (
-        <a href="/videos/watch" className="btn mx-2">
-          Pozrieť si videá
-        </a>
+        <>
+          <a href="/videos/watch" className="btn mx-2">
+            Pozrieť si videá
+          </a>
+          <a href="/videos/all" className="btn mx-2">
+            Všetky videá
+          </a>
+        </>
       )}
     </section>
   )

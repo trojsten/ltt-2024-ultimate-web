@@ -20,9 +20,20 @@ async function NewAd() {
           name="content"
           id="content"
           accept="image/*, video/*"
-          className="mb-4"
+          className="mb-2"
           required
         />
+        <label className="mb-3 text-red">
+          <input type="checkbox" className="mr-2" required />
+          Pred nahratím videa ho skomprimuj (
+          <a
+            className="text-blue"
+            href="https://play.google.com/store/apps/details?id=com.arthur.hritik.proton.video.compressor"
+          >
+            napríklad touto appkou
+          </a>{' '}
+          - internet dostaneš), aby malo tak cca 2MB
+        </label>
         <button type="submit" className="btn">
           Vytvoriť
         </button>
