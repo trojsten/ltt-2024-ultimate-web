@@ -66,6 +66,7 @@ export async function post(req: SessionRequest) {
       },
       data: {
         eveluated: true,
+        blocked: false,
         finalOutcomes: {
           connect: {
             id: outcome.id

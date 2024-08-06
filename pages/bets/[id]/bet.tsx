@@ -14,6 +14,7 @@ async function getHTML(req: SessionRequest) {
       id: true,
       description: true,
       possileOutcomes: true,
+      blocked: true,
       finalOutcomes: {
         select: {
           id: true
@@ -38,10 +39,6 @@ async function getHTML(req: SessionRequest) {
       }
     }
   })
-
-  if (!bet.eveluated && hasBet != null) {
-    return (<p>Už si stávil na túto stávku</p>)
-  }
 
 
   return (
@@ -86,9 +83,17 @@ async function getHTML(req: SessionRequest) {
             }
           })}
         </ul>
-        {bet.eveluated ? <p className='mt-3 text-green-500'>Vyhodnotené</p> : <button type="submit" className='btn mt-3'>Staviť</button>}
-
+        {hasBet ? <p className='mt-3 text-green-500'>Už si stávil na túto stávku</p> : null}
+        {bet.eveluated ? <p className='mt-3 text-green-500'>Vyhodnotené</p> : <button type="submit" className='btn mt-3' disabled={hasBet || bet.blocked}>Staviť</button>}
       </form>
+      {bet.blocked ? (<p className='text-red-500'>Stávka bola zablokovaná</p>) : null}
+      {req.session?.user.admin && !bet.blocked ? (
+        <form action={'/bets/' + bet!.id + '/block'} method='post'>
+          <button type='submit' className='btn'>
+            Zablokovať
+          </button>
+        </form>
+      ) : null}
     </div>
   )
 }
@@ -111,9 +116,11 @@ export async function post(req: SessionRequest) {
   const team = await getTeamForUser(req.session!.user.id)
 
 
-  if (!bet) {
+  if (!bet || bet.blocked) {
     return Response.redirect(`/bets`)
   }
+
+
 
   const hasBet = await db.transaction.findFirst({
     where: {
