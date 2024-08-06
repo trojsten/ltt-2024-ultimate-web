@@ -27,7 +27,7 @@ export async function post(req: SessionRequest): Promise<Response> {
 
   if (item.amountPerUser != null) {
     const itemCount = (await getItemsForUser(user.id)).filter(
-      (e) => e.id === item.id
+      (e) => e!.id === item.id
     ).length
     if (itemCount >= item.amountPerUser) {
       return new Response('Bought already max allowed copies of ' + item.name, {
