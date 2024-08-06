@@ -1,6 +1,11 @@
 import { renderPage } from '@main'
 import type { SessionRequest } from '@session'
-import { kamzik, obrazok, osprchuj } from '@utils/questy/image'
+import {
+  fotenie,
+  nasobenie,
+  obrazok,
+  generateChains
+} from '@utils/questy/image'
 
 export async function getGenerate(req: SessionRequest) {
   return (
@@ -20,8 +25,9 @@ export async function get(req: SessionRequest) {
 }
 
 export async function post(req: SessionRequest): Promise<Response> {
+  await fotenie()
+  await nasobenie()
+  await generateChains()
   await obrazok()
-  // await kamzik()
-  // await osprchuj()
   return Response.redirect('/quests/generate')
 }
