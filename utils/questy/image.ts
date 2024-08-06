@@ -214,7 +214,7 @@ export async function obrazok() {
     for (let j = 0; j < image[0].length; j++)
       if (image[i][j] != 0) {
         await createQuest(
-          `Vyfarbi políčko na riadku označenom ${mapr[i] + 1} a stĺpci ${maps[j] + 1} farbou ${mapf[image[i][j]]}.`,
+          `Prídi ku stolu v strede spoločenskej a na štvorčekovom papieri vyfarbi políčko na riadku označenom ${mapr[i] + 1} a stĺpci ${maps[j] + 1} farbou ${mapf[image[i][j]]}.`,
           'normal',
           undefined,
           3,
@@ -303,47 +303,11 @@ export async function generateChain(popisy, priority, reward, pocet = 1000) {
   }
 }
 
-<<<<<<< HEAD
-export async function generateChains() {
-  await generateChain(['Choď sa osprchovať!'], 1, 50)
-  await generateChain(
-    ['Na TODO miesto je sudoku, doplň doň jedno číslo.'],
-    1,
-    50
-  )
-  await generateChain(
-    [
-      'Na TODO miesto je doska s perom. Na doske je papier, na ktorý sa píše príbeh, doplň doň jedno slovo.'
-    ],
-    1,
-    50
-  )
-  await generateChain(
-    [
-      'Na TODO miesto je doska s perom. Na doske je papier, na ktorom sa hrá slovný futbal, doplň doň jedno slovo.'
-    ],
-    1,
-    50
-  )
-  await generateChain(['Umy si zuby.'], 1, 50)
-  await generateChain(
-    [
-      'Vezmi pohár z TODO miesto, umy ho hubkou a vylož pred dvere kúpeľne. ',
-      'Vezmi pohár z pred kúpeľne, napusti ho vodou a odnes na TODO miesto.',
-      'Vypi pohár vody na TODO miesto.'
-    ],
-    1,
-    50
-  )
-  await generateChain(['Ľahni si na 30 sekúnd na zem.'], 1, 50)
-  await generateChain(['Chod na TODO1, vezmi papier, sprav z neho štvorec a odnes ho na TODO2.',
-    'Choď na TODO2, '], 1, 50)
-=======
 export async function fotenie() {
   let poziadavka = []
   for (let i = 0; i < 500; i++) {
     let zaciatok = await createQuest(
-      'Vyber kostym TODO',
+      'Vyber kostym zo skrinky pri TV a zaves ho na TV.',
       'normal',
       undefined,
       4,
@@ -352,7 +316,7 @@ export async function fotenie() {
     )
     poziadavka.push(
       await createQuest(
-        'oblec si kostym nastav sa',
+        'Nájdi kostým na TV a obleč si ho.',
         'normal',
         undefined,
         100,
@@ -524,5 +488,6 @@ export async function nasobenie() {
       poziadavka ? [poziadavka] : undefined
     )
   }
->>>>>>> 7cdbaca (rozbijame veci ale fakt)
 }
+
+export async function najdiASprav() {}
