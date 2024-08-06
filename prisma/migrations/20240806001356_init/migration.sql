@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Quest" ADD COLUMN     "reward" INTEGER NOT NULL DEFAULT 0,
+ALTER COLUMN "priority" SET DEFAULT 0;

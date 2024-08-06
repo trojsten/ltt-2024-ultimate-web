@@ -1,10 +1,9 @@
-import db, { getQuestForUser } from '@db'
+import db, { getQuestForUser, getTeamForUser } from '@db'
 import { renderPage } from '@main'
-import type { User } from '@prisma/client'
 import type { SessionRequest } from '@session'
 
 async function AssignNewQuest(req: SessionRequest) {
-  return db.$transaction(async (db) => {
+  await db.$transaction(async (db) => {
     const newQuests = await db.quest.findMany({
       select: { id: true, priority: true },
       where: {
@@ -13,11 +12,43 @@ async function AssignNewQuest(req: SessionRequest) {
       }
     })
 
-    let newQuest = newQuests[0]
+    const newQuestsMultiple = []
     for (const quest of newQuests) {
-      if (quest.priority < newQuest.priority) {
-        newQuest = quest
+      for (let i = 0; i < quest.priority; i++) {
+        newQuestsMultiple.push(quest)
       }
+    }
+
+    const newQuest =
+      newQuestsMultiple[Math.floor(Math.random() * newQuestsMultiple.length)]
+
+    let quest = await getQuestForUser(req.session!.user.id)
+    if (quest) {
+      const team = await getTeamForUser(req.session!.user.id)
+      await db.transaction.create({
+        data: {
+          amount: -quest!.reward,
+          userId: req.session!.user.id,
+          teamId: team.id,
+          description: 'Splnený quest'
+        }
+      })
+
+      await db.team.update({
+        where: {
+          id: team.id
+        },
+        data: {
+          money: {
+            increment: quest!.reward
+          }
+        }
+      })
+      await db.quest.delete({
+        where: {
+          id: quest!.id
+        }
+      })
     }
 
     await db.user.update({
@@ -38,16 +69,16 @@ async function AssignNewQuest(req: SessionRequest) {
 async function getQuest(req: SessionRequest) {
   let quest = await getQuestForUser(req.session!.user.id)
   if (!quest) {
-    quest = await AssignNewQuest(req)
+    await AssignNewQuest(req)
+    quest = await getQuestForUser(req.session!.user.id)
   }
 
   return (
-    <form method="post">
-      <input type="hidden" name="id" value={quest.id} />
-      <h1>{quest.task}</h1>
-      {quest.type === 'text' && <input type="text" name="answer" />}
-      {quest.type === 'number' && <input type="number" name="answer" />}
-      <button type="submit">Submit</button>)
+    <form action="/quests" method="post">
+      <h1>{quest!.task}</h1>
+      {quest!.type === 'text' && <input type="text" name="answer" />}
+      {quest!.type === 'number' && <input type="number" name="answer" />}
+      <button type="submit">Submit</button>
     </form>
   )
 }
@@ -59,20 +90,11 @@ export async function get(req: SessionRequest) {
 export async function post(req: SessionRequest): Promise<Response> {
   const formdata = req.data!
 
-  const quest = getQuestForUser(req.session!.user.id)
-  /*
+  const quest = await getQuestForUser(req.session!.user.id)
+
   if (quest?.answer == formdata.get('answer')) {
-    await db.quest.update({
-      where: {
-        id: quest.id
-      },
-      data: {
-        requiredBy: {
-          disconnect: {}
-        }
-      }
-    })
+    await AssignNewQuest(req)
   }
-*/
-  return Response.redirect('/shop')
+
+  return Response.redirect('/quests')
 }

@@ -25,7 +25,8 @@ export async function getQuestForUser(userId: number) {
       id: true,
       task: true,
       type: true,
-      answer: true
+      answer: true,
+      reward: true
     }
   })
 }
