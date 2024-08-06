@@ -4,30 +4,18 @@ import { keys } from '@pages/games/[id]/data';
 import type { Item } from '@prisma/client'
 import type { SessionRequest } from '@session'
 
-/*const rewards: [number, Function][] = [
+const rewards: [number, Function][] = [
   [0.1, reward_item_common], // 10 %
   [0.03, reward_item_uncommon], // 3 %
   [0.01, reward_item_rare], // 1 %
   [0.001, reward_item_legendary], // 0.1 %
   [0.2, reward_one_box],
   [0.4, reward_more_boxes],
-  [0.1, reward_money_small], // 10 %
-  [0.03, reward_money_medium], // 3 %
-  [0.01, reward_money_big], // 1 %
-  [0.001, reward_money_huge], // 0.1 %
+  [0.05, reward_money_small], // 5 %
+  [0.02, reward_money_medium], // 2 %
+  [0.005, reward_money_big], // 0.5 %
+  [0.0005, reward_money_huge], // 0.05 %
   [0.10, reward_nothing]
-];*/
-
-const rewards: [number, Function][] = [
-  [0, reward_item_common], // 10 %
-  [0, reward_item_uncommon], // 3 %
-  [0, reward_item_rare], // 1 %
-  [1, reward_item_legendary], // 0.1 %
-  //[0.0, reward_money_small], // 10 %
-  //[0.0, reward_money_medium], // 3 %
-  //[0.1, reward_money_big], // 1 %
-  //[0.1, reward_money_huge], // 0.1 %
-  [0.1, reward_nothing]
 ];
 
 async function generate_lootbox_reward(req: SessionRequest){
