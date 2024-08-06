@@ -334,5 +334,6 @@ export async function generateChains() {
     1,
     50
   )
-  await generateChain(['Umy si zuby.'], 1, 50)
+  await generateChain(['Ľahni si na 30 sekúnd na zem.'], 1, 50)
+  await generateChain(['Chod na TODO1, vezmi papier, sprav z neho štvorec a odnes ho na TODO2.', 'Choď na TODO2'], 1, 50)
 }
