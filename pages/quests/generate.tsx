@@ -21,10 +21,16 @@ export async function getGenerate(req: SessionRequest) {
 }
 
 export async function get(req: SessionRequest) {
+  if (!req.session?.user.admin) {
+    return new Response("Unauthorized", { status: 401 })
+  }
   return renderPage(await getGenerate(req), req)
 }
 
 export async function post(req: SessionRequest): Promise<Response> {
+  if (!req.session?.user.admin) {
+    return new Response("Unauthorized", { status: 401 })
+  }
   await fotenie()
   await nasobenie()
   await generateChains()

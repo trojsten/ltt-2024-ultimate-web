@@ -483,11 +483,11 @@ export async function nasobenie() {
       `${cisla[0]} x ${cisla[1]} =`,
       'number',
       cisla[2],
-      2,
+      200,
       20,
       poziadavka ? [poziadavka] : undefined
     )
   }
 }
 
-export async function najdiASprav() {}
+export async function najdiASprav() { }

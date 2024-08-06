@@ -78,9 +78,9 @@ async function getQuest(req: SessionRequest) {
       <script src='/static/confetti.js'></script>
       <script src='/static/quest.js'></script>
       <h1>{quest!.task}</h1>
-      {quest!.type === 'text' && <input type="text" name="answer" />}
-      {quest!.type === 'number' && <input type="number" name="answer" />}
-      <button type="submit" className='btn text-3xl'>Hotovo</button>
+      {quest!.type === 'text' && <input type="text" name="answer" className='mb-3' />}
+      {quest!.type === 'number' && <input type="number" name="answer" className='mb-3' />}
+      <button type="submit" className='btn text-6xl'>Hotovo</button>
     </form>
   )
 }
