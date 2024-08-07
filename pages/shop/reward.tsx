@@ -5,16 +5,16 @@ import type { Item } from '@prisma/client'
 import type { SessionRequest } from '@session'
 
 const rewards: [number, Function][] = [
-  [0.1, reward_item_common], // 10 %
-  [0.03, reward_item_uncommon], // 3 %
-  [0.01, reward_item_rare], // 1 %
-  [0.001, reward_item_legendary], // 0.1 %
-  [0.2, reward_one_box],
-  [0.4, reward_more_boxes],
-  [0.05, reward_money_small], // 5 %
-  [0.02, reward_money_medium], // 2 %
-  [0.005, reward_money_big], // 0.5 %
-  [0.0005, reward_money_huge], // 0.05 %
+  [0.1, reward_money_small], // 10 %
+  [0.03, reward_money_medium], // 3 %
+  [0.01, reward_money_big], // 1 %
+  [0.001, reward_money_huge], // 0.1 %
+  [0.3, reward_one_box],
+  [0.3, reward_more_boxes],
+  [0.05, reward_item_common], // 5 %
+  [0.02, reward_item_uncommon], // 2 %
+  [0.005, reward_item_rare], // 0.5 %
+  [0.0005, reward_item_legendary], // 0.05 %
   [0.10, reward_nothing]
 ];
 
@@ -30,7 +30,7 @@ async function generate_lootbox_reward(req: SessionRequest){
   return reward_nothing(req);
 }
 
-async function getItemsWithTag(tag: string) {
+async function get_items_with_tag(tag: string) {
   const items = await db.item!.findMany({
     where: {
       tags: {
@@ -43,31 +43,45 @@ async function getItemsWithTag(tag: string) {
   return items;
 }
 
+async function buy_free_and_remove_from_shop(req: SessionRequest, item: Item){
+  await buy(req.session!.user.id, 0, item);
+  await db.item.update({
+    where: {
+      id: item!.id
+    },
+    data: {
+      amount: {
+        decrement: 1
+      }
+    }
+  })
+}
+
 async function reward_item_common(req: SessionRequest){
-  const items = await getItemsWithTag("lootbox-item-common");
+  const items = await get_items_with_tag("lootbox-item-common");
   const item = items[Math.floor(Math.random() * items.length)];
-  buy(req.session!.user.id, 0, item);
+  await buy_free_and_remove_from_shop(req, items[Math.floor(Math.random() * items.length)]);
   return [item.name, 0, item.image]; // Number means rarity here
 }
 
 async function reward_item_uncommon(req: SessionRequest){
-  const items = await getItemsWithTag("lootbox-item-uncommon");
+  const items = await get_items_with_tag("lootbox-item-uncommon");
   const item = items[Math.floor(Math.random() * items.length)];
-  buy(req.session!.user.id, 0, item);
+  await buy_free_and_remove_from_shop(req, items[Math.floor(Math.random() * items.length)]);
   return [item.name, 1, item.image]; // Number means rarity here
 }
 
 async function reward_item_rare(req: SessionRequest){
-  const items = await getItemsWithTag("lootbox-item-rare");
+  const items = await get_items_with_tag("lootbox-item-rare");
   const item = items[Math.floor(Math.random() * items.length)];
-  buy(req.session!.user.id, 0, item);
+  await buy_free_and_remove_from_shop(req, items[Math.floor(Math.random() * items.length)]);
   return [item.name, 2, item.image]; // Number means rarity here
 }
 
 async function reward_item_legendary(req: SessionRequest){
-  const items = await getItemsWithTag("lootbox-item-legendary");
+  const items = await get_items_with_tag("lootbox-item-legendary");
   const item = items[Math.floor(Math.random() * items.length)];
-  buy(req.session!.user.id, 0, item);
+  await buy_free_and_remove_from_shop(req, items[Math.floor(Math.random() * items.length)]);
   return [item.name, 3, item.image]; // Number means rarity here
 }
 

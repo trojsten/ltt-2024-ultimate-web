@@ -24,9 +24,6 @@ async function getShop(req: SessionRequest) {
       where: {
         tags: {
           every: {
-            /*NOT: {
-            name: "lootbox"
-          },*/
             users: {
               some: {
                 id: req.session?.user.id
