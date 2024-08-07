@@ -53,7 +53,7 @@ export async function post(req: SessionRequest) {
     const money = parseInt(data.get(key) as string);
     await db.transaction.create({
       data: {
-        amount: money,
+        amount: -money,
         description: note,
         teamId: teamId,
         userId: req.session!.user.id

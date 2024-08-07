@@ -35,7 +35,7 @@ async function NewAd() {
           className="mb-4"
           required
         />
-        <label htmlFor="tags">Komu sa má zobrazovať</label>
+        <label htmlFor="tags">Komu sa má zobrazovať (Zobrazuje sa všetkým, ktorí majú aspoň jednu z uvedených vlastností)</label>
         <select
           name="tags"
           id="tags"

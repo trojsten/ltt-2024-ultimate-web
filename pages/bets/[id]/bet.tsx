@@ -28,10 +28,9 @@ async function getHTML(req: SessionRequest) {
     return <div>Invalid bet id</div>
   }
 
-  const team = await getTeamForUser(req.session!.user.id)
   const hasBet = await db.transaction.findFirst({
     where: {
-      teamId: team.id,
+      userId: req.session!.user.id,
       bet: {
         PossileBet: {
           id: bet.id
@@ -124,7 +123,7 @@ export async function post(req: SessionRequest) {
 
   const hasBet = await db.transaction.findFirst({
     where: {
-      teamId: team.id,
+      userId: req.session!.user.id,
       bet: {
         PossileBet: {
           id: bet.id
