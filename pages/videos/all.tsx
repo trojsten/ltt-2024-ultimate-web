@@ -40,7 +40,7 @@ async function allVideos() {
             <div className="bg-gray-200 rounded-lg overflow-hidden relative">
               <div className="top-0 w-full bg-gray-500 overflow-hidden">
                 <h2 className="text-lg text-center mb-3 mt-1 font-semibold">
-                  {video.name}
+                  <a href={`/videos/${video.id}`}>{video.name}</a>
                 </h2>
               </div>
               <div className="mx-5 mt-3 mb-1.5">
@@ -86,8 +86,5 @@ async function allVideos() {
 }
 
 export async function get(req: SessionRequest): Promise<Response> {
-  if (!req.session!.user.admin) {
-    return Response.redirect('/videos')
-  }
   return renderPage(await allVideos(), req)
 }

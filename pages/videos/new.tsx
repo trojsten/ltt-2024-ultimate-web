@@ -47,7 +47,7 @@ export async function get(req: SessionRequest): Promise<Response> {
 }
 
 export async function post(req: SessionRequest): Promise<Response> {
-  const formdata = req.data!
+  /*const formdata = req.data!
 
   const name = formdata.get('name') as string
   const contentId = crypto.randomUUID()
@@ -59,7 +59,7 @@ export async function post(req: SessionRequest): Promise<Response> {
       content: '/uploads/' + contentId,
       userId: req.session!.user.id
     }
-  })
+  })*/
 
   return Response.redirect('/videos')
 }

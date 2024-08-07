@@ -50,19 +50,20 @@ async function myVideos(user: User) {
           <p>Žiadne videá</p>
         )}
       </div>
-      <a href="/videos/new" className="btn mx-2">
-        Nové video
-      </a>
+
       {user.admin && (
         <>
+          <a href="/videos/new" className="btn mx-2">
+            Nové video
+          </a>
           <a href="/videos/watch" className="btn mx-2">
             Pozrieť si videá
           </a>
-          <a href="/videos/all" className="btn mx-2">
-            Všetky videá
-          </a>
         </>
       )}
+      <a href="/videos/all" className="btn mx-2">
+        Všetky videá
+      </a>
     </section>
   )
 }
