@@ -5,6 +5,7 @@ import type { SessionRequest } from '@session'
 async function NewAd() {
   return (
     <div className="container w-full md:w-2/3 m-auto">
+      <script src="/static/fileSizeCheck.js" defer async />
       <h1>Pridať nové video</h1>
       <form
         method="post"
@@ -23,8 +24,7 @@ async function NewAd() {
           className="mb-2"
           required
         />
-        <label className="mb-3 text-red">
-          <input type="checkbox" className="mr-2" required />
+        <p id="warning" className="mb-3 text-red" hidden>
           Pred nahratím videa ho skomprimuj (
           <a
             className="text-blue"
@@ -32,8 +32,8 @@ async function NewAd() {
           >
             napríklad touto appkou
           </a>{' '}
-          - internet dostaneš), aby malo tak cca 2MB
-        </label>
+          - internet si choď vypítať), aby malo najviac 10MB
+        </p>
         <button type="submit" className="btn">
           Vytvoriť
         </button>
