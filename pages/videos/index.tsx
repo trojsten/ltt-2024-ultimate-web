@@ -42,7 +42,7 @@ async function myVideos(user: User) {
                 Hodnotenie:{' '}
                 {video.users.length == 0
                   ? 'Žiadne hodnotenie'
-                  : `${video.rating} / ${video.users.length * 10}`}
+                  : `${video.rating}`}
               </div>
             </div>
           ))

@@ -47,7 +47,7 @@ async function allVideos() {
                 Hodnotenie:{' '}
                 {video.users.length == 0
                   ? 'Žiadne hodnotenie'
-                  : `${video.rating} / ${video.users.length * 10}`}
+                  : `${video.rating}`}
               </div>
               <div className="mx-5 my-1.5">
                 Autor: {video.CreatedBy.team.name} ({video.CreatedBy.name})

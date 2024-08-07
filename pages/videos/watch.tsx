@@ -43,10 +43,10 @@ async function watchVideos(user: User) {
                   Zadaj hodnotenie (1-10):
                   <input
                     type="number"
-                    defaultValue={0}
+                    defaultValue={1}
                     id="rating"
                     name="rating"
-                    min={0}
+                    min={1}
                     max={10}
                     required
                   />
@@ -92,7 +92,7 @@ export async function post(req: SessionRequest): Promise<Response> {
   await db.video.update({
     where: { id: videoId },
     data: {
-      rating: { increment: rating },
+      rating: { increment: rating * rating * rating },
       users: {
         connect: {
           id: ratedByUser.id
