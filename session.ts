@@ -11,6 +11,7 @@ interface AdState {
   lastUpdated: number
   adWatched: Ad
   nextPage: string
+  skippable: boolean
 }
 
 const sessionStore = new Map<string, Session>()

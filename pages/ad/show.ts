@@ -13,7 +13,7 @@ export async function get(req: SessionRequest) {
     return Response.redirect(backUrl)
   }
   try {
-    return startAdWatch(req, backUrl)
+    return startAdWatch(req, backUrl, req.parsedUrl.searchParams.get("skippable") == '1')
   } catch (e) {
     return Response.redirect(backUrl)
   }

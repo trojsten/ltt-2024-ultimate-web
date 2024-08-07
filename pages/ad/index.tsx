@@ -3,6 +3,7 @@ import { renderPage } from '@main'
 import type { Ad, User } from '@prisma/client'
 import { setSession, type SessionRequest } from '@session'
 import { Icon } from '@iconify-icon/react'
+import getDuration from 'get-video-duration'
 
 function renderAd(ad: Ad) {
   return (
@@ -35,7 +36,7 @@ function renderAd(ad: Ad) {
 export async function get(req: SessionRequest): Promise<Response> {
   if (req.session?.ad == undefined)
     return new Response('No ad is currently being watched', { status: 400 })
-  req.session.ad.timeRemaining = req.session.ad.adWatched.length
+  req.session.ad.timeRemaining = await getAdLength(req.session.ad.adWatched, req.session.ad.skippable)
   return setSession(
     await renderPage(renderAd(req.session.ad.adWatched), req),
     req.session
@@ -55,7 +56,7 @@ export async function pickAd(user: User) {
   }
 }
 
-export async function startAdWatch(req: SessionRequest, backUrl?: string) {
+export async function startAdWatch(req: SessionRequest, backUrl?: string, skippable: boolean = true) {
   if (req.session?.ad !== undefined) {
     return new Response('An ad is already being watched', { status: 400 })
   } else if (req.session?.user === undefined) {
@@ -67,14 +68,30 @@ export async function startAdWatch(req: SessionRequest, backUrl?: string) {
     throw 'no ad available'
   }
 
-  req.session.ad = {
-    timeRemaining: ad.length,
-    lastUpdated: Date.now(),
-    adWatched: ad,
-    nextPage: backUrl ?? req.url
+  let length = ad.length
+
+  if (!skippable) {
+    length = ad.type == 'VIDEO' ? (await getDuration(ad.content.substring(1))) * 1000 : 10
+    console.log('Ad length', length)
   }
 
-  console.log('Ad started', ad.id, ad.name, ad.length)
+
+  req.session.ad = {
+    timeRemaining: await getAdLength(ad, skippable),
+    lastUpdated: Date.now(),
+    adWatched: ad,
+    nextPage: backUrl ?? req.url,
+    skippable
+  }
+
+  console.log('Ad started', req.session.ad)
 
   return setSession(Response.redirect('/ad'), req.session)
+}
+
+async function getAdLength(ad: Ad, skippable: boolean) {
+  if (!skippable) {
+    return ad.type == 'VIDEO' ? (await getDuration(ad.content.substring(1))) * 1000 : 30
+  }
+  return ad.length
 }
