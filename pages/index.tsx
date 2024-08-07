@@ -16,9 +16,22 @@ async function home(req: SessionRequest) {
         NOT: {
           item: null
         },
-        item: {
-          consumable: true
-        }
+        OR: [
+          {
+            item: {
+              consumable: true
+            }
+          },
+          {
+            item: {
+              tags: {
+                some: {
+                  name: "lootbox"
+                }
+              },
+            }
+          }
+        ]
       },
       select: {
         id: true,
@@ -47,7 +60,6 @@ async function home(req: SessionRequest) {
             item: null
           },
           item: {
-            consumable: true,
             id: e.id
           }
         }
