@@ -53,7 +53,7 @@ async function getRewardPage(){
     </div>
 
     <div id="lootbox-reward-overlay">
-      <p id="lootbox-reward-overlay-text">Tu by mala byt napisana odmena.</p>
+      <p id="lootbox-reward-overlay-text">Čakám na spojenie s databázou...</p>
       <br/>
       <img id="lootbox-reward-overlay-picture" src="/static/pou.png"/>
     </div>

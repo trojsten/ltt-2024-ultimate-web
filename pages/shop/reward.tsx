@@ -31,7 +31,7 @@ async function generate_lootbox_reward(req: SessionRequest){
 }
 
 async function getItemsWithTag(tag: string) {
-  let items = await db.item!.findMany({
+  const items = await db.item!.findMany({
     where: {
       tags: {
         some: {
@@ -40,38 +40,37 @@ async function getItemsWithTag(tag: string) {
       }
     }
   })
-  console.log(items);
   return items;
 }
 
 async function reward_item_common(req: SessionRequest){
-  let items = await getItemsWithTag("lootbox-item-common");
+  const items = await getItemsWithTag("lootbox-item-common");
   items.sort(() => Math.random());
-  let item = items[0];
+  const item = items[0];
   buy(req.session!.user.id, 0, item);
   return [item.name, 0, item.image]; // Number means rarity here
 }
 
 async function reward_item_uncommon(req: SessionRequest){
-  let items = await getItemsWithTag("lootbox-item-uncommon");
+  const items = await getItemsWithTag("lootbox-item-uncommon");
   items.sort(() => Math.random());
-  let item = items[0];
+  const item = items[0];
   buy(req.session!.user.id, 0, item);
   return [item.name, 1, item.image]; // Number means rarity here
 }
 
 async function reward_item_rare(req: SessionRequest){
-  let items = await getItemsWithTag("lootbox-item-rare");
+  const items = await getItemsWithTag("lootbox-item-rare");
   items.sort(() => Math.random());
-  let item = items[0];
+  const item = items[0];
   buy(req.session!.user.id, 0, item);
   return [item.name, 2, item.image]; // Number means rarity here
 }
 
 async function reward_item_legendary(req: SessionRequest){
-  let items = await getItemsWithTag("lootbox-item-legendary");
+  const items = await getItemsWithTag("lootbox-item-legendary");
   items.sort(() => Math.random());
-  let item = items[0];
+  const item = items[0];
   buy(req.session!.user.id, 0, item);
   return [item.name, 3, item.image]; // Number means rarity here
 }
@@ -82,31 +81,35 @@ function reward_one_box(req: SessionRequest){
 }
 
 function reward_more_boxes(req: SessionRequest){
-  let number = Math.floor(Math.random() * 2 + 1);
+  const number = Math.floor(Math.random() * 2 + 1);
   add_lootboxes(req, number);
   return ["lootbox", number];
 }
 
-function reward_money_small(req: SessionRequest){
-  let number = Math.floor(Math.random() * 15 + 1);
+async function reward_money_small(req: SessionRequest){
+  const team = await getTeamForUser(req.session!.user.id);
+  const number = Math.floor(Math.random() * team.money / 1000 * 2+ 1);
   add_money(req, number);
   return ["money", number];
 }
 
-function reward_money_medium(req: SessionRequest){
-  let number = Math.floor(Math.random() * 50 + 1);
+async function reward_money_medium(req: SessionRequest){
+  const team = await getTeamForUser(req.session!.user.id);
+  const number = Math.floor(Math.random() * team.money / 300 * 2 + 1);
   add_money(req, number);
   return ["money", number];
 }
 
-function reward_money_big(req: SessionRequest){
-  let number = Math.floor(Math.random() * 250 + 1);
+async function reward_money_big(req: SessionRequest){
+  const team = await getTeamForUser(req.session!.user.id);
+  const number = Math.floor(Math.random() * team.money / 100 * 2 + 1);
   add_money(req, number);
   return ["money", number];
 }
 
-function reward_money_huge(req: SessionRequest){
-  let number = Math.floor(Math.random() * 2500 + 1);
+async function reward_money_huge(req: SessionRequest){
+  const team = await getTeamForUser(req.session!.user.id);
+  const number = Math.floor(Math.random() * team.money / 10 * 2 + 1);
   add_money(req, number);
   return ["money", number];
 }
