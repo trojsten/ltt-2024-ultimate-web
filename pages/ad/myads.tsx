@@ -6,7 +6,15 @@ import type { SessionRequest } from '@session'
 async function myAds(userId: number) {
   const ads = await db.ad.findMany({
     where: {
-      createdById: userId
+      createdBy: {
+        team: {
+          users: {
+            some: {
+              id: userId
+            }
+          }
+        }
+      }
     },
     select: {
       content: true,
