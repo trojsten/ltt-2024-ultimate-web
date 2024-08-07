@@ -1,5 +1,6 @@
 import config from '@config'
 import db, { buyAddTag, getTeamForUser, userHasTag } from '@db'
+import { Icon } from '@iconify-icon/react'
 import { renderPage } from '@main'
 import type { SessionRequest } from '@session'
 
@@ -52,9 +53,11 @@ function amountHTML(amount: number) {
           : 'text-green-500 flex justify-center'
       }
     >
-      <span className="material-symbols-outlined block">
-        {amount > 0 ? 'arrow_drop_down' : 'arrow_drop_up'}
-      </span>{' '}
+      <Icon
+        icon={amount > 0 ? 'mdi:menu-down' : 'mdi:menu-up'}
+        width="1.2em"
+        height="1.2em"
+      />{' '}
       {Math.abs(amount)}
     </td>
   )

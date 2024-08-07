@@ -22,6 +22,7 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
+    "@iconify-icon/react": "^2.1.0",
     "@prisma/client": "^5.14.0",
     "@tailwindcss/cli": "^4.0.0-alpha.15",
     "get-video-duration": "^4.1.0",

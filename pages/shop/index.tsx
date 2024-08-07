@@ -2,6 +2,7 @@ import db, { getItemsForUser, getTeamForUser } from '@db'
 import { renderPage } from '@main'
 import type { Item } from '@prisma/client'
 import type { SessionRequest } from '@session'
+import { Icon } from '@iconify-icon/react'
 
 async function getShop(req: SessionRequest) {
   const userItems = await getItemsForUser(req.session!.user.id)
@@ -18,27 +19,32 @@ async function getShop(req: SessionRequest) {
 
   console.log(counts)
 
-  const items = (await db.item.findMany({
-    where: {
-      tags: {
-        every: {
-          /*NOT: {
+  const items = (
+    await db.item.findMany({
+      where: {
+        tags: {
+          every: {
+            /*NOT: {
             name: "lootbox"
           },*/
-          users: {
-            some: {
-              id: req.session?.user.id
+            users: {
+              some: {
+                id: req.session?.user.id
+              }
             }
           }
+        },
+        amount: {
+          gt: 0
         }
-      },
-      amount: {
-        gt: 0
       }
-    }
-  })).filter(e => e.amountPerUser == null || counts[e.id] == undefined || (counts[e.id] < e.amountPerUser && !req.session!.user.admin))
-
-
+    })
+  ).filter(
+    (e) =>
+      e.amountPerUser == null ||
+      counts[e.id] == undefined ||
+      (counts[e.id] < e.amountPerUser && !req.session!.user.admin)
+  )
 
   const team = await getTeamForUser(req.session!.user.id)
 
@@ -86,10 +92,13 @@ export function itemHTML(
       <div className="p-2">
         <p className="mb-4 mt-2">{item.description}</p>
         <div className="flex justify-between">
-          {item.amount < 1000 ? (<p>{item.amount} kusov</p>) : <p>&infin; kusov</p>}
+          {item.amount < 1000 ? (
+            <p>{item.amount} kusov</p>
+          ) : (
+            <p>&infin; kusov</p>
+          )}
           <p className="font-bold flex items-center">
-            {item.cost}{' '}
-            <span className="material-symbols-outlined">monetization_on</span>
+            {item.cost} <Icon icon="mdi:dollar" width="1.2em" height="1.2em" />
           </p>
         </div>
         {buyButton ? (

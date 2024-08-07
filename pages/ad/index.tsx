@@ -2,14 +2,19 @@ import { getAdsForUser } from '@db'
 import { renderPage } from '@main'
 import type { Ad, User } from '@prisma/client'
 import { setSession, type SessionRequest } from '@session'
+import { Icon } from '@iconify-icon/react'
 
 function renderAd(ad: Ad) {
   return (
     <div className="w-screen h-screen fixed top-0 left-0 z-10 bg-black">
-      <h1 className='absolute top-3 left-5 text-3xl text-white' >{ad.name}</h1  >
-      <a href={ad.link ?? ""} id="link"></a>
+      <h1 className="absolute top-3 left-5 text-3xl text-white">{ad.name}</h1>
+      <a href={ad.link ?? ''} id="link"></a>
       {ad.type == 'IMAGE' ? (
-        <img src={ad.content} className="w-full h-full object-contain" id="ad" />
+        <img
+          src={ad.content}
+          className="w-full h-full object-contain"
+          id="ad"
+        />
       ) : (
         <video
           src={ad.content}
@@ -20,7 +25,7 @@ function renderAd(ad: Ad) {
       )}
 
       <button className="btn absolute right-2 top-2" id="skipBtn">
-        <span className="material-symbols-outlined">cancel</span>
+        <Icon icon="mdi:cancel-circle-outline" width="1.2em" height="1.2em" />
       </button>
       <script src="/static/adSync.js"></script>
     </div>
