@@ -7,13 +7,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const closeHTML = closeBtn.innerHTML
   closeBtn.disabled = true
   closeBtn.style.display = 'none'
-  if (link != null) {
-    ad.addEventListener('click', () => {
-      location.href = link
-    })
-  }
 
   function start() {
+    if (link != null) {
+      ad.addEventListener('click', () => {
+        location.href = link
+      })
+    }
     const interval = setInterval(() => {
       fetch('/ad/sync')
         .then((response) => {
@@ -35,20 +35,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 1000)
   }
 
-
   if (video != null) {
     const promise = video.play()
     if (promise !== undefined) {
-      promise.then(() => {
-        start()
-      }).catch((error) => {
-        console.log('Error playing video:', error)
-        video.controls = true
-        video.addEventListener('play', () => {
-          video.controls = false
+      promise
+        .then(() => {
           start()
         })
-      })
+        .catch((error) => {
+          console.log('Error playing video:', error)
+          video.controls = true
+          video.addEventListener('play', () => {
+            video.controls = false
+            start()
+          })
+        })
     }
   } else {
     start()
