@@ -23,7 +23,7 @@ async function NewAd() {
       >
         <label htmlFor="name">Titulok</label>
         <input type="text" name="name" id="name" required />
-        <label htmlFor="link">Link</label>
+        <label htmlFor="link">Link (Kam ma to hodí, ak kliknem na reklamu) - nepovinné</label>
         <input type="text" name="link" id="link" />
 
         <label htmlFor="content">Content</label>

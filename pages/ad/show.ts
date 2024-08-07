@@ -12,5 +12,9 @@ export async function get(req: SessionRequest) {
   if (!getConfig().ads.enabled) {
     return Response.redirect(backUrl)
   }
-  return startAdWatch(req, backUrl)
+  try {
+    return startAdWatch(req, backUrl)
+  } catch (e) {
+    return Response.redirect(backUrl)
+  }
 }
