@@ -1,6 +1,7 @@
 import db from '@db'
 import { renderPage } from '@main'
 import type { SessionRequest } from '@session'
+import { Icon } from '@iconify-icon/react'
 
 async function getPage(req: SessionRequest): Promise<JSX.Element> {
   const id = parseInt(req.params.id)
@@ -25,6 +26,9 @@ async function getPage(req: SessionRequest): Promise<JSX.Element> {
         disablePictureInPicture
         controls
       />
+      <a href="/videos" className="btn absolute right-2 top-2">
+        Späť
+      </a>
     </div>
   )
 }
