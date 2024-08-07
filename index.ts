@@ -1,5 +1,5 @@
 import { startAdWatch } from '@pages/ad'
-import { SessionRequest } from './session'
+import { SessionRequest, setSession } from './session'
 import config from '@config'
 import { importTags, importUsersFromCsv } from '@importer'
 import getConfig from '@config'
@@ -37,7 +37,7 @@ export const server = Bun.serve({
     if (Request.method == 'POST') {
       if (
         Request.headers.get('Content-Type') ==
-          'application/x-www-form-urlencoded' ||
+        'application/x-www-form-urlencoded' ||
         Request.headers.get('Content-Type')?.includes('multipart/form-data')
       ) {
         data = await Request.formData()
@@ -81,7 +81,7 @@ export const server = Bun.serve({
     let res: Response | undefined
     if (sessReq.sessionValid == false) {
       if (sessReq.parsedUrl.pathname != '/login') {
-        return Response.redirect('/login?redirect=' + btoa(Request.url))
+        return setSession(Response.redirect('/login?redirect=' + btoa(Request.url)), undefined)
       }
     }
 
@@ -96,16 +96,16 @@ export const server = Bun.serve({
   port: 3000,
   websocket: {
     message: function () // ws: ServerWebSocket<unknown>,
-    // message: string | Buffer
-    : void | Promise<void> {
+      // message: string | Buffer
+      : void | Promise<void> {
       throw new Error('Function not implemented.')
     }
   },
   tls:
     Bun.env.DEBUG == 'True'
       ? {
-          cert: Bun.file('domain.crt'),
-          key: Bun.file('domain.key')
-        }
+        cert: Bun.file('domain.crt'),
+        key: Bun.file('domain.key')
+      }
       : {}
 })

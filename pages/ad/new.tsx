@@ -13,6 +13,7 @@ async function NewAd() {
   })
   return (
     <div className="container w-full md:w-2/3 m-auto">
+      <script src='/static/fileSizeCheck.js'></script>
       <h1>Pridať novú reklamu</h1>
       <form
         method="post"
@@ -62,6 +63,16 @@ async function NewAd() {
           <option value="IMAGE">Obrázok</option>
           <option value="VIDEO">Video</option>
         </select>
+        <p id="warning" className="mb-3 text-red" hidden>
+          Pred nahratím videa ho skomprimuj (
+          <a
+            className="text-blue"
+            href="https://play.google.com/store/apps/details?id=com.arthur.hritik.proton.video.compressor"
+          >
+            napríklad touto appkou
+          </a>{' '}
+          - internet si choď vypítať), aby malo najviac 10MB
+        </p>
         <button type="submit" className="btn">
           Vytvoriť ({config().ads.adCreationCost})
         </button>
