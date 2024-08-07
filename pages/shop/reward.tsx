@@ -1,6 +1,8 @@
 import db, { getItemsForUser, getTeamForUser, buy } from '@db'
+import type { JsonObject } from '@prisma/client/runtime/library'
 import { renderPage } from '@main'
 import { keys } from '@pages/games/[id]/data';
+import { hooks } from '@pages/shop/buy/hooks'
 import type { Item } from '@prisma/client'
 import type { SessionRequest } from '@session'
 
@@ -48,6 +50,7 @@ async function get_items_with_tag(tag: string) {
 
 async function buy_free_and_remove_from_shop(req: SessionRequest, item: Item){
   await buy(req.session!.user.id, 0, item);
+
   await db.item.update({
     where: {
       id: item!.id
@@ -58,6 +61,18 @@ async function buy_free_and_remove_from_shop(req: SessionRequest, item: Item){
       }
     }
   })
+
+  const user = req.session!.user;
+  const hook = (item.data as JsonObject)?.hook as string | undefined
+  if (hook) {
+    await hooks[hook]({
+      user,
+      item,
+      ip: req.headers.get('x-forwarded-for')?.split(',')[0] ?? req.ip,
+      ...(item.data as JsonObject)
+    })
+  }
+
 }
 
 async function reward_item_common(req: SessionRequest){
