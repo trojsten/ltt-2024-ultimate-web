@@ -2,6 +2,7 @@ import config from '@config'
 import { getTeamForUser, userHasTag } from '@db'
 import type { Team, User } from '@prisma/client'
 import type { SessionRequest } from '@session'
+import { Icon } from '@iconify-icon/react'
 
 export async function navbar(req: SessionRequest) {
   const user = req.session?.user
@@ -14,17 +15,19 @@ export async function navbar(req: SessionRequest) {
     <aside className="shrink-0 md:w-64 bg-gray-800 flex flex-col">
       <header className="bg-blue-500 flex items-center h-14">
         <a href="/" className="pl-4 flex gap-1 justify-center items-center">
-          <span className="block material-symbols-outlined">person</span>
+          <Icon icon="mdi:person-outline" width="1.2em" height="1.2em" />
           {user?.name} | {team?.money}
-          <span className="block material-symbols-outlined">
-            monetization_on
-          </span>
+          <Icon icon="mdi:dollar" width="1.2em" height="1.2em" />
+          <span
+            className="icon-[mdi--attach-money]"
+            style={{ width: '1.2em', height: '1.2em;' }}
+          ></span>
         </a>
         <div
           className="flex justify-center items-center ml-auto mr-2 text-white text-sm md:hidden px-4 py-2 hover:bg-blue-700 rounded-md cursor-pointer"
           id="toggle"
         >
-          <span className="block material-symbols-outlined">menu</span>
+          <Icon icon="mdi:menu" width="1.5em" height="1.5em" />
         </div>
       </header>
       <div className="md:block overflow-y-auto hidden" id="nav">

@@ -3,6 +3,7 @@ import type { SessionRequest } from '@session'
 import { getCurrentReservations, getToday } from './functions'
 import db from '@db'
 import type { Bed } from '@prisma/client'
+import { Icon } from '@iconify-icon/react'
 
 let request: SessionRequest
 
@@ -46,7 +47,7 @@ function roomHTML(room: any, reservations: any[]) {
       <ul className="list-disc">
         {room.features.map((feature: string) => (
           <li className="text-green-500 flex mb-1">
-            <span className="material-symbols-outlined block">add_circle</span>
+            <Icon icon="mdi:add-circle-outline" width="1.2em" height="1.2em" />{' '}
             <p>{feature}</p>
           </li>
         ))}

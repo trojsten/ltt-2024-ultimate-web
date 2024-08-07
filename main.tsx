@@ -34,6 +34,7 @@ async function getPage(content: JSX.Element, req: SessionRequest) {
         <title>LTT APP</title>
         <meta property="og:title" content="LTT" />
         <meta property="twitter:title" content="LTT" />
+        <script src="/static/iconify.js" defer async></script>
       </head>
       <body>
         <main className="flex h-screen min-w-screen flex-col md:flex-row">
