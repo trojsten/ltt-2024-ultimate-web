@@ -37,6 +37,9 @@ async function get_items_with_tag(tag: string) {
         some: {
           name: tag
         }
+      },
+      amount: {
+        gt: 0
       }
     }
   })
