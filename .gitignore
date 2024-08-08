@@ -176,3 +176,5 @@ dist
 
 uploads/*
 !uploads/config.json
+
+!node_modules/@prisma/*

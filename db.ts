@@ -1,6 +1,14 @@
 import { PrismaClient, type Item } from '@prisma/client'
 
-const db = new PrismaClient()
+const prismaClientSingleton = () => {
+  return new PrismaClient()
+}
+
+declare const globalThis: {
+  prismaGlobal: ReturnType<typeof prismaClientSingleton>;
+} & typeof global;
+
+const db = globalThis.prismaGlobal ?? prismaClientSingleton()
 
 export default db
 
