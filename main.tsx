@@ -9,7 +9,6 @@ async function getPage(content: JSX.Element, req: SessionRequest) {
         <link rel="stylesheet" href="/static/app.css" />
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <script src="/static/navbar.js" defer async />
         <link rel="manifest" href="/static/manifest.json" />
         <link rel="icon" href="/static/favicon.ico" type="image/x-icon" />
         <meta property="og:image" content="/static/ltt.svg" />
@@ -34,9 +33,18 @@ async function getPage(content: JSX.Element, req: SessionRequest) {
         <title>LTT APP</title>
         <meta property="og:title" content="LTT" />
         <meta property="twitter:title" content="LTT" />
-        <script src="/static/iconify.js" defer async></script>
+        <script src="/static/navbar.js" defer async />
+        <script src="/static/iconify.js" defer async />
+        {req.parsedUrl.pathname.startsWith('/chat') ? (
+          <script type="module" src="/static/chat.js" defer async />
+        ) : (
+          ''
+        )}
+        <link href="/static/agate.min.css" rel="stylesheet" />
+        <link href="/static/katex.min.css" rel="stylesheet" />
+        <link href="/static/texmath.min.css" rel="stylesheet" />
       </head>
-      <body>
+      <body className="overflow-hidden">
         <main className="flex h-screen min-w-screen flex-col md:flex-row">
           {req.sessionValid ? await navbar(req) : null}
           <section

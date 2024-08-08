@@ -8,6 +8,9 @@
   "devDependencies": {
     "@eslint/js": "^9.2.0",
     "@types/bun": "latest",
+    "@types/katex": "^0.16.7",
+    "@types/markdown-it": "^14.1.2",
+    "@types/markdown-it-emoji": "^3.0.1",
     "@types/react-dom": "^18.3.0",
     "eslint": "^9.2.0",
     "eslint-plugin-jsx-a11y": "^6.8.0",
@@ -26,6 +29,11 @@
     "@prisma/client": "^5.14.0",
     "@tailwindcss/cli": "^4.0.0-alpha.15",
     "get-video-duration": "^4.1.0",
+    "highlight.js": "^11.10.0",
+    "katex": "^0.16.11",
+    "markdown-it": "^14.1.0",
+    "markdown-it-emoji": "^3.0.0",
+    "markdown-it-texmath": "^1.0.0",
     "react": "^19.0.0-rc-915b914b3a-20240515",
     "react-dom": "^19.0.0-rc-915b914b3a-20240515",
     "tailwindcss": "^4.0.0-alpha.15"

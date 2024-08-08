@@ -13,7 +13,8 @@
     "quests": true,
     "quests-admin": "admin",
     "teams": "admin",
-    "upload": "admin"
+    "upload": "admin",
+    "chat": true
   },
   "system_tags": [
     "transactions",

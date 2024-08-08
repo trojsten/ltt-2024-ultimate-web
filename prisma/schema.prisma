@@ -5,226 +5,238 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+    provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
 }
 
 enum Sex {
-  Male
-  Female
+    Male
+    Female
 }
 
 model User {
-  id            Int           @id @default(autoincrement())
-  email         String        @unique
-  name          String        @unique
-  password      String
-  team          Team          @relation(fields: [teamId], references: [id])
-  teamId        Int
-  sex           Sex
-  tags          Tag[]
-  transactions  Transaction[]
-  ads           Ad[]
-  admin         Boolean       @default(false)
-  Reservation   Reservation[]
-  Leaderboard   Leaderboard[]
-  activated     Boolean       @default(false)
-  hovna         Int           @default(0)
-  createdVideos Video[]       @relation("users_createdVideos")
-  watchedVideos Video[]       @relation("users_watchedVideos")
-  Quest         Quest[]
-  Messages      Message[]
-  Channels      Channel[]
+    id            Int           @id @default(autoincrement())
+    email         String        @unique
+    name          String        @unique
+    password      String
+    team          Team          @relation(fields: [teamId], references: [id])
+    teamId        Int
+    sex           Sex
+    tags          Tag[]
+    transactions  Transaction[]
+    ads           Ad[]
+    admin         Boolean       @default(false)
+    Reservation   Reservation[]
+    Leaderboard   Leaderboard[]
+    activated     Boolean       @default(false)
+    hovna         Int           @default(0)
+    createdVideos Video[]       @relation("users_createdVideos")
+    watchedVideos Video[]       @relation("users_watchedVideos")
+    Quest         Quest[]
+    Messages      Message[]
+    Channels      Channel[]
+    Reaction      Reaction[]
+    profileImage  String?
 }
 
 model Team {
-  id           Int           @id @default(autoincrement())
-  name         String
-  users        User[]
-  money        Int
-  transactions Transaction[]
+    id           Int           @id @default(autoincrement())
+    name         String
+    users        User[]
+    money        Int
+    transactions Transaction[]
 }
 
 model Transaction {
-  id          Int         @id @default(autoincrement())
-  amount      Int
-  team        Team        @relation(fields: [teamId], references: [id])
-  teamId      Int
-  user        User        @relation(fields: [userId], references: [id])
-  userId      Int
-  item        Item?       @relation(fields: [itemId], references: [id])
-  itemId      Int?
-  bet         BetOutcome? @relation(fields: [betId], references: [id])
-  betId       Int?
-  description String?
-  createdAt   DateTime    @default(now())
-  consumed    Boolean     @default(false)
+    id          Int         @id @default(autoincrement())
+    amount      Int
+    team        Team        @relation(fields: [teamId], references: [id])
+    teamId      Int
+    user        User        @relation(fields: [userId], references: [id])
+    userId      Int
+    item        Item?       @relation(fields: [itemId], references: [id])
+    itemId      Int?
+    bet         BetOutcome? @relation(fields: [betId], references: [id])
+    betId       Int?
+    description String?
+    createdAt   DateTime    @default(now())
+    consumed    Boolean     @default(false)
 }
 
 model Item {
-  id             Int           @id @default(autoincrement())
-  name           String
-  cost           Int
-  description    String
-  image          String?
-  transactions   Transaction[]
-  createdAt      DateTime      @default(now())
-  tags           Tag[]
-  amount         Int           @default(1)
-  amountPerUser  Int?
-  expirationDate DateTime?
-  consumable     Boolean       @default(false)
-  data           Json?
+    id             Int           @id @default(autoincrement())
+    name           String
+    cost           Int
+    description    String
+    image          String?
+    transactions   Transaction[]
+    createdAt      DateTime      @default(now())
+    tags           Tag[]
+    amount         Int           @default(1)
+    amountPerUser  Int?
+    expirationDate DateTime?
+    consumable     Boolean       @default(false)
+    data           Json?
 }
 
 model Tag {
-  id     Int     @id @default(autoincrement())
-  name   String  @unique
-  items  Item[]
-  users  User[]
-  ads    Ad[]
-  hidden Boolean @default(false)
-  bet    Bet[]
+    id     Int     @id @default(autoincrement())
+    name   String  @unique
+    items  Item[]
+    users  User[]
+    ads    Ad[]
+    hidden Boolean @default(false)
+    bet    Bet[]
 }
 
 model Bed {
-  id          Int           @id @default(autoincrement())
-  room        Room          @relation(fields: [roomId], references: [id])
-  roomId      Int
-  cost        Int
-  location    String
-  Reservation Reservation[]
+    id          Int           @id @default(autoincrement())
+    room        Room          @relation(fields: [roomId], references: [id])
+    roomId      Int
+    cost        Int
+    location    String
+    Reservation Reservation[]
 }
 
 model Reservation {
-  id        Int      @id @default(autoincrement())
-  user      User     @relation(fields: [userId], references: [id])
-  userId    Int
-  bed       Bed      @relation(fields: [bedId], references: [id])
-  bedId     Int
-  date      DateTime
-  cost      Int
-  createdAt DateTime @default(now())
+    id        Int      @id @default(autoincrement())
+    user      User     @relation(fields: [userId], references: [id])
+    userId    Int
+    bed       Bed      @relation(fields: [bedId], references: [id])
+    bedId     Int
+    date      DateTime
+    cost      Int
+    createdAt DateTime @default(now())
 }
 
 model Room {
-  id        Int      @id @default(autoincrement())
-  name      String
-  features  String[]
-  beds      Bed[]
-  bed_count Int
+    id        Int      @id @default(autoincrement())
+    name      String
+    features  String[]
+    beds      Bed[]
+    bed_count Int
 }
 
 enum AdType {
-  IMAGE
-  VIDEO
+    IMAGE
+    VIDEO
 }
 
 model Ad {
-  id            Int     @id @default(autoincrement())
-  type          AdType
-  name          String
-  content       String
-  link          String?
-  tags          Tag[]
-  length        Int
-  viewRemaining Int
-  views         Int
-  createdBy     User    @relation(fields: [createdById], references: [id])
-  createdById   Int
+    id            Int     @id @default(autoincrement())
+    type          AdType
+    name          String
+    content       String
+    link          String?
+    tags          Tag[]
+    length        Int
+    viewRemaining Int
+    views         Int
+    createdBy     User    @relation(fields: [createdById], references: [id])
+    createdById   Int
 }
 
 model Leaderboard {
-  id        Int      @id @default(autoincrement())
-  user      User     @relation(fields: [userId], references: [id])
-  userId    Int
-  score     Float
-  gameData  String
-  gameId    String
-  createdAt DateTime @default(now())
+    id        Int      @id @default(autoincrement())
+    user      User     @relation(fields: [userId], references: [id])
+    userId    Int
+    score     Float
+    gameData  String
+    gameId    String
+    createdAt DateTime @default(now())
 }
 
 model Video {
-  id        Int    @id @default(autoincrement())
-  content   String
-  name      String
-  users     User[] @relation("users_watchedVideos")
-  CreatedBy User   @relation(name: "users_createdVideos", fields: [userId], references: [id])
-  userId    Int
-  rating    Int    @default(0)
+    id        Int    @id @default(autoincrement())
+    content   String
+    name      String
+    users     User[] @relation("users_watchedVideos")
+    CreatedBy User   @relation(name: "users_createdVideos", fields: [userId], references: [id])
+    userId    Int
+    rating    Int    @default(0)
 }
 
 enum QuestType {
-  Simple
-  Numeric
+    Simple
+    Numeric
 }
 
 model Quest {
-  id         Int     @id @default(autoincrement())
-  task       String
-  type       String
-  answer     Int?
-  requiredBy Quest[] @relation("questRequire")
-  requiring  Quest[] @relation("questRequire")
-  user       User?   @relation(fields: [userId], references: [id])
-  userId     Int?
-  priority   Int     @default(0)
-  reward     Int     @default(0)
+    id         Int     @id @default(autoincrement())
+    task       String
+    type       String
+    answer     Int?
+    requiredBy Quest[] @relation("questRequire")
+    requiring  Quest[] @relation("questRequire")
+    user       User?   @relation(fields: [userId], references: [id])
+    userId     Int?
+    priority   Int     @default(0)
+    reward     Int     @default(0)
 }
 
 model BetOutcome {
-  id           Int           @id @default(autoincrement())
-  description  String
-  odds         Float
-  PossileBet   Bet           @relation(name: "possibleOutcomes", fields: [PossileBetId], references: [id])
-  PossileBetId Int
-  FinalBet     Bet?          @relation(name: "finalOutcomes", fields: [FinalBetId], references: [id])
-  FinalBetId   Int?
-  limit        Int?
-  Transaction  Transaction[]
+    id           Int           @id @default(autoincrement())
+    description  String
+    odds         Float
+    PossileBet   Bet           @relation(name: "possibleOutcomes", fields: [PossileBetId], references: [id])
+    PossileBetId Int
+    FinalBet     Bet?          @relation(name: "finalOutcomes", fields: [FinalBetId], references: [id])
+    FinalBetId   Int?
+    limit        Int?
+    Transaction  Transaction[]
 }
 
 model Bet {
-  id              Int          @id @default(autoincrement())
-  description     String
-  possileOutcomes BetOutcome[] @relation("possibleOutcomes")
-  finalOutcomes   BetOutcome[] @relation("finalOutcomes")
-  eveluated       Boolean      @default(false)
-  blocked         Boolean      @default(false)
-  tags            Tag[]
+    id              Int          @id @default(autoincrement())
+    description     String
+    possileOutcomes BetOutcome[] @relation("possibleOutcomes")
+    finalOutcomes   BetOutcome[] @relation("finalOutcomes")
+    eveluated       Boolean      @default(false)
+    blocked         Boolean      @default(false)
+    tags            Tag[]
 }
 
 model Message {
-  id         Int      @id @default(autoincrement())
-  content    String
-  attachment String?
-  createdAt  DateTime @default(now())
-  user       User     @relation(fields: [userId], references: [id])
-  userId     Int
-  Channel    Channel  @relation(fields: [channelId], references: [id])
-  channelId  Int
+    id         Int        @id @default(autoincrement())
+    content    String
+    attachment String?
+    createdAt  DateTime   @default(now())
+    user       User       @relation(fields: [userId], references: [id])
+    userId     Int
+    Channel    Channel    @relation(fields: [channelId], references: [id])
+    channelId  Int
+    Reaction   Reaction[]
 }
 
 model Channel {
-  id       Int       @id @default(autoincrement())
-  name     String
-  messages Message[]
-  users    User[]
+    id       Int       @id @default(autoincrement())
+    name     String
+    messages Message[]
+    users    User[]
 }
 
 enum ProblemType {
-  Math
-  Physics
-  Informatics
+    Math
+    Physics
+    Informatics
 }
 
 model Problem {
-  id   Int         @id @default(autoincrement())
-  name String
-  link String
-  type ProblemType
+    id   Int         @id @default(autoincrement())
+    name String
+    link String
+    type ProblemType
+}
+
+model Reaction {
+    id        Int     @id @default(autoincrement())
+    type      String
+    user      User    @relation(fields: [userId], references: [id])
+    userId    Int
+    message   Message @relation(fields: [messageId], references: [id])
+    messageId Int
 }

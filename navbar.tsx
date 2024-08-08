@@ -143,6 +143,11 @@ const modules: NavGroup[] = [
         name: 'Questy',
         url: '/quests',
         key: 'quests'
+      },
+      {
+        name: 'Chat',
+        url: '/chat',
+        key: 'chat'
       }
     ]
   },
