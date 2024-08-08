@@ -26,7 +26,7 @@ async function getPage(req: SessionRequest): Promise<JSX.Element> {
         disablePictureInPicture
         controls
       />
-      <a href="/videos" className="btn absolute right-2 top-2">
+      <a href="/videos/all" className="btn absolute right-2 top-2">
         Späť
       </a>
     </div>
