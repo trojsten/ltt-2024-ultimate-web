@@ -34,12 +34,6 @@ async function getPage(content: JSX.Element, req: SessionRequest) {
         <meta property="og:title" content="LTT" />
         <meta property="twitter:title" content="LTT" />
         <script src="/static/navbar.js" defer async />
-        <script src="/static/iconify.js" defer async />
-        {req.parsedUrl.pathname.startsWith('/chat') ? (
-          <script type="module" src="/static/chat.js" defer async />
-        ) : (
-          ''
-        )}
         <link href="/static/agate.min.css" rel="stylesheet" />
         <link href="/static/katex.min.css" rel="stylesheet" />
         <link href="/static/texmath.min.css" rel="stylesheet" />
