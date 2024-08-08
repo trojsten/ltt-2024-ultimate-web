@@ -39,6 +39,8 @@ model User {
   Quest         Quest[]
   Messages      Message[]
   Channels      Channel[]
+  Reaction      Reaction[]
+  profileImage  String?
 }
 
 model Team {
@@ -199,14 +201,15 @@ model Bet {
 }
 
 model Message {
-  id         Int      @id @default(autoincrement())
+  id         Int        @id @default(autoincrement())
   content    String
   attachment String?
-  createdAt  DateTime @default(now())
-  user       User     @relation(fields: [userId], references: [id])
+  createdAt  DateTime   @default(now())
+  user       User       @relation(fields: [userId], references: [id])
   userId     Int
-  Channel    Channel  @relation(fields: [channelId], references: [id])
+  Channel    Channel    @relation(fields: [channelId], references: [id])
   channelId  Int
+  Reaction   Reaction[]
 }
 
 model Channel {
@@ -227,4 +230,13 @@ model Problem {
   name String
   link String
   type ProblemType
+}
+
+model Reaction {
+  id        Int     @id @default(autoincrement())
+  type      String
+  user      User    @relation(fields: [userId], references: [id])
+  userId    Int
+  message   Message @relation(fields: [messageId], references: [id])
+  messageId Int
 }
