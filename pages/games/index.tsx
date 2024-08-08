@@ -76,7 +76,6 @@ function gameUI(game: Game, inner: JSX.Element) {
 }
 
 export async function get(req: SessionRequest): Promise<Response> {
-  console.log(req.headers.get('Cookie'))
   const res = renderPage(await getPage(req), req)
   return res
 }

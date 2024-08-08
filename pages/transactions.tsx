@@ -70,24 +70,22 @@ function timeHTML(time: Date) {
     <td className="flex justify-center">
       {diff > day
         ? time.toLocaleTimeString('sk-SK', {
-            timeZone: 'Europe/Bratislava',
-            hour: '2-digit',
-            minute: '2-digit'
-          }) +
-          ', ' +
-          time.toLocaleDateString('sk-SK')
+          timeZone: 'Europe/Bratislava',
+          hour: '2-digit',
+          minute: '2-digit'
+        }) +
+        ', ' +
+        time.toLocaleDateString('sk-SK')
         : time.toLocaleTimeString('sk-SK', {
-            timeZone: 'Europe/Bratislava',
-            hour: '2-digit',
-            minute: '2-digit'
-          })}
+          timeZone: 'Europe/Bratislava',
+          hour: '2-digit',
+          minute: '2-digit'
+        })}
     </td>
   )
 }
 
 function BuyTransactions() {
-  console.log(config().transactions.transactionUnlockCost)
-
   return (
     <div>
       <h1>Vykonané Transakcie</h1>

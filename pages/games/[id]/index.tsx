@@ -5,7 +5,6 @@ import { getEncryptionKey } from './data'
 
 async function getPage(id: string, req: SessionRequest) {
   const enckey = await getEncryptionKey(req.session!.user.id)
-  console.log(enckey)
   return (
     <div>
       <script src="/static/gameData.js"></script>

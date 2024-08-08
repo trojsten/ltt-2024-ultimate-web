@@ -21,6 +21,8 @@ interface LootboxItem {
   count: number
 }
 
+export const adblockers: Set<number> = new Set()
+
 export const hooks: Record<string, (args: HookArgs) => Promise<void>> = {
   internet: async (args: HookArgs) => {
     const body = {
@@ -28,7 +30,6 @@ export const hooks: Record<string, (args: HookArgs) => Promise<void>> = {
       address: args.ip,
       timeout: args.timeout + 'm'
     }
-    console.log(body)
     await fetch('http://10.85.255.4/rest/ip/firewall/address-list', {
       method: 'PUT',
       headers: {
@@ -38,30 +39,12 @@ export const hooks: Record<string, (args: HookArgs) => Promise<void>> = {
       body: JSON.stringify(body)
     })
   },
-  lootbox: async (args: HookArgs) => {
-    const items = args.items as LootboxItem[]
-    const itemCount = items.reduce((acc, e) => acc + e.count, 0)
-    let rand = Math.floor(Math.random() * itemCount)
-    let item: LootboxItem | undefined
-    for (let i = 0; i < items.length; i++) {
-      if (rand < items[i].count) {
-        item = items[i]
-        break
-      }
-      rand -= items[i].count
-    }
-
-    if (item?.type == 'coins') {
-      await buy(args.user.id, -item.amount!, 'Výhra z lootboxu')
-    } else if (item?.type == 'item') {
-      await db.transaction.create({
-        data: {
-          amount: 0,
-          userId: args.user.id,
-          itemId: item.itemId!,
-          teamId: (await getTeamForUser(args.user.id)).id
-        }
-      })
-    }
+  adBlock: async (args: HookArgs) => {
+    adblockers.add(args.user.id)
+    console.log('adblock active')
+    setTimeout(() => {
+      adblockers.delete(args.user.id)
+      // @ts-expect-error timeout is not in the type
+    }, args.item.data!.timeout! * 60 * 1000)
   }
 }

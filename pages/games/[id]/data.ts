@@ -77,7 +77,6 @@ export async function get(req: SessionRequest) {
   }
 
   const data = await getLeaderboardForUser(user.id, req.params.id)
-  console.log("get gameData: ", data.gameData)
   const msg = await encrypt(key, data.gameData)
 
   return Response.json(msg,

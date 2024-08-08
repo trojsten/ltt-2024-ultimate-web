@@ -48,7 +48,7 @@ async function home(req: SessionRequest) {
   )
     .map((e) => e.item)
     .filter((e) => e != null)
-  
+
   let itemTransactionsPromises = [];
   myItems.forEach(e => {
     itemTransactionsPromises.push(
@@ -63,11 +63,9 @@ async function home(req: SessionRequest) {
             id: e.id
           }
         }
-    }))
+      }))
   });
   const itemTransactions = await Promise.all(itemTransactionsPromises);
-
-  console.log(myItems)
 
   return (
     <div className="m-0">
@@ -78,7 +76,7 @@ async function home(req: SessionRequest) {
         <h2>Moje kúpené veci</h2>
         <ul>
           {myItems.map((item) => (
-            <li 
+            <li
               key={item!.id}
               className="bg-gray-300 rounded-2xl p-2 m-1 flex items-center"
             >

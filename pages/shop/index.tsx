@@ -8,16 +8,12 @@ async function getShop(req: SessionRequest) {
   const userItems = await getItemsForUser(req.session!.user.id)
   const counts: Record<number, number> = {}
 
-  console.log(userItems)
-
   for (const item of userItems) {
     if (counts[item!.id] == undefined) {
       counts[item!.id] = 0
     }
     counts[item!.id]++
   }
-
-  console.log(counts)
 
   const items = (
     await db.item.findMany({

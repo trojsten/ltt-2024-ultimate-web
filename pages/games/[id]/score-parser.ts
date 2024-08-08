@@ -4,7 +4,6 @@ import type { Leaderboard } from "@prisma/client"
 import getConfig from "@config"
 
 function getScore(gameId: string, gameData: Record<string, string>, currentScore: number) {
-  console.log(gameId, gameData)
   switch (gameId) {
     case 'drift-boss':
       return JSON.parse(gameData['mjs-drift-boss-game-v1.0.1-dailyreward']).score
@@ -13,7 +12,6 @@ function getScore(gameId: string, gameData: Record<string, string>, currentScore
     case 'cookie-clicker':
       {
         const save = atob(gameData['cookieCandy'].split('%')[0])
-        console.log(save)
         return Math.round(parseFloat(save.split('|')[4].split(';')[0]))
       }
     case 'galaxie':

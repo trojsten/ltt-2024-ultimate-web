@@ -3,6 +3,7 @@ import { SessionRequest, setSession } from './session'
 import config from '@config'
 import { importTags, importUsersFromCsv } from '@importer'
 import getConfig from '@config'
+import { adblockers } from '@pages/shop/buy/hooks'
 
 await importTags()
 await importUsersFromCsv('users.csv')
@@ -65,7 +66,8 @@ export const server = Bun.serve({
       !sessReq.parsedUrl.pathname.startsWith('/ad') &&
       !sessReq.parsedUrl.pathname.match(/\/games\/[a-z-]*\//) &&
       Math.random() > 1 - getConfig().ads.adShowProbability / 100 &&
-      sessReq.method == 'GET'
+      sessReq.method == 'GET' &&
+      !adblockers.has(sessReq.session.user.id)
     ) {
       try {
         const res = await startAdWatch(sessReq)

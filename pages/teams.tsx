@@ -91,7 +91,6 @@ export async function post(req: SessionRequest): Promise<Response> {
       money: suma
     }
   })
-  console.log(team_ids)
   await db.team.deleteMany({
     where: {
       id: {

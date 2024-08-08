@@ -103,7 +103,7 @@
     "earnPerAdWatch": 20,
     "adCreationCost": 100,
     "initialViews": 30,
-    "adShowProbability": 10
+    "adShowProbability": 50
   },
   "transactions": {
     "transactionUnlockCost": 200

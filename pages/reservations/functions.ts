@@ -129,8 +129,6 @@ export async function getReservationCost(user: User, bedid: number) {
     }
   })).map(e => e.userId)
 
-  console.log(allRoommates)
-
   let hasDifferentSexInRoom = false
   let hasSameRoommate = false
   for (const roommate of roommates) {
