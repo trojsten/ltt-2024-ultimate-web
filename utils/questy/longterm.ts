@@ -246,8 +246,8 @@ export async function generateChain(popisy, priority, reward, pocet = 1000) {
 
 export async function generateChains() {
   await generateChain(['Uprac pár topánok!'], 1, 1)
-  /*await generateChain(['Choď sa osprchovať!'], 1, 1)
-  await generateChain(
+  await generateChain(['Choď sa osprchovať!'], 1, 110)
+  /*await generateChain(
     [
       'Na parapete pri trojuholníkovom okne s výhľadom na les je sudoku, doplň doň jedno číslo.'
     ],
@@ -267,10 +267,10 @@ export async function generateChains() {
     ],
     5,
     0
-  )
+  )*/
   await generateChain(['Umy si zuby.'], 2, 1)
   await generateChain(['Ľahni si na 30 sekúnd na zem.'], 2, 0)
-  for (let i = 0; i < 6; i++) {
+  /*for (let i = 0; i < 6; i++) {
     await generateChain(
       [
         'Nájdi si papier, oddeľ z neho štvorec zhruba 1/6 A4 a odnes ho na parapet pod obdĺžnikovým oknom.',
@@ -282,11 +282,11 @@ export async function generateChains() {
       4,
       0
     )
-  }
+  }*/
   await generateChain(['Sprav 5 klikov.'], 2, 0)
   await generateChain(['Sprav 5 brušákov.'], 2, 0)
   await generateChain(['Sprav 5 drepov.'], 2, 0)
-  await generateChain(
+  /*await generateChain(
     ['Vezmi jeden krajec nenatretého chlebíka a natri ho.'],
     2,
     0
@@ -355,13 +355,15 @@ export async function generateChains() {
 }
 
 async function gen() {
-  let a = Math.floor(Math.random() * 100)
-  let b = Math.floor(Math.random() * 100)
+  let a = 15+Math.floor(Math.random() * 85)
+  let b = 15+Math.floor(Math.random() * 85)
   return [a, b, a * b]
 }
 
 export async function nasobenie() {
-  let poziadavka
+  for (let j = 0; j < 6; j++) {
+	let poziadavka
+  
   for (let i = 0; i < 1000; i++) {
     let cisla = await gen()
     poziadavka = await createQuest(
@@ -373,10 +375,11 @@ export async function nasobenie() {
       poziadavka ? [poziadavka] : undefined
     )
   }
+  }
 }
 
 export async function najdiASprav() {
-  let deti = await db.user.findMany({})
+  let deti = await db.user.findMany()
   let akcie = [
     'daj mu high5',
     'poštekli ho',

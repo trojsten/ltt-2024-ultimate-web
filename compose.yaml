@@ -20,11 +20,11 @@ services:
     image: oven/bun:1.1.21-slim
     environment:
       - DATABASE_URL=postgresql://ultimate-ltt:ultimate-ltt@db/ultimate-ltt?schema=public
-      - DEBUG=True
+      - DEBUG=False
     volumes:
       - .:/home/bun/app
     ports:
-      - '3000:3000'
+      - '3001:3000'
       - '6499:6499'
     depends_on:
       db:

@@ -178,8 +178,7 @@ export async function post(req: SessionRequest): Promise<Response> {
   const message = formdata.get('message') as string
   const media = formdata.get('mediaCapture') as File
   const contentId = crypto.randomUUID()
-  console.log(formdata.get('mediaType'))
-  if (media) {
+  if (media.size > 0) {
     await Bun.write(`uploads/${contentId}`, media)
     await db.Message.create({
       data: {

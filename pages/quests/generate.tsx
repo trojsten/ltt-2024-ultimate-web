@@ -28,8 +28,8 @@ export async function get(req: SessionRequest) {
 export async function post(req: SessionRequest): Promise<Response> {
   await nasobenie()
   await generateChains()
-  await obrazok()
-  await najdiASprav()
+  //await obrazok()
+  //await najdiASprav()
   await kamzik()
   return Response.redirect('/quests/generate')
 }
