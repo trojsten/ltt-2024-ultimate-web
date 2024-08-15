@@ -118,14 +118,16 @@ export async function getChannelList(req: SessionRequest) {
           >
             {new Date().getDate() === message.createdAt.getDate()
               ? message.createdAt.toLocaleTimeString('sk-SK', {
-                  minute: 'numeric',
+timeZone: 'Europe/Bratislava',                  
+minute: 'numeric',
                   hour: 'numeric'
                 })
               : new Date().getTime() - 604800000 <= message.createdAt.getTime()
                 ? message.createdAt.toLocaleDateString('sk-SK', {
-                    weekday: 'short'
+timeZone: 'Europe/Bratislava',                    
+weekday: 'short'
                   })
-                : message.createdAt.toLocaleDateString('sk-SK')}
+                : message.createdAt.toLocaleDateString('sk-SK', {timeZone: 'Europe/Bratislava'})}
           </time>
         </section>
       ))}
