@@ -394,7 +394,7 @@ export async function najdiASprav() {
         `Choď za ${deti[Math.floor(Math.random() * deti.length)].name}, a ${akcie[Math.floor(Math.random() * akcie.length)]}`,
         'normal',
         undefined,
-        2,
+        21,
         10,
         poziadavka ? [poziadavka] : undefined
       )
