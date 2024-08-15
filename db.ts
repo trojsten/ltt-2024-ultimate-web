@@ -67,7 +67,15 @@ export async function getAdsForUser(userId: number) {
       ads: true
     }
   })
-  return tags.map((tag) => tag.ads).flat()
+  const ids = new Set<number>()
+  return tags
+    .map((tag) => tag.ads)
+    .flat()
+    .filter((ad) => {
+      const ret = !ids.has(ad.id)
+      if (!ids.has(ad.id)) ids.add(ad.id)
+      return ret
+    })
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types

@@ -36,7 +36,10 @@ function renderAd(ad: Ad) {
 export async function get(req: SessionRequest): Promise<Response> {
   if (req.session?.ad == undefined)
     return new Response('No ad is currently being watched', { status: 400 })
-  req.session.ad.timeRemaining = await getAdLength(req.session.ad.adWatched, req.session.ad.skippable)
+  req.session.ad.timeRemaining = await getAdLength(
+    req.session.ad.adWatched,
+    req.session.ad.skippable
+  )
   return setSession(
     await renderPage(renderAd(req.session.ad.adWatched), req),
     req.session
@@ -56,7 +59,11 @@ export async function pickAd(user: User) {
   }
 }
 
-export async function startAdWatch(req: SessionRequest, backUrl?: string, skippable: boolean = true) {
+export async function startAdWatch(
+  req: SessionRequest,
+  backUrl?: string,
+  skippable: boolean = true
+) {
   if (req.session?.ad !== undefined) {
     return new Response('An ad is already being watched', { status: 400 })
   } else if (req.session?.user === undefined) {
@@ -71,10 +78,12 @@ export async function startAdWatch(req: SessionRequest, backUrl?: string, skippa
   let length = ad.length
 
   if (!skippable) {
-    length = ad.type == 'VIDEO' ? (await getDuration(ad.content.substring(1))) * 1000 : 10
+    length =
+      ad.type == 'VIDEO'
+        ? (await getDuration(ad.content.substring(1))) * 1000
+        : 10
     console.log('Ad length', length)
   }
-
 
   req.session.ad = {
     timeRemaining: await getAdLength(ad, skippable),
@@ -91,7 +100,9 @@ export async function startAdWatch(req: SessionRequest, backUrl?: string, skippa
 
 async function getAdLength(ad: Ad, skippable: boolean) {
   if (!skippable) {
-    return ad.type == 'VIDEO' ? (await getDuration(ad.content.substring(1))) * 1000 : 30
+    return ad.type == 'VIDEO'
+      ? (await getDuration(ad.content.substring(1))) * 1000
+      : 30
   }
   return ad.length
 }
