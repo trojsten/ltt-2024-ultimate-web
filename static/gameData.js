@@ -35,7 +35,7 @@ async function uploadData(data, gameId) {
     body: JSON.stringify({ data: data.msg })
   })
 
-  if (Math.random() > 0.8) {
+  if (Math.random() > 0.95) {
     location.href = '/ad/show?back=' + encodeURIComponent(location.href) + '&skippable=1'
   }
 }

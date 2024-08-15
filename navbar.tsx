@@ -180,7 +180,7 @@ const modules: NavGroup[] = [
         key: 'teams'
       },
       {
-        name: 'Aktuálne guesty',
+        name: 'Aktuálnequesty',
         url: '/quests/board',
         key: 'quests-admin'
       },
